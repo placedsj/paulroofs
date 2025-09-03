@@ -7,10 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { LogOut, Palette, Edit, FileText } from 'lucide-react';
+import { LogOut, Palette, Edit, FileText, Megaphone } from 'lucide-react';
 import { QuoteGenerator } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
+import { ProjectPromoter } from './project-promoter';
 
 type DailyLogEntry = {
     id: string;
@@ -83,12 +84,13 @@ export function BossQuartersDashboard() {
             </p>
 
             <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-background h-auto">
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-6 bg-background h-auto">
                     <TabsTrigger value="overview">Project Overview</TabsTrigger>
                     <TabsTrigger value="tracking">Daily Log</TabsTrigger>
                     <TabsTrigger value="quotes">AI Quote Generator</TabsTrigger>
                     <TabsTrigger value="coordinator">AI Color Coordinator</TabsTrigger>
                     <TabsTrigger value="invoices">AI Invoice Generator</TabsTrigger>
+                    <TabsTrigger value="promoter">AI Project Promoter</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview" className="mt-6">
@@ -154,6 +156,10 @@ export function BossQuartersDashboard() {
 
                 <TabsContent value="invoices" className="mt-6">
                     <InvoiceGenerator />
+                </TabsContent>
+
+                <TabsContent value="promoter" className="mt-6">
+                    <ProjectPromoter />
                 </TabsContent>
             </Tabs>
 
