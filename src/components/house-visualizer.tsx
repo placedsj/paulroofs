@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { ColorOption } from './color-chart';
+import { RoofVisualizerImage } from './roof-visualizer-image';
 
 type HouseVisualizerProps = {
     selectedColor: ColorOption | null;
@@ -11,21 +12,21 @@ type HouseVisualizerProps = {
     setHouseStyle: (style: string) => void;
 };
 
-const houseStyles = {
-    colonial: { bodyClass: 'w-48 h-32 bg-yellow-100', roofClass: 'w-48 h-20 -top-14', bodyColor: '#FDF2D5' },
-    ranch: { bodyClass: 'w-64 h-24 bg-blue-100', roofClass: 'w-64 h-12 -top-10', bodyColor: '#E0F2FE' },
-    cape: { bodyClass: 'w-40 h-28 bg-gray-200', roofClass: 'w-40 h-24 -top-20', bodyColor: '#E5E7EB' },
-    modern: { bodyClass: 'w-56 h-32 bg-stone-200', roofClass: 'w-56 h-8 -top-8 flat-roof', bodyColor: '#E7E5E4' },
-};
+const houseStyles = [
+    { value: 'ranch', label: 'Ranch', image: 'https://picsum.photos/id/180/800/600', roofPath: 'M0,250 L400,100 L800,250 L800,310 L750,300 L50,220 L0,230 Z' },
+    { value: 'colonial', label: 'Colonial', image: 'https://picsum.photos/id/1062/800/600', roofPath: 'M15,220 L400,100 L785,220 L785,280 L400,160 L15,280 Z' },
+    { value: 'modern', label: 'Modern', image: 'https://picsum.photos/id/219/800/600', roofPath: 'M100,200 L500,150 L800,220 L800,280 L500,210 L100,260 Z' },
+];
+
 
 export function HouseVisualizer({ selectedColor, houseStyle, setHouseStyle }: HouseVisualizerProps) {
-    const currentStyle = houseStyles[houseStyle as keyof typeof houseStyles] || houseStyles.colonial;
+    const currentStyle = houseStyles.find(s => s.value === houseStyle) || houseStyles[0];
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle>ROOF VISUALIZER</CardTitle>
-                <CardDescription>Click on colors to preview them on your roof style.</CardDescription>
+                <CardDescription>Select a house style and click on colors to preview.</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="mb-4">
@@ -35,39 +36,25 @@ export function HouseVisualizer({ selectedColor, houseStyle, setHouseStyle }: Ho
                             <SelectValue placeholder="Select a house style" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="colonial">Colonial</SelectItem>
-                            <SelectItem value="ranch">Ranch</SelectItem>
-                            <SelectItem value="cape">Cape Cod</SelectItem>
-                            <SelectItem value="modern">Modern</SelectItem>
+                            {houseStyles.map(style => (
+                                <SelectItem key={style.value} value={style.value}>{style.label}</SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="bg-gradient-to-b from-blue-400 to-blue-600 p-4 rounded-lg relative overflow-hidden min-h-[256px] flex items-end justify-center">
-                    <div className="relative z-10">
-                        <div 
-                            className={`relative border-2 border-black/20 ${currentStyle.bodyClass}`}
-                            style={{backgroundColor: currentStyle.bodyColor}}
-                        >
-                             {/* Roof */}
-                            <div
-                                className={`absolute left-0 transition-colors duration-300 ${currentStyle.roofClass}`}
-                                style={{
-                                    backgroundColor: selectedColor ? selectedColor.color : '#708090',
-                                    clipPath: currentStyle.roofClass.includes('flat-roof') ? 'none' : 'polygon(50% 0%, 0% 100%, 100% 100%)',
-                                    borderBottom: '2px solid #333'
-                                }}
-                            ></div>
-                             {/* Door */}
-                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-12 bg-amber-800 border border-amber-900"></div>
-                        </div>
+                
+                <RoofVisualizerImage 
+                    imageUrl={currentStyle.image}
+                    roofPath={currentStyle.roofPath}
+                    roofColor={selectedColor ? selectedColor.color : '#708090'}
+                />
+
+                {selectedColor && (
+                    <div className="mt-4 bg-background border rounded-md p-2 text-center">
+                        <p className="text-sm font-bold">{selectedColor.name}</p>
+                        <p className="text-xs text-muted-foreground">{selectedColor.code}</p>
                     </div>
-                    {selectedColor && (
-                        <div className="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded">
-                            <p className="text-sm font-bold">{selectedColor.name}</p>
-                            <p className="text-xs">{selectedColor.code}</p>
-                        </div>
-                    )}
-                </div>
+                )}
             </CardContent>
         </Card>
     );

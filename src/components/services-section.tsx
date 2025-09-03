@@ -41,7 +41,7 @@ const serviceBenefits = {
 export function ServicesSection() {
     const [selectedService, setSelectedService] = useState('metal');
     const [selectedColor, setSelectedColor] = useState<ColorOption | null>(metalColors[0]);
-    const [houseStyle, setHouseStyle] = useState('colonial');
+    const [houseStyle, setHouseStyle] = useState('ranch');
     
     const handleTabChange = (value: string) => {
         setSelectedService(value);
