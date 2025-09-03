@@ -5,6 +5,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { ServicesSection } from '@/components/services-section';
 import { Testimonials } from '@/components/testimonials';
+import { GallerySection } from '@/components/gallery-section';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -104,6 +105,8 @@ export default function Home() {
         </section>
 
         <Testimonials />
+
+        <GallerySection />
 
         <section id="contact" className="py-20 bg-secondary/20">
             <div className="container mx-auto px-4">

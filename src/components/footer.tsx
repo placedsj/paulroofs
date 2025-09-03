@@ -10,11 +10,12 @@ export function Footer() {
         <p className="text-muted-foreground mb-4 max-w-md mx-auto">
           Southern New Brunswick's Premier Metal Roofing Specialist
         </p>
-        <div className="flex justify-center space-x-6 mb-6">
+        <div className="flex justify-center space-x-6 mb-6 flex-wrap">
             <Link href="#home" className="text-sm text-muted-foreground hover:text-primary">HOME</Link>
             <Link href="#services" className="text-sm text-muted-foreground hover:text-primary">SERVICES</Link>
             <Link href="#about" className="text-sm text-muted-foreground hover:text-primary">ABOUT</Link>
             <Link href="#testimonials" className="text-sm text-muted-foreground hover:text-primary">TESTIMONIALS</Link>
+            <Link href="#gallery" className="text-sm text-muted-foreground hover:text-primary">OUR WORK</Link>
             <Link href="#contact" className="text-sm text-muted-foreground hover:text-primary">CONTACT</Link>
         </div>
         <p className="text-sm text-muted-foreground/80">
