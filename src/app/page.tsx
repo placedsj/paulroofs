@@ -64,10 +64,10 @@ export default function Home() {
                     <div className="relative rounded-lg overflow-hidden shadow-lg h-96">
                         <Image
                             src="https://picsum.photos/800/600"
-                            alt="Paul's Roofing team working on a roof"
+                            alt="A newly installed high-quality metal roof"
                             fill
                             className="object-cover"
-                            data-ai-hint="roofing team work"
+                            data-ai-hint="new metal roof"
                         />
                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                          <div className="absolute bottom-0 left-0 p-6">

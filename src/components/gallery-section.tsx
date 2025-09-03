@@ -4,11 +4,11 @@ import Link from 'next/link';
 
 const galleryImages = [
   { src: "https://picsum.photos/600/400?random=1", alt: "Modern home with a charcoal metal roof.", hint: "metal roof" },
-  { src: "https://picsum.photos/600/400?random=2", alt: "Close-up of newly installed asphalt shingles.", hint: "asphalt shingles" },
-  { src: "https://picsum.photos/600/400?random=3", alt: "Ranch style house with a new forest green metal roof.", hint: "green roof" },
-  { src: "https://picsum.photos/600/400?random=4", alt: "Two-story house with a brand new roof.", hint: "new roof" },
-  { src: "https://picsum.photos/600/400?random=5", alt: "Detailed view of roof siding and gutter work.", hint: "roof detail" },
-  { src: "https://picsum.photos/600/400?random=6", alt: "Completed roofing project on a large house.", hint: "large house" },
+  { src: "https://picsum.photos/600/400?random=2", alt: "Close-up of a new standing seam metal roof.", hint: "metal roof" },
+  { src: "https://picsum.photos/600/400?random=3", alt: "Ranch style house with a new forest green metal roof.", hint: "green metal roof" },
+  { src: "https://picsum.photos/600/400?random=4", alt: "Two-story house with a brand new red metal roof.", hint: "red metal roof" },
+  { src: "https://picsum.photos/600/400?random=5", alt: "Detailed view of metal roof flashing and trim work.", hint: "metal roof" },
+  { src: "https://picsum.photos/600/400?random=6", alt: "Completed metal roofing project on a large luxury house.", hint: "metal roof house" },
 ];
 
 export function GallerySection() {
