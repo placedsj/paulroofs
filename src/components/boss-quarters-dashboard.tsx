@@ -10,6 +10,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { LogOut, Palette, Edit, FileText } from 'lucide-react';
 import { QuoteGenerator } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
+import { InvoiceGenerator } from './invoice-generator';
 
 type DailyLogEntry = {
     id: string;
@@ -87,7 +88,7 @@ export function BossQuartersDashboard() {
                     <TabsTrigger value="tracking">Daily Log</TabsTrigger>
                     <TabsTrigger value="quotes">AI Quote Generator</TabsTrigger>
                     <TabsTrigger value="coordinator">AI Color Coordinator</TabsTrigger>
-                    <TabsTrigger value="invoices">Invoices</TabsTrigger>
+                    <TabsTrigger value="invoices">AI Invoice Generator</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview" className="mt-6">
@@ -152,15 +153,7 @@ export function BossQuartersDashboard() {
                 </TabsContent>
 
                 <TabsContent value="invoices" className="mt-6">
-                    <Card>
-                        <CardHeader>
-                             <CardTitle className="text-3xl text-primary">Invoice Management</CardTitle>
-                             <CardDescription>Create and track client invoices.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                           <p className="text-muted-foreground text-center py-12">Invoice management coming soon.</p>
-                        </CardContent>
-                    </Card>
+                    <InvoiceGenerator />
                 </TabsContent>
             </Tabs>
 
