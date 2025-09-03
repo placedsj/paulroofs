@@ -28,10 +28,10 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/50 to-transparent" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-primary-foreground px-4">
             <h1 className="text-5xl md:text-7xl font-extrabold text-shadow-outline">
-              THE LAST ROOF YOU'LL EVER NEED.
+              OLD SCHOOL WORK ETHIC. NEW SCHOOL ROOFING.
             </h1>
             <p className="mt-6 max-w-2xl text-xl md:text-2xl text-zinc-200 text-shadow-outline-sm">
-              30 YEARS ON THE ROOF. READY FOR YOURS.
+              THE LAST ROOF YOU'LL EVER NEED.
             </p>
             <p className="mt-4 max-w-xl text-lg text-zinc-300">
               Southern New Brunswick's Premier Metal Roofing Specialist.
