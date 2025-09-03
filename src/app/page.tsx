@@ -54,52 +54,50 @@ export default function Home() {
 
         <section id="about" className="py-20 bg-background">
             <div className="container mx-auto px-4">
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold">30 YEARS OF ROOFING EXCELLENCE</h2>
+                    <p className="text-muted-foreground mt-4 max-w-3xl mx-auto text-lg">
+                        Based in Quispamsis, Paul's Roofing has been the trusted choice for homeowners throughout Southern New Brunswick for three decades. We specialize in premium metal and asphalt roofing systems engineered to last, backed by comprehensive warranties and expert craftsmanship.
+                    </p>
+                </div>
                 <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 className="text-4xl font-bold mb-8">30 YEARS OF EXCELLENCE</h2>
-                        <p className="text-muted-foreground text-lg mb-6">
-                            Based in Quispamsis, New Brunswick, Paul's Roofing has been the trusted choice for homeowners throughout Southern NB for three decades.
-                        </p>
-                        <p className="text-muted-foreground text-lg mb-6">
-                            We specialize in premium metal roofing systems that are engineered to last a lifetime, backed by comprehensive warranties and expert craftsmanship.
-                        </p>
-                        <div className="space-y-4">
-                            <div className="flex items-center">
-                                <div className="w-2 h-2 bg-primary rounded-full mr-4"></div>
-                                <span className="text-foreground">Licensed & Insured</span>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="w-2 h-2 bg-primary rounded-full mr-4"></div>
-                                <span className="text-foreground">Lifetime Warranties Available</span>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="w-2 h-2 bg-primary rounded-full mr-4"></div>
-                                <span className="text-foreground">Emergency Services 24/7</span>
-                            </div>
-                        </div>
+                    <div className="relative rounded-lg overflow-hidden shadow-lg h-96">
+                        <Image
+                            src="https://picsum.photos/800/600"
+                            alt="Paul's Roofing team working on a roof"
+                            fill
+                            className="object-cover"
+                            data-ai-hint="roofing team work"
+                        />
+                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                         <div className="absolute bottom-0 left-0 p-6">
+                            <h3 className="text-2xl font-bold text-white text-shadow-outline">Licensed & Insured</h3>
+                            <p className="text-white/90 text-shadow-outline-sm">Peace of mind guaranteed.</p>
+                         </div>
                     </div>
-                    <Card className="bg-card">
-                        <CardHeader>
-                            <CardTitle className="text-2xl">WHY CHOOSE US?</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <ul className="space-y-3 text-muted-foreground">
-                                {[
-                                    "30+ years of roofing experience",
-                                    "Specialized in metal roofing systems",
-                                    "Serving all of Southern New Brunswick",
-                                    "Premium materials and workmanship",
-                                    "Comprehensive warranty coverage",
-                                    "Emergency repair services"
-                                ].map((item) => (
-                                    <li key={item} className="flex items-start">
-                                        <Check className="h-5 w-5 text-primary mr-2 mt-1 shrink-0" />
-                                        <span>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </CardContent>
-                    </Card>
+                    <div>
+                        <h3 className="text-2xl font-bold mb-6">WHY CHOOSE PAUL'S ROOFING?</h3>
+                        <ul className="space-y-4">
+                            {[
+                                { title: "30+ Years of Experience", description: "Three decades of dedicated service in Southern NB." },
+                                { title: "Metal Roofing Specialists", description: "Expert installation of durable and beautiful metal roofs." },
+                                { title: "Lifetime Warranties", description: "We stand by our work with available lifetime warranties." },
+                                { title: "Premium Materials", description: "We use only the best materials for a long-lasting finish." },
+                                { title: "24/7 Emergency Service", description: "Ready to respond when you need us most." },
+                                { title: "Locally Owned & Operated", description: "Proudly serving our local community." },
+                            ].map((item) => (
+                                <li key={item.title} className="flex items-start">
+                                    <div className="flex-shrink-0">
+                                        <Check className="h-6 w-6 text-primary mr-3 mt-1" />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-semibold text-lg">{item.title}</h4>
+                                        <p className="text-muted-foreground">{item.description}</p>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
