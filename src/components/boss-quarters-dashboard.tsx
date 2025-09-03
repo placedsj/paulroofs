@@ -9,6 +9,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/com
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { LogOut, Palette, Edit, FileText } from 'lucide-react';
 import { QuoteGenerator } from './quote-generator';
+import { ColorCoordinator } from './color-coordinator';
 
 type DailyLogEntry = {
     id: string;
@@ -81,10 +82,11 @@ export function BossQuartersDashboard() {
             </p>
 
             <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-background h-auto">
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 bg-background h-auto">
                     <TabsTrigger value="overview">Project Overview</TabsTrigger>
                     <TabsTrigger value="tracking">Daily Log</TabsTrigger>
                     <TabsTrigger value="quotes">AI Quote Generator</TabsTrigger>
+                    <TabsTrigger value="coordinator">AI Color Coordinator</TabsTrigger>
                     <TabsTrigger value="invoices">Invoices</TabsTrigger>
                 </TabsList>
                 
@@ -143,6 +145,10 @@ export function BossQuartersDashboard() {
                 
                 <TabsContent value="quotes" className="mt-6">
                     <QuoteGenerator />
+                </TabsContent>
+
+                <TabsContent value="coordinator" className="mt-6">
+                    <ColorCoordinator />
                 </TabsContent>
 
                 <TabsContent value="invoices" className="mt-6">
