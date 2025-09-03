@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Siren, Check } from 'lucide-react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { ServicesSection } from '@/components/services-section';
+import { Testimonials } from '@/components/testimonials';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -101,6 +102,8 @@ export default function Home() {
                 </div>
             </div>
         </section>
+
+        <Testimonials />
 
         <section id="contact" className="py-20 bg-secondary/20">
             <div className="container mx-auto px-4">
