@@ -6,9 +6,8 @@ import { Footer } from '@/components/footer';
 import { ServicesSection } from '@/components/services-section';
 import { Testimonials } from '@/components/testimonials';
 import { GallerySection } from '@/components/gallery-section';
+import { ContactForm } from '@/components/contact-form';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
 export default function Home() {
@@ -151,21 +150,7 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                     <Card>
-                        <CardHeader>
-                            <CardTitle className="text-2xl">REQUEST A QUOTE</CardTitle>
-                            <CardDescription>Fill out the form below and we'll get back to you.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <form className="space-y-4">
-                                <Input type="text" placeholder="Your Name" />
-                                <Input type="email" placeholder="Your Email" />
-                                <Input type="tel" placeholder="Your Phone" />
-                                <Textarea placeholder="Describe your roofing needs..." rows={4} />
-                                <Button type="submit" className="w-full font-bold">SEND REQUEST</Button>
-                            </form>
-                        </CardContent>
-                    </Card>
+                    <ContactForm />
                 </div>
             </div>
         </section>
