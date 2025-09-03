@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { LogOut } from 'lucide-react';
+import { LogOut, Palette, Edit, FileText } from 'lucide-react';
+import { QuoteGenerator } from './quote-generator';
 
 type DailyLogEntry = {
     id: string;
@@ -51,22 +52,22 @@ export function BossQuartersDashboard() {
         text: newProgressEntry.trim(),
         timestamp: new Date()
     };
-    setDailyProgressLog(prev => [...prev, newEntry]);
+    setDailyProgressLog(prev => [newEntry, ...prev]);
     setNewProgressEntry('');
   }, [newProgressEntry]);
 
   if (!isMounted) {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-green-500 to-green-700">
-            <div className="text-white text-2xl">Loading...</div>
+        <div className="flex min-h-screen items-center justify-center bg-background">
+             <h1 className="text-2xl">Loading Boss Quarters...</h1>
         </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-700 to-green-900 p-4 sm:p-6">
+    <div className="min-h-screen bg-secondary/30 p-4 sm:p-6">
         <div className="container mx-auto">
-            <header className="flex flex-col sm:flex-row justify-between items-center mb-6 text-white">
+            <header className="flex flex-col sm:flex-row justify-between items-center mb-6 text-foreground">
                 <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-wider text-shadow-outline mb-4 sm:mb-0">
                     Boss Quarters
                 </h1>
@@ -75,63 +76,64 @@ export function BossQuartersDashboard() {
                 </Button>
             </header>
 
-            <p className="text-lg text-green-200 mb-8 text-center max-w-3xl mx-auto text-shadow-outline-sm">
-                PROJECT MANAGEMENT | QUOTES | INVOICES | ADMIN TOOLS
+            <p className="text-lg text-muted-foreground mb-8 text-center max-w-3xl mx-auto">
+                Your central command for Project Management, AI Tools, and Administration.
             </p>
 
             <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-white/20 backdrop-blur-sm h-auto">
-                    <TabsTrigger value="overview">PROJECT OVERVIEW</TabsTrigger>
-                    <TabsTrigger value="tracking">PROJECT TRACKING</TabsTrigger>
-                    <TabsTrigger value="quotes">QUOTES</TabsTrigger>
-                    <TabsTrigger value="invoices">INVOICES</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-background h-auto">
+                    <TabsTrigger value="overview">Project Overview</TabsTrigger>
+                    <TabsTrigger value="tracking">Daily Log</TabsTrigger>
+                    <TabsTrigger value="quotes">AI Quote Generator</TabsTrigger>
+                    <TabsTrigger value="invoices">Invoices</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview" className="mt-6">
-                    <Card className="bg-white/90 backdrop-blur-sm">
+                    <Card>
                         <CardHeader>
-                            <CardTitle className="text-3xl text-green-800">PROJECT OVERVIEW 📊</CardTitle>
+                            <CardTitle className="text-3xl text-primary">Project Overview</CardTitle>
+                             <CardDescription>High-level view of the current job.</CardDescription>
                         </CardHeader>
                         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg">
                             <div className="space-y-2">
-                                <label className="font-bold text-gray-700 uppercase">PROJECT NAME:</label>
-                                <Input value={projectName} onChange={(e) => setProjectName(e.target.value)} />
+                                <label className="font-bold text-muted-foreground text-sm uppercase">PROJECT NAME:</label>
+                                <Input className="text-lg" value={projectName} onChange={(e) => setProjectName(e.target.value)} />
                             </div>
                             <div className="space-y-2">
-                                <label className="font-bold text-gray-700 uppercase">CLIENT CONTACT:</label>
-                                <Input value={clientContact} onChange={(e) => setClientContact(e.target.value)} />
+                                <label className="font-bold text-muted-foreground text-sm uppercase">CLIENT CONTACT:</label>
+                                <Input className="text-lg" value={clientContact} onChange={(e) => setClientContact(e.target.value)} />
                             </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
 
                 <TabsContent value="tracking" className="mt-6">
-                     <Card className="bg-white/90 backdrop-blur-sm">
+                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-3xl text-green-800">PROJECT TRACKING 📝</CardTitle>
-                            <CardDescription>Log daily progress and important notes.</CardDescription>
+                            <CardTitle className="text-3xl text-primary">Project Tracking</CardTitle>
+                            <CardDescription>Log daily progress and important notes for the current project.</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="mb-8">
-                                <h3 className="text-xl font-bold text-green-700 mb-2 uppercase">DAILY PROGRESS LOG</h3>
+                            <div className="mb-4">
                                 <div className="flex gap-2 mb-3">
                                     <Input
                                         value={newProgressEntry}
                                         onChange={(e) => setNewProgressEntry(e.target.value)}
-                                        placeholder="Add new daily progress entry..."
+                                        placeholder="Log today's progress (e.g., 'Finished tear-off, started underlayment')."
                                         onKeyPress={(e) => e.key === 'Enter' && addDailyProgressEntry()}
                                     />
-                                    <Button onClick={addDailyProgressEntry} className="bg-green-600 hover:bg-green-700">ADD</Button>
+                                    <Button onClick={addDailyProgressEntry}>Add Log</Button>
                                 </div>
-                                <div className="bg-green-50 p-4 rounded-lg border border-green-200 max-h-60 overflow-y-auto space-y-2">
+                                <div className="bg-secondary/30 p-4 rounded-lg border max-h-60 overflow-y-auto space-y-3">
                                     {dailyProgressLog.length > 0 ? (
                                         dailyProgressLog.map(entry => (
-                                            <p key={entry.id} className="text-sm text-gray-800">
-                                                <span className="font-bold">{entry.timestamp.toLocaleDateString()}:</span> {entry.text}
-                                            </p>
+                                            <div key={entry.id} className="text-sm text-foreground flex items-start">
+                                                <span className="font-semibold text-muted-foreground w-28 shrink-0">{entry.timestamp.toLocaleDateString()}:</span> 
+                                                <p>{entry.text}</p>
+                                            </div>
                                         ))
                                     ) : (
-                                        <p className="text-gray-500">No daily progress logged yet.</p>
+                                        <p className="text-muted-foreground text-center py-4">No daily progress logged yet.</p>
                                     )}
                                 </div>
                             </div>
@@ -140,73 +142,23 @@ export function BossQuartersDashboard() {
                 </TabsContent>
                 
                 <TabsContent value="quotes" className="mt-6">
-                    <Card className="bg-white/90 backdrop-blur-sm">
-                        <CardHeader>
-                             <CardTitle className="text-3xl text-blue-800">QUOTE MANAGEMENT 💰</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <Card className="bg-blue-50 border-blue-200">
-                                <CardHeader>
-                                    <CardTitle className="text-2xl text-blue-700">CREATE NEW QUOTE</CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <Input type="text" placeholder="Client Name" />
-                                        <Input type="email" placeholder="Client Email" />
-                                        <Input type="text" placeholder="Project Type" />
-                                        <Input type="number" placeholder="Estimated Cost" />
-                                    </div>
-                                    <Textarea placeholder="Project Description..." rows={4} />
-                                    <Button className="bg-blue-600 hover:bg-blue-700">GENERATE QUOTE</Button>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="text-2xl text-gray-700">RECENT QUOTES</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p className="text-gray-600">No quotes created yet.</p>
-                                </CardContent>
-                            </Card>
-                        </CardContent>
-                    </Card>
+                    <QuoteGenerator />
                 </TabsContent>
 
                 <TabsContent value="invoices" className="mt-6">
-                    <Card className="bg-white/90 backdrop-blur-sm">
+                    <Card>
                         <CardHeader>
-                             <CardTitle className="text-3xl text-purple-800">INVOICE MANAGEMENT 📋</CardTitle>
+                             <CardTitle className="text-3xl text-primary">Invoice Management</CardTitle>
+                             <CardDescription>Create and track client invoices.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                            <Card className="bg-purple-50 border-purple-200">
-                                <CardHeader>
-                                    <CardTitle className="text-2xl text-purple-700">CREATE NEW INVOICE</CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <Input type="text" placeholder="Invoice Number" />
-                                        <Input type="date" placeholder="Due Date" />
-                                        <Input type="text" placeholder="Client Name" />
-                                        <Input type="number" placeholder="Total Amount" />
-                                    </div>
-                                    <Textarea placeholder="Invoice Items & Details..." rows={4} />
-                                    <Button className="bg-purple-600 hover:bg-purple-700">GENERATE INVOICE</Button>
-                                </CardContent>
-                            </Card>
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="text-2xl text-gray-700">PENDING INVOICES</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p className="text-gray-600">No pending invoices.</p>
-                                </CardContent>
-                            </Card>
+                           <p className="text-muted-foreground text-center py-12">Invoice management coming soon.</p>
                         </CardContent>
                     </Card>
                 </TabsContent>
             </Tabs>
 
-            <footer className="mt-12 text-center text-green-200 text-sm">
+            <footer className="mt-12 text-center text-muted-foreground text-sm">
                 <p>PAUL'S ROOFING BOSS QUARTERS | SECURE ADMINISTRATIVE ACCESS</p>
             </footer>
         </div>

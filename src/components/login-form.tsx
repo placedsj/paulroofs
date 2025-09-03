@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 const BOSS_PASSWORD = "paul2025";
 
@@ -18,32 +19,36 @@ export function LoginForm() {
     e.preventDefault();
     setIsLoading(true);
 
-    if (password === BOSS_PASSWORD) {
-      toast({
-        title: "Success!",
-        description: "Access granted. Welcome, Boss!",
-      });
-      try {
-        sessionStorage.setItem('isAuthenticated', 'true');
-        router.push('/boss-quarters');
-      } catch (error) {
-        console.error("Session storage is not available.");
-        // Fallback for environments where sessionStorage is disabled/unavailable
-         toast({
-          variant: "destructive",
-          title: "Login Error",
-          description: "Could not save session. Please enable cookies/session storage.",
-        });
-      }
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Access Denied",
-        description: "Incorrect password.",
-      });
-      setIsLoading(false);
-      setPassword('');
-    }
+    // Simulate network delay
+    setTimeout(() => {
+        if (password === BOSS_PASSWORD) {
+          toast({
+            title: "Success!",
+            description: "Access granted. Welcome, Boss!",
+            className: "bg-primary text-primary-foreground",
+          });
+          try {
+            sessionStorage.setItem('isAuthenticated', 'true');
+            router.push('/boss-quarters');
+          } catch (error) {
+            console.error("Session storage is not available.");
+             toast({
+              variant: "destructive",
+              title: "Login Error",
+              description: "Could not save session. Please enable cookies/session storage.",
+            });
+            setIsLoading(false);
+          }
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Access Denied",
+            description: "Incorrect password. Please try again.",
+          });
+          setIsLoading(false);
+          setPassword('');
+        }
+    }, 1000);
   };
 
   return (
@@ -57,6 +62,7 @@ export function LoginForm() {
         autoFocus
       />
       <Button type="submit" className="w-full font-bold" disabled={isLoading}>
+        {isLoading && <Loader2 className="animate-spin" />}
         {isLoading ? 'ACCESSING...' : 'ACCESS'}
       </Button>
     </form>
