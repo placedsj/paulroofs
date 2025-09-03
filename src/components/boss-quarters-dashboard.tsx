@@ -110,7 +110,7 @@ export function BossQuartersDashboard() {
                 <TabsContent value="tracking" className="mt-6">
                      <Card>
                         <CardHeader>
-                            <CardTitle className="text-3xl text-primary">Project Tracking</CardTitle>
+                            <CardTitle className="text-3xl text-primary">Daily Project Log</CardTitle>
                             <CardDescription>Log daily progress and important notes for the current project.</CardDescription>
                         </CardHeader>
                         <CardContent>
