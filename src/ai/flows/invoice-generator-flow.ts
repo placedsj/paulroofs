@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -17,7 +18,7 @@ const LineItemSchema = z.object({
     total: z.number().describe('Total cost for the line item (quantity * unitCost).')
 });
 
-export const GenerateInvoiceInputSchema = z.object({
+const GenerateInvoiceInputSchema = z.object({
   clientName: z.string().describe('The name of the client.'),
   clientAddress: z.string().describe('The address where the work was completed.'),
   workDescription: z.string().describe('A brief summary of the work completed.'),

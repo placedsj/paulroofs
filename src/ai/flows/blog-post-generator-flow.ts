@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -10,7 +11,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-export const GenerateBlogPostInputSchema = z.object({
+const GenerateBlogPostInputSchema = z.object({
   topic: z.string().describe('The main topic of the blog post (e.g., "Benefits of Metal Roofing in Winter").'),
   keywords: z.array(z.string()).describe('A list of SEO keywords to include in the post (e.g., "Quispamsis roofing", "metal roof").'),
 });

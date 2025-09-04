@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -11,7 +12,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-export const GeneratePromotionInputSchema = z.object({
+const GeneratePromotionInputSchema = z.object({
   roofType: z.string().describe('The type of roofing material used (e.g., "Standing Seam Metal", "Asphalt Shingles").'),
   roofColor: z.string().describe('The color of the new roof (e.g., "Charcoal Grey", "Driftwood").'),
   location: z.string().describe('The general location of the project (e.g., "in Rothesay", "near Quispamsis").'),
