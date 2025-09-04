@@ -7,12 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { LogOut, Palette, Edit, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Notebook, Wand2 } from 'lucide-react';
+import { LogOut, Palette, Edit, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Notebook, Wand2, Home } from 'lucide-react';
 import { QuoteGenerator } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
 import { ProjectPromoter } from './project-promoter';
 import { BlogPostGenerator } from './blog-post-generator';
+import { HomeStoryGenerator } from './home-story-generator';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 
 type DailyLogEntry = {
@@ -21,7 +22,7 @@ type DailyLogEntry = {
     timestamp: Date;
 };
 
-type View = 'overview' | 'tracking' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog';
+type View = 'overview' | 'tracking' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
 
 export function BossQuartersDashboard() {
   const router = useRouter();
@@ -132,6 +133,7 @@ export function BossQuartersDashboard() {
         case 'invoices': return <InvoiceGenerator />;
         case 'promoter': return <ProjectPromoter />;
         case 'blog': return <BlogPostGenerator />;
+        case 'storyteller': return <HomeStoryGenerator />;
         default: return null;
     }
   }
@@ -155,6 +157,9 @@ export function BossQuartersDashboard() {
                         </SidebarMenu>
                         <p className="p-4 text-xs text-muted-foreground font-semibold uppercase">AI Tools</p>
                          <SidebarMenu>
+                             <SidebarMenuItem>
+                                <SidebarMenuButton onClick={() => setActiveView('storyteller')} isActive={activeView === 'storyteller'}><Home/> Homestead Storyteller</SidebarMenuButton>
+                            </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('quotes')} isActive={activeView === 'quotes'}><FileText/> Quote Generator</SidebarMenuButton>
                             </SidebarMenuItem>
@@ -162,7 +167,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Wand2/> Color Coordinator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={active_view === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('promoter')} isActive={activeView === 'promoter'}><Megaphone/> Project Promoter</SidebarMenuButton>
