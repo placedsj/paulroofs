@@ -28,11 +28,11 @@ export default function BlogPage() {
             <Card className="mb-12 overflow-hidden md:grid md:grid-cols-2 md:items-center">
                 <div className="relative h-64 md:h-full min-h-[300px]">
                     <Image
-                      src={`https://picsum.photos/800/600?random=${latestPost.slug}`}
+                      src="/blog-hero-1.jpg"
                       alt={latestPost.title}
                       fill
                       className="object-cover"
-                      data-ai-hint="roofing texture"
+                      data-ai-hint="wood shingle roof"
                       priority
                     />
                      <div className="absolute inset-0 bg-gradient-to-r from-background/70 to-transparent" />
