@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Siren, Check } from 'lucide-react';
@@ -18,12 +19,12 @@ export default function Home() {
       <main className="flex-1">
         <section id="home" className="relative h-screen min-h-[600px] w-full">
           <Image
-            src="https://picsum.photos/1920/1080"
-            alt="A beautiful metal roof on a modern house"
+            src="/hero-emergency.jpg"
+            alt="Man on a ladder catching water from a leaky ceiling during a storm, highlighting emergency roofing services."
             fill
             priority
             className="object-cover"
-            data-ai-hint="metal roof house"
+            data-ai-hint="leaky roof emergency"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/50 to-transparent" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-primary-foreground px-4">
