@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -7,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { ColorChart, type ColorOption } from '@/components/color-chart';
 import { HouseVisualizer } from '@/components/house-visualizer';
-import { Check } from 'lucide-react';
+import { Check, Wrench, Building, Droplets } from 'lucide-react';
 
 const metalColors: ColorOption[] = [
     { name: 'Charcoal', color: '#3A3B3D', code: 'DE-01' },
@@ -94,20 +95,23 @@ export function ServicesSection() {
 
                     <TabsContent value="other" className="mt-8">
                         <div className="grid md:grid-cols-3 gap-8">
-                            <OtherServiceCard 
+                             <OtherServiceCard 
+                                icon={<Wrench className="h-8 w-8 text-primary" />}
                                 title="ROOF REPAIRS" 
                                 description="Emergency repairs and maintenance for all roofing types. Available 24/7 for urgent situations."
                                 items={["Leak Detection & Repair", "Storm Damage Assessment", "Gutter Repair & Cleaning", "Emergency Tarping"]}
                             />
                             <OtherServiceCard 
-                                title="SIDING INSTALLATION" 
-                                description="Complete exterior renovations with Hardie Board and premium materials."
+                                icon={<Building className="h-8 w-8 text-primary" />}
+                                title="SIDING & EXTERIORS" 
+                                description="Complete exterior renovations with Hardie Board and other premium materials."
                                 items={["Hardie Board Siding", "Vinyl Siding", "Wood Siding", "Trim & Soffit Work"]}
                             />
                             <OtherServiceCard 
+                                icon={<Droplets className="h-8 w-8 text-primary" />}
                                 title="GUTTERS & EAVESTROUGH" 
-                                description="Complete gutter systems to protect your foundation and landscaping."
-                                items={["Seamless Gutters", "Gutter Guards", "Downspout Installation", "Gutter Maintenance"]}
+                                description="Expert installation of seamless gutter systems to protect your foundation and landscaping."
+                                items={["Seamless Gutter Systems", "Gutter Guard Installation", "Downspout Repair & Install", "Soffit & Fascia Vents"]}
                             />
                         </div>
                     </TabsContent>
@@ -156,19 +160,20 @@ function ServiceInfoCard({ title, description, benefits }: { title: string, desc
 }
 
 
-function OtherServiceCard({ title, description, items }: { title: string, description: string, items: string[] }) {
+function OtherServiceCard({ icon, title, description, items }: { icon: React.ReactNode, title: string, description: string, items: string[] }) {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>{title}</CardTitle>
+        <Card className="flex flex-col">
+            <CardHeader className="items-center text-center">
+                {icon}
+                <CardTitle className="mt-4">{title}</CardTitle>
                 <CardDescription>{description}</CardDescription>
             </CardHeader>
-            <CardContent>
-                <ul className="space-y-2">
+            <CardContent className="flex-grow">
+                <ul className="space-y-3">
                     {items.map(item => (
                         <li key={item} className="flex items-start">
-                            <Check className="h-4 w-4 text-primary mr-2 mt-1 shrink-0" />
-                            <span className="text-muted-foreground">{item}</span>
+                            <Check className="h-4 w-4 text-primary/80 mr-2 mt-1 shrink-0" />
+                            <span className="text-muted-foreground text-sm">{item}</span>
                         </li>
                     ))}
                 </ul>
