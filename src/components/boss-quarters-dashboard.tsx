@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { LogOut, Palette, Edit, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, NotebookText, Wand2, Home, Sparkles, Loader2 } from 'lucide-react';
+import { LogOut, Palette, Edit, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, NotebookText, Wand2, Home, Sparkles, Loader2, Users } from 'lucide-react';
 import { QuoteGenerator } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
@@ -17,6 +17,7 @@ import { HomeStoryGenerator } from './home-story-generator';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 import { refineLogEntry } from '@/ai/flows/log-refiner-flow';
 import { useToast } from '@/hooks/use-toast';
+import { ColorCoordinatorTool } from './color-coordinator-tool';
 
 type DailyLogEntry = {
     id: string;
@@ -165,7 +166,7 @@ export function BossQuartersDashboard() {
                 </Card>
             );
         case 'quotes': return <QuoteGenerator />;
-        case 'coordinator': return <ColorCoordinator />;
+        case 'coordinator': return <ColorCoordinatorTool />;
         case 'invoices': return <InvoiceGenerator />;
         case 'promoter': return <ProjectPromoter />;
         case 'blog': return <BlogPostGenerator />;
@@ -200,7 +201,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('quotes')} isActive={activeView === 'quotes'}><FileText/> Quote Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Wand2/> Color Coordinator</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
