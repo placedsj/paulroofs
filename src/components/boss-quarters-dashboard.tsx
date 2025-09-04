@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
@@ -24,7 +23,7 @@ type DailyLogEntry = {
     timestamp: Date;
 };
 
-type View = 'overview' | 'tracking' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
+type View = 'overview' | 'tracking' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller' | 'color-coordinator';
 
 export function BossQuartersDashboard() {
   const router = useRouter();
@@ -165,7 +164,7 @@ export function BossQuartersDashboard() {
                 </Card>
             );
         case 'quotes': return <QuoteGenerator />;
-        case 'coordinator': return <ColorCoordinator />;
+        case 'color-coordinator': return <ColorCoordinator />;
         case 'invoices': return <InvoiceGenerator />;
         case 'promoter': return <ProjectPromoter />;
         case 'blog': return <BlogPostGenerator />;
@@ -200,7 +199,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('quotes')} isActive={activeView === 'quotes'}><FileText/> Quote Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('color-coordinator')} isActive={activeView === 'color-coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>

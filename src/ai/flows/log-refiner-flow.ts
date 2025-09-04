@@ -11,7 +11,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-export const RefineLogEntryInputSchema = z.object({
+const RefineLogEntryInputSchema = z.object({
   rawNotes: z.string().describe('The rough, unedited notes for a daily project log entry.'),
 });
 export type RefineLogEntryInput = z.infer<typeof RefineLogEntryInputSchema>;
