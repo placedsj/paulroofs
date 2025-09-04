@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, WandSparkles } from "lucide-react";
 
 export function Header() {
   const navLinks = [
@@ -33,8 +33,8 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-             <Button asChild variant="outline" size="sm">
-                <Link href="/recommendations">AI Recommender</Link>
+             <Button asChild variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+                <Link href="/visualizer"><WandSparkles className="mr-2 h-4 w-4" /> AI Visualizer</Link>
             </Button>
             <Button asChild size="sm">
                 <Link href="/login">BOSS QUARTERS</Link>
@@ -60,8 +60,8 @@ export function Header() {
                     </Link>
                   ))}
                   <div className="border-t pt-4 space-y-2">
-                    <Button asChild variant="outline" className="w-full">
-                        <Link href="/recommendations">AI Recommender</Link>
+                    <Button asChild variant="outline" className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+                        <Link href="/visualizer"><WandSparkles className="mr-2 h-4 w-4" />AI Visualizer</Link>
                     </Button>
                     <Button asChild className="w-full">
                         <Link href="/login">BOSS QUARTERS</Link>
