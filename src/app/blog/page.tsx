@@ -1,4 +1,5 @@
 
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { posts } from '@/lib/posts';
@@ -17,6 +18,7 @@ export default function BlogPage() {
       '/blog-hero-1.jpg',
       '/blog-hero-2.jpg',
       '/blog-hero-3.jpg',
+      '/blog-hero-4.jpg',
   ]
 
   return (
