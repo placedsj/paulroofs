@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 const testimonials = [
   {
@@ -24,24 +24,24 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="py-20 bg-secondary/20">
+    <section id="testimonials" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">WHAT OUR CLIENTS SAY</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="flex flex-col">
-              <CardContent className="pt-6 flex-grow">
-                <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
-              </CardContent>
-              <div className="p-6 pt-0 mt-4 flex items-center">
-                <Avatar className="h-12 w-12 mr-4">
-                  <AvatarFallback className="bg-primary text-primary-foreground font-bold">{testimonial.avatar}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-bold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+            <Card key={index} className="flex flex-col bg-secondary/30">
+              <CardContent className="pt-6 flex-grow flex flex-col">
+                <p className="text-muted-foreground italic flex-grow">"{testimonial.quote}"</p>
+                <div className="mt-6 flex items-center">
+                  <Avatar className="h-12 w-12 mr-4">
+                    <AvatarFallback className="bg-primary text-primary-foreground font-bold">{testimonial.avatar}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-bold text-foreground">{testimonial.name}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                  </div>
                 </div>
-              </div>
+              </CardContent>
             </Card>
           ))}
         </div>
