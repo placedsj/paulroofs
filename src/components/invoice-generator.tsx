@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { generateInvoice, GenerateInvoiceInput, GenerateInvoiceOutput } from '@/ai/flows/invoice-generator-flow';
+import { generateInvoice, GenerateInvoiceOutput } from '@/ai/flows/invoice-generator-flow';
 import { generateQuote, type GenerateQuoteOutput } from '@/ai/flows/quote-generator-flow';
 
 import { Button } from '@/components/ui/button';
@@ -83,4 +83,3 @@ export function InvoiceGenerator() {
         </Card>
     );
 }
-
