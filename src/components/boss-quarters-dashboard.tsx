@@ -116,7 +116,7 @@ export function BossQuartersDashboard() {
                                 {dailyProgressLog.length > 0 ? (
                                     dailyProgressLog.map(entry => (
                                         <div key={entry.id} className="text-sm text-foreground flex items-start">
-                                            <span className="font-semibold text-muted-foreground w-32 shrink-0">{entry.timestamp.toLocaleString()}:</span> 
+                                            <span className="font-semibold text-muted-foreground w-40 shrink-0">{entry.timestamp.toLocaleString()}:</span> 
                                             <p>{entry.text}</p>
                                         </div>
                                     ))
@@ -167,7 +167,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Wand2/> Color Coordinator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={active_view === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('promoter')} isActive={activeView === 'promoter'}><Megaphone/> Project Promoter</SidebarMenuButton>
