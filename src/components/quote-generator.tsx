@@ -1,10 +1,12 @@
+
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { generateQuote, type GenerateQuoteOutput } from '@/ai/flows/quote-generator-flow';
+import { type Client } from './client-manager';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -15,6 +17,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from '@/components/ui/table';
 import { Loader2, FileText } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   clientName: z.string().min(2, "Client name is required."),
@@ -26,10 +29,15 @@ const formSchema = z.object({
 
 type QuoteFormValues = z.infer<typeof formSchema>;
 
-export function QuoteGenerator() {
+type QuoteGeneratorProps = {
+    client: Client | null;
+};
+
+export function QuoteGenerator({ client }: QuoteGeneratorProps) {
   const [quote, setQuote] = useState<GenerateQuoteOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(formSchema),
@@ -41,6 +49,21 @@ export function QuoteGenerator() {
       specialRequests: "",
     },
   });
+
+  useEffect(() => {
+    if (client) {
+      form.reset({
+        ...form.getValues(),
+        clientName: client.name,
+        clientAddress: client.address,
+      });
+      toast({
+        title: `New Quote for ${client.name}`,
+        description: "Client details have been pre-filled. Please confirm roof size and type.",
+      });
+    }
+  }, [client, form, toast]);
+
 
   async function onSubmit(values: QuoteFormValues) {
     setIsLoading(true);
@@ -67,7 +90,10 @@ export function QuoteGenerator() {
       <Card>
         <CardHeader>
           <CardTitle className="text-3xl text-primary">AI Quote Generator</CardTitle>
-          <CardDescription>Fill in the project details to generate a professional quote instantly.</CardDescription>
+          <CardDescription>
+            Fill in the project details to generate a professional quote instantly.
+            {client && <span className="block mt-1 font-semibold text-primary">Working on: {client.name}</span>}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>

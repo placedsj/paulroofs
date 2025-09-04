@@ -1,11 +1,12 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { generateHomeStory, GenerateHomeStoryOutput, GenerateHomeStoryInput } from "@/ai/flows/home-story-generator-flow";
+import { generateHomeStory, GenerateHomeStoryOutput } from "@/ai/flows/home-story-generator-flow";
+import { type Client } from './client-manager';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -24,7 +25,11 @@ const formSchema = z.object({
 
 type StoryFormValues = z.infer<typeof formSchema>;
 
-export function HomeStoryGenerator() {
+type HomeStoryGeneratorProps = {
+    client: Client | null;
+};
+
+export function HomeStoryGenerator({ client }: HomeStoryGeneratorProps) {
   const [story, setStory] = useState<GenerateHomeStoryOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +42,16 @@ export function HomeStoryGenerator() {
       roofType: 'a beautiful new metal roof',
     },
   });
+
+   useEffect(() => {
+    if (client) {
+      toast({
+        title: `Story for ${client.name}`,
+        description: "Upload a photo of their house to get started.",
+      });
+    }
+  }, [client, toast]);
+
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -96,6 +111,7 @@ export function HomeStoryGenerator() {
         </CardTitle>
         <CardDescription>
             Upload a photo of a client's house to generate a magical, heartwarming story. A unique gift that builds connection.
+            {client && <span className="block mt-1 font-semibold text-primary">Working on: {client.name}</span>}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -183,7 +199,7 @@ export function HomeStoryGenerator() {
                 {story && (
                     <Card className="bg-secondary/30 flex-grow">
                         <CardHeader>
-                            <CardTitle>A Story for the Homeowner</CardTitle>
+                            <CardTitle>A Story for {client ? client.name : 'the Homeowner'}</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                            <div className="bg-background/50 p-4 rounded-lg whitespace-pre-wrap text-sm text-foreground max-h-96 overflow-y-auto">

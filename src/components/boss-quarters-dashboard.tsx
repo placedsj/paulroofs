@@ -13,6 +13,7 @@ import { BlogPostGenerator } from './blog-post-generator';
 import { HomeStoryGenerator } from './home-story-generator';
 import { ClientManager } from './client-manager';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
+import type { Client } from './client-manager';
 
 type View = 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
 
@@ -20,6 +21,7 @@ export function BossQuartersDashboard() {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
   const [activeView, setActiveView] = useState<View>('clients');
+  const [contextualClient, setContextualClient] = useState<Client | null>(null);
   
   useEffect(() => {
     setIsMounted(true);
@@ -42,6 +44,11 @@ export function BossQuartersDashboard() {
     router.push('/');
   };
 
+  const handleClientAction = (client: Client, view: View) => {
+    setContextualClient(client);
+    setActiveView(view);
+  };
+
   if (!isMounted) {
     return (
         <div className="flex min-h-screen items-center justify-center bg-background">
@@ -52,14 +59,14 @@ export function BossQuartersDashboard() {
 
   const renderContent = () => {
     switch (activeView) {
-        case 'clients': return <ClientManager />;
-        case 'quotes': return <QuoteGenerator />;
+        case 'clients': return <ClientManager onClientAction={handleClientAction} />;
+        case 'quotes': return <QuoteGenerator client={contextualClient} />;
         case 'coordinator': return <ColorCoordinator />;
-        case 'invoices': return <InvoiceGenerator />;
-        case 'promoter': return <ProjectPromoter />;
+        case 'invoices': return <InvoiceGenerator client={contextualClient} />;
+        case 'promoter': return <ProjectPromoter client={contextualClient} />;
         case 'blog': return <BlogPostGenerator />;
-        case 'storyteller': return <HomeStoryGenerator />;
-        default: return null;
+        case 'storyteller': return <HomeStoryGenerator client={contextualClient} />;
+        default: return <ClientManager onClientAction={handleClientAction} />;
     }
   }
 
@@ -92,7 +99,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('promoter')} isActive={activeView === 'promoter'}><Megaphone/> Project Promoter</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('promoter')} isActive={active_view === 'promoter'}><Megaphone/> Project Promoter</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('blog')} isActive={activeView === 'blog'}><PenSquare/> Blog Writer</SidebarMenuButton>

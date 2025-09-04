@@ -1,11 +1,12 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { generateInvoice, type GenerateInvoiceOutput, type GenerateInvoiceInput } from '@/ai/flows/invoice-generator-flow';
+import { type Client } from './client-manager';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -15,6 +16,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from '@/components/ui/table';
 import { Loader2, FileSignature, FileText, Trash2, PlusCircle, Printer } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
+
 
 const lineItemSchema = z.object({
   item: z.string().min(1, 'Item description is required.'),
@@ -37,10 +40,15 @@ const invoiceFormSchema = z.object({
 type InvoiceFormValues = z.infer<typeof invoiceFormSchema>;
 type LineItem = z.infer<typeof lineItemSchema>;
 
-export function InvoiceGenerator() {
+type InvoiceGeneratorProps = {
+    client: Client | null;
+};
+
+export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
   const [invoice, setInvoice] = useState<GenerateInvoiceOutput & { input: GenerateInvoiceInput } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const form = useForm<InvoiceFormValues>({
     resolver: zodResolver(invoiceFormSchema),
@@ -56,6 +64,23 @@ export function InvoiceGenerator() {
     },
   });
 
+  useEffect(() => {
+    if (client) {
+      form.reset({
+        clientName: client.name,
+        clientAddress: client.address,
+        workDescription: `Complete roof replacement for the property at ${client.address}.`,
+        lineItems: [{ item: 'Standing Seam Metal Roofing Panels', quantity: 1500, unitCost: 9, total: 13500 }],
+        quoteId: `Q-2024-` // Example, you might have this stored on the client object
+      });
+      toast({
+        title: `New Invoice for ${client.name}`,
+        description: "Client details have been pre-filled. Please add line items and details.",
+      });
+    }
+  }, [client, form, toast]);
+
+
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "lineItems"
@@ -63,13 +88,15 @@ export function InvoiceGenerator() {
 
   const watchLineItems = form.watch("lineItems");
 
-  const calculateTotals = () => {
+  const calculateTotals = useCallback(() => {
     let subtotal = 0;
-    watchLineItems.forEach((item, index) => {
+    form.getValues('lineItems').forEach((item, index) => {
         const quantity = Number(item.quantity) || 0;
         const unitCost = Number(item.unitCost) || 0;
         const total = quantity * unitCost;
-        form.setValue(`lineItems.${index}.total`, total);
+        if (form.getValues(`lineItems.${index}.total`) !== total) {
+             form.setValue(`lineItems.${index}.total`, total);
+        }
         subtotal += total;
     });
     const tax = subtotal * 0.15;
@@ -78,12 +105,20 @@ export function InvoiceGenerator() {
     form.setValue("subtotal", subtotal);
     form.setValue("tax", tax);
     form.setValue("total", total);
-  };
+  }, [form]);
   
-  // Recalculate totals whenever line items change
-  React.useEffect(() => {
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      if (name && name.startsWith('lineItems')) {
+        calculateTotals();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form, calculateTotals]);
+  
+  useEffect(() => {
     calculateTotals();
-  }, [watchLineItems]);
+  }, [fields, calculateTotals]);
 
 
   async function onSubmit(values: InvoiceFormValues) {
@@ -104,7 +139,7 @@ export function InvoiceGenerator() {
     try {
       const result = await generateInvoice(inputForAI);
       setInvoice({ ...result, input: inputForAI });
-      form.reset();
+      // form.reset(); // Don't reset so user can see what they submitted
     } catch (e) {
       console.error(e);
       setError("An error occurred while generating the invoice. The model may be unavailable. Please try again later.");
@@ -129,7 +164,10 @@ export function InvoiceGenerator() {
           <CardTitle className="text-3xl text-primary flex items-center gap-2">
             <FileSignature /> AI Invoice Generator
           </CardTitle>
-          <CardDescription>Create professional invoices from completed projects. The AI will generate invoice dates and notes.</CardDescription>
+          <CardDescription>
+            Create professional invoices from completed projects. The AI will generate invoice dates and notes.
+            {client && <span className="block mt-1 font-semibold text-primary">Working on: {client.name}</span>}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -289,5 +327,3 @@ export function InvoiceGenerator() {
     </div>
   );
 }
-
-    

@@ -1,11 +1,12 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { generatePromotion, type GeneratePromotionOutput, type GeneratePromotionInput } from "@/ai/flows/project-promoter-flow";
+import { generatePromotion, type GeneratePromotionOutput } from "@/ai/flows/project-promoter-flow";
+import { type Client } from './client-manager';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -26,7 +27,11 @@ const formSchema = z.object({
 
 type PromotionFormValues = z.infer<typeof formSchema>;
 
-export function ProjectPromoter() {
+type ProjectPromoterProps = {
+    client: Client | null;
+};
+
+export function ProjectPromoter({ client }: ProjectPromoterProps) {
   const [promotion, setPromotion] = useState<GeneratePromotionOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,12 +47,27 @@ export function ProjectPromoter() {
     },
   });
 
+  useEffect(() => {
+    if (client) {
+      form.reset({
+        ...form.getValues(),
+        location: client.address.split(',')[1] || client.address.split(',')[0] || 'Southern New Brunswick',
+        keyDetail: `Another fantastic project completed for the owners of the ${client.name}!`,
+      });
+       toast({
+        title: `Promote project for ${client.name}`,
+        description: "Client details have been pre-filled. Adjust as needed and generate a post!",
+      });
+    }
+  }, [client, form, toast]);
+
+
   async function onSubmit(values: PromotionFormValues) {
     setIsLoading(true);
     setError(null);
     setPromotion(null);
     try {
-      const result = await generatePromotion(values as GeneratePromotionInput);
+      const result = await generatePromotion(values);
       setPromotion(result);
     } catch (e) {
       console.error(e);
@@ -75,6 +95,7 @@ export function ProjectPromoter() {
         </CardTitle>
         <CardDescription>
             Generate an engaging social media post for a completed project. Just fill in the details and let the AI do the writing!
+            {client && <span className="block mt-1 font-semibold text-primary">Working on: {client.name}</span>}
         </CardDescription>
       </CardHeader>
       <CardContent>

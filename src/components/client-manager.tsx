@@ -17,7 +17,7 @@ type DailyLogEntry = {
     timestamp: Date;
 };
 
-type Client = {
+export type Client = {
     id: string;
     name: string;
     contact: string;
@@ -25,7 +25,12 @@ type Client = {
     log: DailyLogEntry[];
 };
 
-export function ClientManager() {
+type ClientManagerProps = {
+    onClientAction: (client: Client, view: 'quotes' | 'invoices' | 'storyteller' | 'promoter') => void;
+};
+
+
+export function ClientManager({ onClientAction }: ClientManagerProps) {
   const [clients, setClients] = useState<Client[]>([
       { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [] }
   ]);
@@ -154,10 +159,10 @@ export function ClientManager() {
                             <CardDescription>{selectedClient.contact} | {selectedClient.address}</CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-wrap gap-2">
-                             <Button variant="outline"><FileText className="mr-2" /> New Quote</Button>
-                             <Button variant="outline"><FileSignature className="mr-2" /> New Invoice</Button>
-                             <Button variant="outline"><Home className="mr-2" /> Create Story</Button>
-                             <Button variant="outline"><Megaphone className="mr-2" /> Promote Project</Button>
+                             <Button variant="outline" onClick={() => onClientAction(selectedClient, 'quotes')}><FileText className="mr-2" /> New Quote</Button>
+                             <Button variant="outline" onClick={() => onClientAction(selectedClient, 'invoices')}><FileSignature className="mr-2" /> New Invoice</Button>
+                             <Button variant="outline" onClick={() => onClientAction(selectedClient, 'storyteller')}><Home className="mr-2" /> Create Story</Button>
+                             <Button variant="outline" onClick={() => onClientAction(selectedClient, 'promoter')}><Megaphone className="mr-2" /> Promote Project</Button>
                         </CardContent>
                     </Card>
                     <Card>
