@@ -17,7 +17,7 @@ export function GallerySection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold">OUR WORK</h2>
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
             A showcase of our quality craftsmanship and the beautiful, durable roofs we've installed across Southern New Brunswick.
           </p>
         </div>
