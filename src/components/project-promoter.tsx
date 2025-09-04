@@ -1,10 +1,11 @@
+
 "use client";
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { generatePromotion, GeneratePromotionOutput, GeneratePromotionInputSchema } from "@/ai/flows/project-promoter-flow";
+import { generatePromotion, type GeneratePromotionOutput, type GeneratePromotionInput } from "@/ai/flows/project-promoter-flow";
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -16,7 +17,14 @@ import { Loader2, Megaphone, Copy } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 
-type PromotionFormValues = z.infer<typeof GeneratePromotionInputSchema>;
+const formSchema = z.object({
+  roofType: z.string().min(1, "The type of roofing material used is required."),
+  roofColor: z.string().min(1, "The color of the new roof is required."),
+  location: z.string().min(1, "The general location of the project is required."),
+  keyDetail: z.string().optional(),
+});
+
+type PromotionFormValues = z.infer<typeof formSchema>;
 
 export function ProjectPromoter() {
   const [promotion, setPromotion] = useState<GeneratePromotionOutput | null>(null);
@@ -25,7 +33,7 @@ export function ProjectPromoter() {
   const { toast } = useToast();
 
   const form = useForm<PromotionFormValues>({
-    resolver: zodResolver(GeneratePromotionInputSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       roofType: 'Standing Seam Metal',
       roofColor: 'Charcoal Grey',
@@ -39,7 +47,7 @@ export function ProjectPromoter() {
     setError(null);
     setPromotion(null);
     try {
-      const result = await generatePromotion(values);
+      const result = await generatePromotion(values as GeneratePromotionInput);
       setPromotion(result);
     } catch (e) {
       console.error(e);

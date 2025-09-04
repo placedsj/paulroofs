@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { generateBlogPost, GenerateBlogPostOutput, GenerateBlogPostInputSchema } from "@/ai/flows/blog-post-generator-flow";
+import { generateBlogPost, type GenerateBlogPostOutput, type GenerateBlogPostInput } from "@/ai/flows/blog-post-generator-flow";
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -16,7 +16,12 @@ import { Loader2, PenSquare, Copy, FileText } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 
-type BlogFormValues = z.infer<typeof GenerateBlogPostInputSchema>;
+const formSchema = z.object({
+  topic: z.string().min(1, 'The main topic of the blog post (e.g., "Benefits of Metal Roofing in Winter").'),
+  keywords: z.array(z.string()).min(1, 'A list of SEO keywords to include in the post (e.g., "Quispamsis roofing", "metal roof").'),
+});
+
+type BlogFormValues = z.infer<typeof formSchema>;
 
 export function BlogPostGenerator() {
   const [blogPost, setBlogPost] = useState<GenerateBlogPostOutput | null>(null);
@@ -25,7 +30,7 @@ export function BlogPostGenerator() {
   const { toast } = useToast();
 
   const form = useForm<BlogFormValues>({
-    resolver: zodResolver(GenerateBlogPostInputSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       topic: 'Benefits of Metal Roofing in Winter',
       keywords: ['Quispamsis roofing', 'metal roof', 'winter'],
@@ -37,7 +42,7 @@ export function BlogPostGenerator() {
     setError(null);
     setBlogPost(null);
     try {
-      const result = await generateBlogPost(values);
+      const result = await generateBlogPost(values as GenerateBlogPostInput);
       setBlogPost(result);
     } catch (e) {
       console.error(e);
@@ -104,7 +109,7 @@ ${blogPost.conclusion}
                         )} />
                         <FormField control={form.control} name="keywords" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>SEO Keywords</FormLabel>
+                                <FormLabel>SEO Keywords (comma-separated)</FormLabel>
                                 <FormControl><Input placeholder="e.g., metal roof, rothesay" {...field} onChange={(e) => field.onChange(e.target.value.split(',').map(k => k.trim()))} /></FormControl>
                                 <FormMessage />
                             </FormItem>

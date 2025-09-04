@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { generateHomeStory, GenerateHomeStoryOutput } from "@/ai/flows/home-story-generator-flow";
+import { generateHomeStory, GenerateHomeStoryOutput, GenerateHomeStoryInput } from "@/ai/flows/home-story-generator-flow";
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
