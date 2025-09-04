@@ -19,6 +19,8 @@ export default function BlogPage() {
       '/blog-hero-2.jpg',
       '/blog-hero-3.jpg',
       '/blog-hero-4.jpg',
+      '/blog-hero-5.jpg',
+      '/blog-hero-6.jpg',
   ]
 
   return (
@@ -37,7 +39,7 @@ export default function BlogPage() {
             <Card className="mb-12 overflow-hidden md:grid md:grid-cols-2 md:items-center">
                 <div className="relative h-64 md:h-full min-h-[300px]">
                     <Image
-                      src="/blog-hero-1.jpg"
+                      src={postImages[0]}
                       alt={latestPost.title}
                       fill
                       className="object-cover"

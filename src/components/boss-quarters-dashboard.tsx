@@ -17,7 +17,6 @@ import { HomeStoryGenerator } from './home-story-generator';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 import { refineLogEntry } from '@/ai/flows/log-refiner-flow';
 import { useToast } from '@/hooks/use-toast';
-import { ColorCoordinatorTool } from './color-coordinator-tool';
 
 type DailyLogEntry = {
     id: string;
@@ -166,7 +165,7 @@ export function BossQuartersDashboard() {
                 </Card>
             );
         case 'quotes': return <QuoteGenerator />;
-        case 'coordinator': return <ColorCoordinatorTool />;
+        case 'coordinator': return <ColorCoordinator />;
         case 'invoices': return <InvoiceGenerator />;
         case 'promoter': return <ProjectPromoter />;
         case 'blog': return <BlogPostGenerator />;
