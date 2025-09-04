@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { posts } from '@/lib/posts';
@@ -11,6 +12,12 @@ import { ArrowRight } from 'lucide-react';
 export default function BlogPage() {
   const sortedPosts = [...posts].sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
   const [latestPost, ...otherPosts] = sortedPosts;
+
+  const postImages = [
+      '/blog-hero-1.jpg',
+      '/blog-hero-2.jpg',
+      '/blog-hero-3.jpg',
+  ]
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -54,12 +61,12 @@ export default function BlogPage() {
 
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {otherPosts.map((post) => (
+            {otherPosts.map((post, index) => (
               <Card key={post.slug} className="flex flex-col overflow-hidden group">
                 <Link href={`/blog/${post.slug}`} className="block">
                   <div className="relative h-56 w-full overflow-hidden">
                     <Image
-                      src={`https://picsum.photos/600/400?random=${post.slug}`}
+                      src={postImages[index+1] || `https://picsum.photos/600/400?random=${post.slug}`}
                       alt={post.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
