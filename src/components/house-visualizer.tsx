@@ -13,9 +13,9 @@ type HouseVisualizerProps = {
 };
 
 const houseStyles = [
-    { value: 'ranch', label: 'Ranch', image: 'https://picsum.photos/id/180/800/600', roofPath: 'M0,250 L400,100 L800,250 L800,310 L750,300 L50,220 L0,230 Z' },
-    { value: 'colonial', label: 'Colonial', image: 'https://picsum.photos/id/1062/800/600', roofPath: 'M15,220 L400,100 L785,220 L785,280 L400,160 L15,280 Z' },
-    { value: 'modern', label: 'Modern', image: 'https://picsum.photos/id/219/800/600', roofPath: 'M100,200 L500,150 L800,220 L800,280 L500,210 L100,260 Z' },
+    { value: 'ranch', label: 'Ranch', image: 'https://placehold.co/800x600/png?text=Ranch+Style+House', roofPath: 'M0,250 L400,100 L800,250 L800,310 L750,300 L50,220 L0,230 Z' },
+    { value: 'colonial', label: 'Colonial', image: 'https://placehold.co/800x600/png?text=Colonial+Style+House', roofPath: 'M15,220 L400,100 L785,220 L785,280 L400,160 L15,280 Z' },
+    { value: 'modern', label: 'Modern', image: 'https://placehold.co/800x600/png?text=Modern+Style+House', roofPath: 'M100,200 L500,150 L800,220 L800,280 L500,210 L100,260 Z' },
 ];
 
 

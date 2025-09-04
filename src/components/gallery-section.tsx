@@ -3,12 +3,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const galleryImages = [
-  { src: "https://picsum.photos/600/400?random=1", alt: "Modern home with a charcoal metal roof.", hint: "metal roof" },
-  { src: "https://picsum.photos/600/400?random=2", alt: "Close-up of a new standing seam metal roof.", hint: "metal roof" },
-  { src: "https://picsum.photos/600/400?random=3", alt: "Ranch style house with a new forest green metal roof.", hint: "green metal roof" },
-  { src: "https://picsum.photos/600/400?random=4", alt: "Two-story house with a brand new red metal roof.", hint: "red metal roof" },
-  { src: "https://picsum.photos/600/400?random=5", alt: "Detailed view of metal roof flashing and trim work.", hint: "metal roof" },
-  { src: "https://picsum.photos/600/400?random=6", alt: "Completed metal roofing project on a large luxury house.", hint: "metal roof house" },
+  { src: "https://placehold.co/600x400/png?text=Modern+home+with+a+charcoal+metal+roof", alt: "Modern home with a charcoal metal roof.", hint: "metal roof" },
+  { src: "https://placehold.co/600x400/png?text=Close-up+of+a+new+standing+seam+metal+roof", alt: "Close-up of a new standing seam metal roof.", hint: "metal roof" },
+  { src: "https://placehold.co/600x400/png?text=Ranch+style+house+with+a+new+forest+green+metal+roof", alt: "Ranch style house with a new forest green metal roof.", hint: "green metal roof" },
+  { src: "https://placehold.co/600x400/png?text=Two-story+house+with+a+brand+new+red+metal+roof", alt: "Two-story house with a brand new red metal roof.", hint: "red metal roof" },
+  { src: "https://placehold.co/600x400/png?text=Detailed+view+of+metal+roof+flashing+and+trim+work", alt: "Detailed view of metal roof flashing and trim work.", hint: "metal roof" },
+  { src: "https://placehold.co/600x400/png?text=Completed+metal+roofing+project+on+a+large+luxury+house", alt: "Completed metal roofing project on a large luxury house.", hint: "metal roof house" },
 ];
 
 export function GallerySection() {
