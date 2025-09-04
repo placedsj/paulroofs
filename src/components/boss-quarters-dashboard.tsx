@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { LogOut, Palette, Edit, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Notebook, Wand2, Home } from 'lucide-react';
+import { LogOut, Palette, Edit, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, NotebookText, Wand2, Home, Sparkles, Loader2 } from 'lucide-react';
 import { QuoteGenerator } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
@@ -15,6 +15,8 @@ import { ProjectPromoter } from './project-promoter';
 import { BlogPostGenerator } from './blog-post-generator';
 import { HomeStoryGenerator } from './home-story-generator';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
+import { refineLogEntry } from '@/ai/flows/log-refiner-flow';
+import { useToast } from '@/hooks/use-toast';
 
 type DailyLogEntry = {
     id: string;
@@ -32,6 +34,8 @@ export function BossQuartersDashboard() {
   const [clientContact, setClientContact] = useState("John Smith - (506) 555-0123");
   const [dailyProgressLog, setDailyProgressLog] = useState<DailyLogEntry[]>([]);
   const [newProgressEntry, setNewProgressEntry] = useState('');
+  const [isRefining, setIsRefining] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     setIsMounted(true);
@@ -64,6 +68,25 @@ export function BossQuartersDashboard() {
     setDailyProgressLog(prev => [newEntry, ...prev]);
     setNewProgressEntry('');
   }, [newProgressEntry]);
+
+  const handleRefineEntry = async () => {
+    if (newProgressEntry.trim() === '') return;
+    setIsRefining(true);
+    try {
+      const result = await refineLogEntry({ rawNotes: newProgressEntry });
+      setNewProgressEntry(result.refinedEntry);
+    } catch (e) {
+      console.error(e);
+      toast({
+        variant: 'destructive',
+        title: 'Refinement Failed',
+        description: 'The AI could not refine the notes. Please try again.',
+      });
+    } finally {
+      setIsRefining(false);
+    }
+  };
+
 
   if (!isMounted) {
     return (
@@ -98,18 +121,31 @@ export function BossQuartersDashboard() {
             return (
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-3xl text-primary">Daily Project Log</CardTitle>
-                        <CardDescription>Log daily progress and important notes for the current project.</CardDescription>
+                        <CardTitle className="text-3xl text-primary flex items-center gap-2"><NotebookText /> Daily Project Log</CardTitle>
+                        <CardDescription>Log daily progress and important notes for the current project. Use the AI refiner to clean up your notes.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="mb-4">
                             <div className="flex gap-2 mb-3">
-                                <Input
-                                    value={newProgressEntry}
-                                    onChange={(e) => setNewProgressEntry(e.target.value)}
-                                    placeholder="Log today's progress (e.g., 'Finished tear-off, started underlayment')."
-                                    onKeyPress={(e) => e.key === 'Enter' && addDailyProgressEntry()}
-                                />
+                                <div className="relative w-full">
+                                    <Input
+                                        value={newProgressEntry}
+                                        onChange={(e) => setNewProgressEntry(e.target.value)}
+                                        placeholder="Log today's progress (e.g., 'finished tear-off, started underlayment')."
+                                        onKeyPress={(e) => e.key === 'Enter' && addDailyProgressEntry()}
+                                        className="pr-28"
+                                    />
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={handleRefineEntry}
+                                      disabled={isRefining || !newProgressEntry}
+                                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8"
+                                      >
+                                        {isRefining ? <Loader2 className="animate-spin" /> : <Sparkles />}
+                                        Refine
+                                    </Button>
+                                </div>
                                 <Button onClick={addDailyProgressEntry}>Add Log</Button>
                             </div>
                             <div className="bg-secondary/30 p-4 rounded-lg border max-h-96 overflow-y-auto space-y-3">
@@ -152,7 +188,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('overview')} isActive={activeView === 'overview'}><LayoutDashboard/> Project Overview</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('tracking')} isActive={activeView === 'tracking'}><Notebook/> Daily Log</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('tracking')} isActive={activeView === 'tracking'}><NotebookText/> Daily Log</SidebarMenuButton>
                             </SidebarMenuItem>
                         </SidebarMenu>
                         <p className="p-4 text-xs text-muted-foreground font-semibold uppercase">AI Tools</p>
