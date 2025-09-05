@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from '@/components/ui/table';
-import { Loader2, FileText } from 'lucide-react';
+import { Loader2, FileText, Printer } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 
@@ -28,13 +28,16 @@ const formSchema = z.object({
 });
 
 type QuoteFormValues = z.infer<typeof formSchema>;
+export type GeneratedQuote = GenerateQuoteOutput & { formValues: QuoteFormValues };
+
 
 type QuoteGeneratorProps = {
     client: Client | null;
+    onQuoteGenerated: (quote: GeneratedQuote, client: Client) => void;
 };
 
-export function QuoteGenerator({ client }: QuoteGeneratorProps) {
-  const [quote, setQuote] = useState<GenerateQuoteOutput | null>(null);
+export function QuoteGenerator({ client, onQuoteGenerated }: QuoteGeneratorProps) {
+  const [quote, setQuote] = useState<GeneratedQuote | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
@@ -71,7 +74,11 @@ export function QuoteGenerator({ client }: QuoteGeneratorProps) {
     setQuote(null);
     try {
       const result = await generateQuote(values);
-      setQuote(result);
+      const fullQuote: GeneratedQuote = { ...result, formValues: values };
+      setQuote(fullQuote);
+      if(client) {
+        onQuoteGenerated(fullQuote, client);
+      }
     } catch (e) {
       console.error(e);
       setError("An error occurred while generating the quote. The model may be unavailable. Please try again later.");
@@ -84,12 +91,15 @@ export function QuoteGenerator({ client }: QuoteGeneratorProps) {
     return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(amount);
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8">
-      <Card>
+    <div className="grid lg:grid-cols-2 gap-8 print:grid-cols-1">
+      <Card className="print:hidden">
         <CardHeader>
-          <CardTitle className="text-3xl text-primary">AI Quote Generator</CardTitle>
+          <CardTitle className="text-3xl text-primary flex items-center gap-2"><FileText /> AI Quote Generator</CardTitle>
           <CardDescription>
             Fill in the project details to generate a professional quote instantly.
             {client && <span className="block mt-1 font-semibold text-primary">Working on: {client.name}</span>}
@@ -169,23 +179,28 @@ export function QuoteGenerator({ client }: QuoteGeneratorProps) {
         )}
         
         {!isLoading && !error && !quote && (
-            <div className="flex flex-col items-center justify-center h-full text-center p-8 border-2 border-dashed rounded-lg bg-background">
+            <div className="flex flex-col items-center justify-center h-full text-center p-8 border-2 border-dashed rounded-lg bg-background print:hidden">
                 <FileText className="h-12 w-12 text-muted-foreground mb-4" />
                 <p className="text-lg font-semibold text-muted-foreground">Your generated quote will appear here.</p>
             </div>
         )}
 
         {quote && (
-          <Card className="flex-grow flex flex-col">
-            <CardHeader className="bg-secondary/30">
+          <Card className="flex-grow flex flex-col print:shadow-none print:border-none" id="quote-preview">
+            <CardHeader className="bg-secondary/30 print:bg-secondary/30">
               <div className="flex justify-between items-start">
                   <div>
-                      <CardTitle className="text-2xl">Quote: {quote.quoteId}</CardTitle>
-                      <CardDescription>Prepared for: {form.getValues('clientName')}</CardDescription>
+                      <h2 className="text-3xl font-bold text-primary">QUOTE</h2>
+                      <p className="text-lg font-semibold">{quote.quoteId}</p>
+                      <p className="text-sm text-muted-foreground mt-4"><strong>Prepared For:</strong><br />{quote.formValues.clientName}<br />{quote.formValues.clientAddress}</p>
                   </div>
-                  <div className="text-right text-sm">
-                      <p><strong>Date:</strong> {quote.date}</p>
-                      <p><strong>Valid Until:</strong> {quote.validUntil}</p>
+                  <div className="text-right">
+                      <p className="font-bold text-lg">Asphalt Bros Roofing</p>
+                      <p className="text-sm text-muted-foreground">contact@asphaltbros.ca</p>
+                      <div className="mt-4 text-sm">
+                        <p><strong>Date:</strong> {quote.date}</p>
+                        <p><strong>Valid Until:</strong> {quote.validUntil}</p>
+                      </div>
                   </div>
               </div>
             </CardHeader>
@@ -218,22 +233,41 @@ export function QuoteGenerator({ client }: QuoteGeneratorProps) {
                         <TableCell colSpan={3} className="text-right font-bold">HST (15%)</TableCell>
                         <TableCell className="text-right font-bold">{formatCurrency(quote.tax)}</TableCell>
                     </TableRow>
-                     <TableRow className="text-lg bg-secondary/30">
+                     <TableRow className="text-xl bg-secondary/30 print:bg-secondary/30">
                         <TableCell colSpan={3} className="text-right font-extrabold text-primary">Total</TableCell>
                         <TableCell className="text-right font-extrabold text-primary">{formatCurrency(quote.total)}</TableCell>
                     </TableRow>
                 </TableFooter>
               </Table>
             </CardContent>
-            <CardFooter className="bg-secondary/30 mt-auto">
-                <div className="text-xs text-muted-foreground space-y-2">
+            <CardFooter className="bg-secondary/30 mt-auto flex-col items-start gap-4 p-6 print:bg-secondary/30">
+                <div className="text-sm text-muted-foreground space-y-2">
                     <p className="font-bold">Notes:</p>
                     <p>{quote.notes}</p>
                 </div>
+                 <Button onClick={handlePrint} className="w-full font-bold print:hidden">
+                    <Printer className="mr-2 h-4 w-4" /> Print Quote
+                </Button>
             </CardFooter>
           </Card>
         )}
       </div>
+        <style jsx global>{`
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                #quote-preview, #quote-preview * {
+                    visibility: visible;
+                }
+                #quote-preview {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
+            }
+        `}</style>
     </div>
   );
 }

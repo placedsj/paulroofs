@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { generateInvoice, type GenerateInvoiceOutput, type GenerateInvoiceInput } from '@/ai/flows/invoice-generator-flow';
 import { type Client } from './client-manager';
+import type { GeneratedQuote } from './quote-generator';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -37,13 +38,13 @@ const formSchema = z.object({
 });
 
 type InvoiceFormValues = z.infer<typeof formSchema>;
-type LineItem = z.infer<typeof lineItemSchema>;
 
 type InvoiceGeneratorProps = {
     client: Client | null;
+    quote: GeneratedQuote | null;
 };
 
-export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
+export function InvoiceGenerator({ client, quote }: InvoiceGeneratorProps) {
   const [invoice, setInvoice] = useState<GenerateInvoiceOutput & { input: GenerateInvoiceInput } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,22 +63,36 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
       quoteId: "",
     },
   });
-
+  
   useEffect(() => {
     if (client) {
-      form.reset({
-        clientName: client.name,
-        clientAddress: client.address,
-        workDescription: `Complete roof replacement for the property at ${client.address}.`,
-        lineItems: [{ item: 'Asphalt Shingles', quantity: 1500, unitCost: 4, total: 6000 }],
-        quoteId: `Q-2024-` // Example, you might have this stored on the client object
-      });
-      toast({
-        title: `New Invoice for ${client.name}`,
-        description: "Client details have been pre-filled. Please add line items and details.",
-      });
+        let descriptionToast = "Client details have been pre-filled. Please add line items and details.";
+        let newWorkDescription = `Complete roof replacement for the property at ${client.address}.`;
+
+        const resetValues: Partial<InvoiceFormValues> = {
+            clientName: client.name,
+            clientAddress: client.address,
+        };
+
+        if (quote && quote.quoteId) {
+            resetValues.workDescription = newWorkDescription; // Default description
+            resetValues.lineItems = quote.lineItems.map(li => ({...li})); // Deep copy
+            resetValues.quoteId = quote.quoteId;
+            descriptionToast = `Invoice pre-filled from Quote ${quote.quoteId}.`;
+        } else {
+             resetValues.workDescription = newWorkDescription;
+             resetValues.lineItems = [{ item: 'Asphalt Shingles', quantity: 1500, unitCost: 4, total: 6000 }];
+             resetValues.quoteId = "";
+        }
+        
+        form.reset(resetValues);
+
+        toast({
+            title: `New Invoice for ${client.name}`,
+            description: descriptionToast,
+        });
     }
-  }, [client, form, toast]);
+  }, [client, quote, form, toast]);
 
 
   const { fields, append, remove } = useFieldArray({
@@ -94,16 +109,16 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
         const unitCost = Number(item.unitCost) || 0;
         const total = quantity * unitCost;
         if (form.getValues(`lineItems.${index}.total`) !== total) {
-             form.setValue(`lineItems.${index}.total`, total);
+             form.setValue(`lineItems.${index}.total`, total, { shouldValidate: true });
         }
         subtotal += total;
     });
     const tax = subtotal * 0.15;
     const total = subtotal + tax;
 
-    form.setValue("subtotal", subtotal);
-    form.setValue("tax", tax);
-    form.setValue("total", total);
+    form.setValue("subtotal", subtotal, { shouldValidate: true });
+    form.setValue("tax", tax, { shouldValidate: true });
+    form.setValue("total", total, { shouldValidate: true });
   }, [form]);
   
   useEffect(() => {
@@ -138,7 +153,6 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
     try {
       const result = await generateInvoice(inputForAI);
       setInvoice({ ...result, input: inputForAI });
-      // form.reset(); // Don't reset so user can see what they submitted
     } catch (e) {
       console.error(e);
       setError("An error occurred while generating the invoice. The model may be unavailable. Please try again later.");
@@ -166,6 +180,7 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
           <CardDescription>
             Create professional invoices from completed projects. The AI will generate invoice dates and notes.
             {client && <span className="block mt-1 font-semibold text-primary">Working on: {client.name}</span>}
+            {quote && <span className="block mt-1 font-semibold text-accent">From Quote: {quote.quoteId}</span>}
           </CardDescription>
         </CardHeader>
         <CardContent>

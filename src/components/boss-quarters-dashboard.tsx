@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { LogOut, Palette, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Home, Users } from 'lucide-react';
-import { QuoteGenerator } from './quote-generator';
+import { QuoteGenerator, type GeneratedQuote } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
 import { ProjectPromoter } from './project-promoter';
@@ -23,6 +23,7 @@ export function BossQuartersDashboard() {
   const [isMounted, setIsMounted] = useState(false);
   const [activeView, setActiveView] = useState<View>('dashboard');
   const [contextualClient, setContextualClient] = useState<Client | null>(null);
+  const [contextualQuote, setContextualQuote] = useState<GeneratedQuote | null>(null);
   
   useEffect(() => {
     setIsMounted(true);
@@ -45,9 +46,16 @@ export function BossQuartersDashboard() {
     router.push('/');
   };
 
-  const handleClientAction = (client: Client, view: View) => {
+  const handleClientAction = (client: Client, view: View, quote?: GeneratedQuote) => {
     setContextualClient(client);
+    setContextualQuote(quote || null);
     setActiveView(view);
+  };
+
+  const onQuoteGenerated = (quote: GeneratedQuote, client: Client) => {
+    // In a real app, you'd save this to a database. For now, we'll update localStorage via the ClientManager.
+    const event = new CustomEvent('quoteGenerated', { detail: { client, quote } });
+    window.dispatchEvent(event);
   };
 
   if (!isMounted) {
@@ -62,9 +70,9 @@ export function BossQuartersDashboard() {
     switch (activeView) {
         case 'dashboard': return <DashboardHome setActiveView={setActiveView} />;
         case 'clients': return <ClientManager onClientAction={handleClientAction} />;
-        case 'quotes': return <QuoteGenerator client={contextualClient} />;
+        case 'quotes': return <QuoteGenerator client={contextualClient} onQuoteGenerated={onQuoteGenerated} />;
         case 'coordinator': return <ColorCoordinator />;
-        case 'invoices': return <InvoiceGenerator client={contextualClient} />;
+        case 'invoices': return <InvoiceGenerator client={contextualClient} quote={contextualQuote} />;
         case 'promoter': return <ProjectPromoter client={contextualClient} />;
         case 'blog': return <BlogPostGenerator />;
         case 'storyteller': return <HomeStoryGenerator client={contextualClient} />;

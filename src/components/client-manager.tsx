@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { NotebookText, Sparkles, Loader2, Plus, Trash2, FileText, FileSignature, Home, Megaphone } from 'lucide-react';
+import { NotebookText, Sparkles, Loader2, Plus, Trash2, FileText, FileSignature, Home, Megaphone, BadgeDollarSign } from 'lucide-react';
 import { refineLogEntry } from '@/ai/flows/log-refiner-flow';
 import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import type { GeneratedQuote } from './quote-generator';
 
 type DailyLogEntry = {
     id: string;
@@ -23,10 +23,11 @@ export type Client = {
     contact: string;
     address: string;
     log: DailyLogEntry[];
+    quotes: GeneratedQuote[];
 };
 
 type ClientManagerProps = {
-    onClientAction: (client: Client, view: 'quotes' | 'invoices' | 'storyteller' | 'promoter') => void;
+    onClientAction: (client: Client, view: 'quotes' | 'invoices' | 'storyteller' | 'promoter', quote?: GeneratedQuote) => void;
 };
 
 
@@ -47,7 +48,7 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
       const storedClients = localStorage.getItem('clients');
       if (storedClients) {
         const parsedClients = JSON.parse(storedClients, (key, value) => {
-            if (key === 'timestamp') {
+            if (key === 'timestamp' || key === 'date') { // also parse quote dates
                 return new Date(value);
             }
             return value;
@@ -58,16 +59,27 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
         }
       } else {
         // If no clients in storage, add the default one.
-        const defaultClient = { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [] };
+        const defaultClient: Client = { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [], quotes: [] };
         setClients([defaultClient]);
         setSelectedClient(defaultClient);
       }
     } catch (error) {
       console.error("Could not access localStorage. Using default state.");
-      const defaultClient = { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [] };
+      const defaultClient: Client = { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [], quotes: [] };
       setClients([defaultClient]);
       setSelectedClient(defaultClient);
     }
+
+     const handleQuoteGenerated = (event: Event) => {
+        const { client, quote } = (event as CustomEvent).detail;
+        addQuoteToClient(client.id, quote);
+    };
+
+    window.addEventListener('quoteGenerated', handleQuoteGenerated);
+
+    return () => {
+        window.removeEventListener('quoteGenerated', handleQuoteGenerated);
+    };
   }, []);
 
   // Save clients to localStorage whenever they change
@@ -94,7 +106,8 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
         name: newClientName,
         contact: newClientContact,
         address: newClientAddress,
-        log: []
+        log: [],
+        quotes: [],
     };
     const updatedClients = [...clients, newClient];
     setClients(updatedClients);
@@ -123,10 +136,27 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
     const updatedClient = { ...selectedClient, log: [newEntry, ...selectedClient.log] };
     const updatedClients = clients.map(c => c.id === selectedClient.id ? updatedClient : c);
     
-    setSelectedClient(updatedClient);
     setClients(updatedClients);
+    setSelectedClient(updatedClient);
     setNewProgressEntry('');
   }, [newProgressEntry, selectedClient, clients]);
+
+  const addQuoteToClient = (clientId: string, quote: GeneratedQuote) => {
+    setClients(prevClients => {
+        return prevClients.map(c => {
+            if (c.id === clientId) {
+                // Prepend new quote to ensure it's at the top of the list
+                const updatedQuotes = [quote, ...(c.quotes || [])];
+                return { ...c, quotes: updatedQuotes };
+            }
+            return c;
+        });
+    });
+     toast({
+        title: "Quote Saved!",
+        description: `Quote ${quote.quoteId} has been saved to ${selectedClient?.name}.`,
+      });
+  };
 
   const handleRefineEntry = async () => {
     if (newProgressEntry.trim() === '') return;
@@ -144,6 +174,10 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
     } finally {
       setIsRefining(false);
     }
+  };
+  
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(amount);
   };
 
   return (
@@ -197,9 +231,9 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
             </Card>
         </div>
 
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 space-y-6">
             {selectedClient ? (
-                <div className="space-y-6">
+                <>
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-3xl text-primary">{selectedClient.name}</CardTitle>
@@ -212,6 +246,33 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
                              <Button variant="outline" onClick={() => onClientAction(selectedClient, 'promoter')}><Megaphone className="mr-2" /> Promote Project</Button>
                         </CardContent>
                     </Card>
+
+                     <Card>
+                        <CardHeader>
+                            <CardTitle className="text-xl flex items-center gap-2"><BadgeDollarSign /> Saved Quotes</CardTitle>
+                            <CardDescription>Quotes generated for this client. Click to create an invoice from a quote.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                             <div className="bg-secondary/30 p-4 rounded-lg border max-h-60 overflow-y-auto space-y-3">
+                                {selectedClient.quotes && selectedClient.quotes.length > 0 ? (
+                                    selectedClient.quotes.map(quote => (
+                                        <div key={quote.quoteId} className="text-sm bg-background p-3 rounded-md flex justify-between items-center">
+                                            <div>
+                                                <p className="font-semibold">{quote.quoteId} - {new Date(quote.date).toLocaleDateString()}</p>
+                                                <p className="text-muted-foreground">{formatCurrency(quote.total)}</p>
+                                            </div>
+                                            <Button size="sm" onClick={() => onClientAction(selectedClient, 'invoices', quote)}>
+                                                Create Invoice
+                                            </Button>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-muted-foreground text-center py-4">No quotes saved for this client yet.</p>
+                                )}
+                            </div>
+                        </CardContent>
+                    </Card>
+
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-xl flex items-center gap-2"><NotebookText /> Daily Project Log</CardTitle>
@@ -245,7 +306,7 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
                                     {selectedClient.log.length > 0 ? (
                                         selectedClient.log.map(entry => (
                                             <div key={entry.id} className="text-sm text-foreground flex items-start">
-                                                <span className="font-semibold text-muted-foreground w-40 shrink-0">{entry.timestamp.toLocaleString()}:</span> 
+                                                <span className="font-semibold text-muted-foreground w-40 shrink-0">{new Date(entry.timestamp).toLocaleString()}:</span> 
                                                 <p>{entry.text}</p>
                                             </div>
                                         ))
@@ -256,7 +317,7 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
                             </div>
                         </CardContent>
                     </Card>
-                </div>
+                </>
             ) : (
                  <Card>
                     <CardContent className="p-12 text-center">
