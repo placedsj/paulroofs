@@ -21,6 +21,19 @@ export default function BlogPage() {
       '/blog-hero-4.jpg',
       '/blog-hero-5.jpg',
       '/blog-hero-6.jpg',
+      '/blog-hero-7.jpg',
+      '/blog-hero-8.jpg',
+      '/blog-hero-9.jpg',
+      '/blog-hero-10.jpg',
+      '/blog-hero-11.jpg',
+      '/blog-hero-12.jpg',
+      '/blog-hero-13.jpg',
+      '/blog-hero-14.jpg',
+      '/blog-hero-15.jpg',
+      '/blog-hero-16.jpg',
+      '/blog-hero-17.jpg',
+      '/blog-hero-18.jpg',
+      '/blog-hero-19.jpg',
   ]
 
   return (
@@ -31,7 +44,7 @@ export default function BlogPage() {
           <div className="text-center mb-12">
             <h1 className="text-5xl font-extrabold text-shadow-outline">THE ROOFING CHRONICLES</h1>
             <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
-              Paul's pearls of wisdom, dad jokes, and expert advice on everything roofing in Southern New Brunswick.
+              Expert advice from the Asphalt Bros on everything roofing, siding, and home exteriors in Southern New Brunswick.
             </p>
           </div>
           
@@ -39,11 +52,11 @@ export default function BlogPage() {
             <Card className="mb-12 overflow-hidden md:grid md:grid-cols-2 md:items-center">
                 <div className="relative h-64 md:h-full min-h-[300px]">
                     <Image
-                      src={postImages[0]}
+                      src={`https://picsum.photos/1200/800?random=${latestPost.slug}`}
                       alt={latestPost.title}
                       fill
                       className="object-cover"
-                      data-ai-hint="wood shingle roof"
+                      data-ai-hint="vinyl siding"
                       priority
                     />
                      <div className="absolute inset-0 bg-gradient-to-r from-background/70 to-transparent" />
@@ -70,11 +83,11 @@ export default function BlogPage() {
                 <Link href={`/blog/${post.slug}`} className="block">
                   <div className="relative h-56 w-full overflow-hidden">
                     <Image
-                      src={postImages[index+1] || `https://picsum.photos/600/400?random=${post.slug}`}
+                      src={postImages[index] || `https://picsum.photos/600/400?random=${post.slug}`}
                       alt={post.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      data-ai-hint="roofing texture"
+                      data-ai-hint={post.category === 'Siding' ? 'vinyl siding' : 'roofing texture'}
                     />
                   </div>
                 </Link>
