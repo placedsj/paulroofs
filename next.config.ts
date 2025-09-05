@@ -35,6 +35,13 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '4.5mb',
     },
   },
+  serverActions: {
+    // 2 minute timeout for video generation
+    bodySizeLimit: '4.5mb',
+    serverActions: {
+      bodySizeLimit: '4.5mb',
+    },
+  },
 };
 
 export default nextConfig;

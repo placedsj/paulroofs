@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { LogOut, Palette, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Home, Users } from 'lucide-react';
+import { LogOut, Palette, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Home, Users, Film } from 'lucide-react';
 import { QuoteGenerator, type GeneratedQuote } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
@@ -13,10 +13,11 @@ import { BlogPostGenerator } from './blog-post-generator';
 import { HomeStoryGenerator } from './home-story-generator';
 import { ClientManager } from './client-manager';
 import { DashboardHome } from './dashboard-home';
+import { VideoAdGenerator } from './video-ad-generator';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 import type { Client } from './client-manager';
 
-type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
+type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller' | 'video';
 
 export function BossQuartersDashboard() {
   const router = useRouter();
@@ -76,6 +77,7 @@ export function BossQuartersDashboard() {
         case 'promoter': return <ProjectPromoter client={contextualClient} />;
         case 'blog': return <BlogPostGenerator />;
         case 'storyteller': return <HomeStoryGenerator client={contextualClient} />;
+        case 'video': return <VideoAdGenerator client={contextualClient} />;
         default: return <DashboardHome setActiveView={setActiveView} />;
     }
   }
@@ -116,6 +118,9 @@ export function BossQuartersDashboard() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('blog')} isActive={activeView === 'blog'}><PenSquare/> Blog Writer</SidebarMenuButton>
+                            </SidebarMenuItem>
+                            <SidebarMenuItem>
+                                <SidebarMenuButton onClick={() => setActiveView('video')} isActive={activeView === 'video'}><Film/> Video Ad Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                         </SidebarMenu>
                     </div>

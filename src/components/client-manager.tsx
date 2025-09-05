@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { NotebookText, Sparkles, Loader2, Plus, Trash2, FileText, FileSignature, Home, Megaphone, BadgeDollarSign } from 'lucide-react';
+import { NotebookText, Sparkles, Loader2, Plus, Trash2, FileText, FileSignature, Home, Megaphone, BadgeDollarSign, Film } from 'lucide-react';
 import { refineLogEntry } from '@/ai/flows/log-refiner-flow';
 import { useToast } from '@/hooks/use-toast';
 import type { GeneratedQuote } from './quote-generator';
@@ -27,7 +27,7 @@ export type Client = {
 };
 
 type ClientManagerProps = {
-    onClientAction: (client: Client, view: 'quotes' | 'invoices' | 'storyteller' | 'promoter', quote?: GeneratedQuote) => void;
+    onClientAction: (client: Client, view: 'quotes' | 'invoices' | 'storyteller' | 'promoter' | 'video', quote?: GeneratedQuote) => void;
 };
 
 
@@ -244,6 +244,7 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
                              <Button variant="outline" onClick={() => onClientAction(selectedClient, 'invoices')}><FileSignature className="mr-2" /> New Invoice</Button>
                              <Button variant="outline" onClick={() => onClientAction(selectedClient, 'storyteller')}><Home className="mr-2" /> Create Story</Button>
                              <Button variant="outline" onClick={() => onClientAction(selectedClient, 'promoter')}><Megaphone className="mr-2" /> Promote Project</Button>
+                             <Button variant="outline" onClick={() => onClientAction(selectedClient, 'video')}><Film className="mr-2" /> Create Video Ad</Button>
                         </CardContent>
                     </Card>
 
