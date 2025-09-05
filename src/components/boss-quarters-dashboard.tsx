@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { LogOut, Palette, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Home, Users, WandSparkles } from 'lucide-react';
+import { LogOut, Palette, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Home, Users } from 'lucide-react';
 import { QuoteGenerator } from './quote-generator';
 import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
@@ -15,9 +15,8 @@ import { ClientManager } from './client-manager';
 import { DashboardHome } from './dashboard-home';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 import type { Client } from './client-manager';
-import { RoofVisualizer } from './roof-visualizer';
 
-type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller' | 'visualizer';
+type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
 
 export function BossQuartersDashboard() {
   const router = useRouter();
@@ -65,7 +64,6 @@ export function BossQuartersDashboard() {
         case 'clients': return <ClientManager onClientAction={handleClientAction} />;
         case 'quotes': return <QuoteGenerator client={contextualClient} />;
         case 'coordinator': return <ColorCoordinator />;
-        case 'visualizer': return <RoofVisualizer />;
         case 'invoices': return <InvoiceGenerator client={contextualClient} />;
         case 'promoter': return <ProjectPromoter client={contextualClient} />;
         case 'blog': return <BlogPostGenerator />;
@@ -98,9 +96,6 @@ export function BossQuartersDashboard() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('quotes')} isActive={activeView === 'quotes'}><FileText/> Quote Generator</SidebarMenuButton>
-                            </SidebarMenuItem>
-                             <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('visualizer')} isActive={activeView === 'visualizer'}><WandSparkles/> AI Roof Visualizer</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
