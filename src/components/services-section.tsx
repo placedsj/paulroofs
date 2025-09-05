@@ -2,19 +2,24 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wrench, Repeat, Droplets, Wind, Home, Building, Snowflake, Sun, Search } from 'lucide-react';
+import { Wrench, Repeat, Droplets, Wind, Home, Building, Snowflake, Sun, Search, Layers } from 'lucide-react';
 
 
 const services = [
+    {
+        icon: <Repeat className="h-8 w-8 text-primary" />,
+        title: "Roof Replacement",
+        description: "If your roof is beyond repair, we offer affordable and efficient roof replacement services. Our team will work with you to find the best solution for your home."
+    },
     {
         icon: <Wrench className="h-8 w-8 text-primary" />,
         title: "Roof Repair",
         description: "Our team of experts will repair any leaks, damage, or wear and tear on your roof. We use high-quality materials and provide expert service and advice."
     },
     {
-        icon: <Repeat className="h-8 w-8 text-primary" />,
-        title: "Roof Replacement",
-        description: "If your roof is beyond repair, we offer affordable and efficient roof replacement services. Our team will work with you to find the best solution for your home."
+        icon: <Layers className="h-8 w-8 text-primary" />,
+        title: "Siding Installation & Repair",
+        description: "Boost your home's curb appeal and protection with new siding. We install and repair a variety of siding materials to match your style and budget."
     },
     {
         icon: <Droplets className="h-8 w-8 text-primary" />,
@@ -30,11 +35,6 @@ const services = [
         icon: <Home className="h-8 w-8 text-primary" />,
         title: "Roof Maintenance",
         description: "Preventative maintenance is key to extending the life of your roof. We offer regular maintenance services to keep your roof in top condition."
-    },
-    {
-        icon: <Building className="h-8 w-8 text-primary" />,
-        title: "Commercial Roofing",
-        description: "We also offer commercial roofing services for businesses of any size. Our team has experience in a variety of roofing types and can provide the best solution for your business."
     },
     {
         icon: <Snowflake className="h-8 w-8 text-primary" />,
@@ -58,9 +58,9 @@ export function ServicesSection() {
         <section id="services" className="py-20 bg-secondary/20">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold">Expert Roofing Services</h2>
+                    <h2 className="text-4xl font-bold">Expert Roofing & Siding Services</h2>
                     <p className="text-muted-foreground mt-4 max-w-3xl mx-auto text-lg">
-                        Welcome to Asphalt Bros Roofing, where we provide quality roofing solutions for your home or business. Our experienced team is ready to assist you with all your roofing needs. Contact us today for a free estimate!
+                        Welcome to Asphalt Bros Roofing, where we provide quality roofing and siding solutions for your home. Our experienced team is ready to assist you with all your exterior needs. Contact us today for a free estimate!
                     </p>
                 </div>
                 

@@ -48,7 +48,7 @@ const visualizeRoofFlow = ai.defineFlow(
             { text: `Professionally replace the existing roof on this house with a high-quality ${roofColor} ${roofType}. The new roof should look realistic, with proper lighting, shadows, and perspective that matches the original photo. Ensure the final image is a photorealistic depiction of the completed roofing project.` },
         ],
         config: {
-            responseModalities: ['IMAGE'],
+            responseModalities: ['IMAGE', 'TEXT'],
         },
     });
 
