@@ -58,7 +58,7 @@ export default function Home() {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="relative rounded-lg overflow-hidden shadow-lg h-96">
                         <Image
-                            src="https://picsum.photos/800/600"
+                            src="https://ik.imagekit.io/ik5x4q7jl/ffds_s7bYdqKz7?updatedAt=1757040303489"
                             alt="The Asphalt Bros Roofing family team"
                             fill
                             className="object-cover"
