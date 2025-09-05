@@ -2,6 +2,13 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 const galleryImages = [
   { src: "https://ik.imagekit.io/ik5x4q7jl/sdfada_gJM9TZDCe?updatedAt=1757040358273", alt: "High-quality asphalt shingle roof", hint: "asphalt shingle" },
@@ -24,20 +31,32 @@ export function GallerySection() {
             A showcase of our quality craftsmanship and the beautiful, durable roofs we've installed.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {galleryImages.map((image, index) => (
-            <div key={index} className="group overflow-hidden rounded-lg shadow-lg">
-              <Image
-                src={image.src}
-                alt={image.alt}
-                width={600}
-                height={400}
-                className="object-cover w-full h-full aspect-[4/3] transform transition-transform duration-500 group-hover:scale-110"
-                data-ai-hint={image.hint}
-              />
-            </div>
-          ))}
-        </div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {galleryImages.map((image, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                 <div className="group overflow-hidden rounded-lg shadow-lg">
+                    <Image
+                        src={image.src}
+                        alt={image.alt}
+                        width={600}
+                        height={400}
+                        className="object-cover w-full h-full aspect-[4/3] transform transition-transform duration-500 group-hover:scale-110"
+                        data-ai-hint={image.hint}
+                    />
+                    </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden sm:flex"/>
+          <CarouselNext className="hidden sm:flex"/>
+        </Carousel>
         <div className="mt-16 text-center">
             <p className="text-lg text-muted-foreground mb-6">Impressed by what you see?</p>
             <Button asChild size="lg" className="font-bold text-lg">
