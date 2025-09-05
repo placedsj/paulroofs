@@ -12,15 +12,16 @@ import { ProjectPromoter } from './project-promoter';
 import { BlogPostGenerator } from './blog-post-generator';
 import { HomeStoryGenerator } from './home-story-generator';
 import { ClientManager } from './client-manager';
+import { DashboardHome } from './dashboard-home';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 import type { Client } from './client-manager';
 
-type View = 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
+type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
 
 export function BossQuartersDashboard() {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
-  const [activeView, setActiveView] = useState<View>('clients');
+  const [activeView, setActiveView] = useState<View>('dashboard');
   const [contextualClient, setContextualClient] = useState<Client | null>(null);
   
   useEffect(() => {
@@ -59,6 +60,7 @@ export function BossQuartersDashboard() {
 
   const renderContent = () => {
     switch (activeView) {
+        case 'dashboard': return <DashboardHome setActiveView={setActiveView} />;
         case 'clients': return <ClientManager onClientAction={handleClientAction} />;
         case 'quotes': return <QuoteGenerator client={contextualClient} />;
         case 'coordinator': return <ColorCoordinator />;
@@ -66,7 +68,7 @@ export function BossQuartersDashboard() {
         case 'promoter': return <ProjectPromoter client={contextualClient} />;
         case 'blog': return <BlogPostGenerator />;
         case 'storyteller': return <HomeStoryGenerator client={contextualClient} />;
-        default: return <ClientManager onClientAction={handleClientAction} />;
+        default: return <DashboardHome setActiveView={setActiveView} />;
     }
   }
 
@@ -80,6 +82,9 @@ export function BossQuartersDashboard() {
                     </div>
                     <div className="flex-1 overflow-y-auto">
                         <SidebarMenu>
+                             <SidebarMenuItem>
+                                <SidebarMenuButton onClick={() => setActiveView('dashboard')} isActive={activeView === 'dashboard'}><LayoutDashboard/> Dashboard</SidebarMenuButton>
+                            </SidebarMenuItem>
                              <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('clients')} isActive={activeView === 'clients'}><Users/> Client Manager</SidebarMenuButton>
                             </SidebarMenuItem>
