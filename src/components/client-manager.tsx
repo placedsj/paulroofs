@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
@@ -31,10 +31,8 @@ type ClientManagerProps = {
 
 
 export function ClientManager({ onClientAction }: ClientManagerProps) {
-  const [clients, setClients] = useState<Client[]>([
-      { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [] }
-  ]);
-  const [selectedClient, setSelectedClient] = useState<Client | null>(clients[0] || null);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [newClientName, setNewClientName] = useState('');
   const [newClientContact, setNewClientContact] = useState('');
   const [newClientAddress, setNewClientAddress] = useState('');
@@ -42,6 +40,49 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
   const [newProgressEntry, setNewProgressEntry] = useState('');
   const [isRefining, setIsRefining] = useState(false);
   const { toast } = useToast();
+  
+  // Load clients from localStorage on initial render
+  useEffect(() => {
+    try {
+      const storedClients = localStorage.getItem('clients');
+      if (storedClients) {
+        const parsedClients = JSON.parse(storedClients, (key, value) => {
+            if (key === 'timestamp') {
+                return new Date(value);
+            }
+            return value;
+        });
+        setClients(parsedClients);
+        if (parsedClients.length > 0) {
+            setSelectedClient(parsedClients[0]);
+        }
+      } else {
+        // If no clients in storage, add the default one.
+        const defaultClient = { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [] };
+        setClients([defaultClient]);
+        setSelectedClient(defaultClient);
+      }
+    } catch (error) {
+      console.error("Could not access localStorage. Using default state.");
+      const defaultClient = { id: '1', name: 'Smith Residence', contact: 'John Smith - (506) 555-0123', address: '123 Maple St, Rothesay', log: [] };
+      setClients([defaultClient]);
+      setSelectedClient(defaultClient);
+    }
+  }, []);
+
+  // Save clients to localStorage whenever they change
+  useEffect(() => {
+    try {
+      if(clients.length > 0) {
+         localStorage.setItem('clients', JSON.stringify(clients));
+      } else {
+         localStorage.removeItem('clients');
+      }
+    } catch (error) {
+        console.error("Could not access localStorage. Changes will not be saved.");
+    }
+  }, [clients]);
+
 
   const handleAddClient = () => {
     if (!newClientName || !newClientContact || !newClientAddress) {
@@ -55,7 +96,8 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
         address: newClientAddress,
         log: []
     };
-    setClients(prev => [...prev, newClient]);
+    const updatedClients = [...clients, newClient];
+    setClients(updatedClients);
     setNewClientName('');
     setNewClientContact('');
     setNewClientAddress('');
@@ -63,9 +105,11 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
   };
   
   const handleDeleteClient = (clientId: string) => {
-    setClients(prev => prev.filter(c => c.id !== clientId));
+    const updatedClients = clients.filter(c => c.id !== clientId);
+    setClients(updatedClients);
+    
     if (selectedClient?.id === clientId) {
-        setSelectedClient(clients[0] || null);
+        setSelectedClient(updatedClients.length > 0 ? updatedClients[0] : null);
     }
   };
 
@@ -77,8 +121,10 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
         timestamp: new Date()
     };
     const updatedClient = { ...selectedClient, log: [newEntry, ...selectedClient.log] };
+    const updatedClients = clients.map(c => c.id === selectedClient.id ? updatedClient : c);
+    
     setSelectedClient(updatedClient);
-    setClients(clients.map(c => c.id === selectedClient.id ? updatedClient : c));
+    setClients(updatedClients);
     setNewProgressEntry('');
   }, [newProgressEntry, selectedClient, clients]);
 
@@ -123,6 +169,7 @@ export function ClientManager({ onClientAction }: ClientManagerProps) {
                                 </Button>
                             </div>
                         ))}
+                         {clients.length === 0 && <p className="text-muted-foreground text-center text-sm p-4">No clients yet. Add one to get started!</p>}
                     </div>
                 </CardContent>
                 <CardFooter>
