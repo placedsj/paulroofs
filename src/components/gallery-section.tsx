@@ -5,13 +5,13 @@ import Link from 'next/link';
 
 const galleryImages = [
   { src: "https://ik.imagekit.io/ik5x4q7jl/sdfada_gJM9TZDCe?updatedAt=1757040358273", alt: "High-quality asphalt shingle roof", hint: "asphalt shingle" },
-  { src: "https://picsum.photos/seed/img2/600/400", alt: "Roof repair in progress", hint: "roof repair" },
-  { src: "https://picsum.photos/seed/img3/600/400", alt: "New roof installation", hint: "new roof" },
-  { src: "https://picsum.photos/seed/img4/600/400", alt: "Commercial roofing project", hint: "commercial roof" },
-  { src: "https://picsum.photos/seed/img5/600/400", alt: "Cleaned roof after moss removal", hint: "roof cleaning" },
-  { src: "https://picsum.photos/seed/img6/600/400", alt: "Team working on a roof", hint: "roofing team" },
-  { src: "https://picsum.photos/seed/img7/600/400", alt: "Detailed gutter work", hint: "gutter installation" },
-  { src: "https://picsum.photos/seed/img8/600/400", alt: "Storm damaged roof before repair", hint: "storm damage" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/495541199_10161644959733867_8106039805902393432_n.jpg?updatedAt=1757040223678", alt: "Roof repair in progress", hint: "roof repair" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/541362907_122139082238867953_8397629622451905856_n.jpg?updatedAt=1757040223447", alt: "New roof installation", hint: "new roof" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/download.webp?updatedAt=1757040223799", alt: "Commercial roofing project", hint: "commercial roof" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/541359478_122139082262867953_4249044785827027468_n.jpg?updatedAt=1757040223397", alt: "Cleaned roof after moss removal", hint: "roof cleaning" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/rs=w_1280,h_960.webp?updatedAt=1757040223897", alt: "Team working on a roof", hint: "roofing team" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/rs=w_719,h_751.webp?updatedAt=1757040223723", alt: "Detailed gutter work", hint: "gutter installation" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/download%20(1).webp?updatedAt=1757040223642", alt: "Storm damaged roof before repair", hint: "storm damage" },
 ];
 
 export function GallerySection() {
