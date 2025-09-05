@@ -8,16 +8,12 @@ import { dynastyShingleColors, cambridgeShingleColors, type ColorOption } from '
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { WandSparkles, Palette } from 'lucide-react';
+import { Palette } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { RoofVisualizerImage } from './roof-visualizer-image';
 
 export function AIVisualizer() {
-  const [selectedColor, setSelectedColor] = useState<ColorOption>(dynastyShingleColors[0]);
+  const [selectedShingle, setSelectedShingle] = useState<ColorOption>(dynastyShingleColors[0]);
   const [activeTab, setActiveTab] = useState('dynasty');
-
-  const houseImage = "https://ik.imagekit.io/ik5x4q7jl/Gemini_Generated_Image_qy1662qy1662qy16.png?updatedAt=1757040233005";
-  const roofPath = "M-5,245 C150,150 650,150 805,245 L800,310 L400,230 L0,310 Z";
 
   const ColorPicker = ({ colors, onSelect }: { colors: ColorOption[], onSelect: (color: ColorOption) => void }) => {
     return (
@@ -27,7 +23,7 @@ export function AIVisualizer() {
                     <div 
                         className={cn(
                             "w-full h-16 rounded-md border-2 border-transparent group-hover:border-primary transition-all",
-                            selectedColor?.name === color.name && "border-primary ring-2 ring-primary ring-offset-2 ring-offset-background"
+                            selectedShingle?.name === color.name && "border-primary ring-2 ring-primary ring-offset-2 ring-offset-background"
                         )}
                         style={{ backgroundColor: color.color }}
                     />
@@ -44,21 +40,28 @@ export function AIVisualizer() {
             <Palette className="mx-auto h-12 w-12 text-primary" />
             <CardTitle className="text-3xl md:text-4xl mt-2">Product Explorer</CardTitle>
             <CardDescription className="text-lg">
-                Virtually explore our high-quality IKO shingle options on a sample home.
+                Virtually explore our high-quality IKO shingle options.
             </CardDescription>
         </CardHeader>
         <CardContent>
             <div className="grid lg:grid-cols-2 gap-8 items-start">
                 <div className="space-y-6">
-                    <RoofVisualizerImage 
-                        imageUrl={houseImage}
-                        roofPath={roofPath}
-                        roofColor={selectedColor.color}
-                        data-ai-hint="house exterior"
-                    />
-                     {selectedColor && (
+                    <div className="relative w-full aspect-video rounded-lg overflow-hidden border bg-secondary/30">
+                         {selectedShingle && (
+                            <Image
+                                key={selectedShingle.name}
+                                src={selectedShingle.image}
+                                alt={`IKO Shingle sample in ${selectedShingle.name}`}
+                                fill
+                                priority
+                                className="object-cover transition-opacity duration-300"
+                                data-ai-hint="shingle sample"
+                            />
+                         )}
+                    </div>
+                     {selectedShingle && (
                         <div className="mt-4 bg-background border rounded-md p-3 text-center">
-                            <p className="text-lg font-bold">{selectedColor.name}</p>
+                            <p className="text-lg font-bold">{selectedShingle.name}</p>
                             <p className="text-sm text-muted-foreground">{activeTab === 'dynasty' ? 'IKO Dynasty' : 'IKO Cambridge'}</p>
                         </div>
                     )}
@@ -70,7 +73,7 @@ export function AIVisualizer() {
                         className="w-full"
                         onValueChange={(value) => {
                             setActiveTab(value);
-                            setSelectedColor(value === 'dynasty' ? dynastyShingleColors[0] : cambridgeShingleColors[0]);
+                            setSelectedShingle(value === 'dynasty' ? dynastyShingleColors[0] : cambridgeShingleColors[0]);
                         }}
                     >
                         <TabsList className="grid w-full grid-cols-2">
@@ -79,11 +82,11 @@ export function AIVisualizer() {
                         </TabsList>
                         <TabsContent value="dynasty" className="mt-6">
                            <h3 className="text-xl font-bold mb-4">Select a Dynasty Color</h3>
-                           <ColorPicker colors={dynastyShingleColors} onSelect={setSelectedColor} />
+                           <ColorPicker colors={dynastyShingleColors} onSelect={setSelectedShingle} />
                         </TabsContent>
                          <TabsContent value="cambridge" className="mt-6">
                            <h3 className="text-xl font-bold mb-4">Select a Cambridge Color</h3>
-                           <ColorPicker colors={cambridgeShingleColors} onSelect={setSelectedColor} />
+                           <ColorPicker colors={cambridgeShingleColors} onSelect={setSelectedShingle} />
                         </TabsContent>
                     </Tabs>
                 </div>
