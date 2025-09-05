@@ -5,10 +5,10 @@ export function Footer() {
     <footer className="bg-secondary/20 border-t border-border py-12">
       <div className="container mx-auto px-4 text-center">
         <h3 className="text-2xl font-bold font-headline text-primary mb-4">
-          PAUL'S ROOFING
+          ASPHALT BROS ROOFING
         </h3>
         <p className="text-muted-foreground mb-4 max-w-md mx-auto">
-          Southern New Brunswick's Premier Metal Roofing Specialist
+          Your Trusted Asphalt & Metal Roofing Experts
         </p>
         <div className="flex justify-center space-x-6 mb-6 flex-wrap">
             <Link href="#home" className="text-sm text-muted-foreground hover:text-primary">HOME</Link>
@@ -20,7 +20,7 @@ export function Footer() {
             <Link href="#contact" className="text-sm text-muted-foreground hover:text-primary">CONTACT</Link>
         </div>
         <p className="text-sm text-muted-foreground/80">
-          © {new Date().getFullYear()} Paul's Roofing. All rights reserved. | Licensed & Insured
+          © {new Date().getFullYear()} Asphalt Bros Roofing. All rights reserved. | Licensed & Insured
         </p>
       </div>
     </footer>

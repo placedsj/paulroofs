@@ -17,8 +17,8 @@ const serviceBenefits = {
 };
 
 export function ServicesSection() {
-    const [selectedService, setSelectedService] = useState('metal');
-    const [selectedColor, setSelectedColor] = useState<ColorOption | null>(metalColors[0]);
+    const [selectedService, setSelectedService] = useState('shingles');
+    const [selectedColor, setSelectedColor] = useState<ColorOption | null>(shingleColors[0]);
     const [houseStyle, setHouseStyle] = useState('ranch');
     
     const handleTabChange = (value: string) => {
@@ -39,24 +39,12 @@ export function ServicesSection() {
             <div className="container mx-auto px-4">
                 <h2 className="text-4xl font-bold text-center mb-12">OUR SERVICES</h2>
                 
-                <Tabs defaultValue="metal" onValueChange={handleTabChange} className="w-full">
+                <Tabs defaultValue="shingles" onValueChange={handleTabChange} className="w-full">
                     <TabsList className="grid w-full grid-cols-3 mx-auto max-w-lg h-auto">
-                        <TabsTrigger value="metal">METAL ROOFING</TabsTrigger>
                         <TabsTrigger value="shingles">ASPHALT SHINGLES</TabsTrigger>
+                        <TabsTrigger value="metal">METAL ROOFING</TabsTrigger>
                         <TabsTrigger value="other">OTHER SERVICES</TabsTrigger>
                     </TabsList>
-                    
-                    <TabsContent value="metal" className="mt-8 space-y-8">
-                        <ServiceInfoCard 
-                            title="PREMIUM METAL ROOFING"
-                            description="Lifetime protection with our premium metal roofing systems. Choose from our extensive color palette and see how it looks on your home."
-                            benefits={serviceBenefits.metal}
-                        />
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            <ColorChart colors={metalColors} title="DAIRYTOWN EXTERIORS - METAL COLORS" onColorSelect={setSelectedColor} selectedColor={selectedColor} />
-                            <HouseVisualizer selectedColor={selectedColor} houseStyle={houseStyle} setHouseStyle={setHouseStyle} />
-                        </div>
-                    </TabsContent>
                     
                     <TabsContent value="shingles" className="mt-8 space-y-8">
                         <ServiceInfoCard 
@@ -70,6 +58,18 @@ export function ServicesSection() {
                         </div>
                     </TabsContent>
 
+                    <TabsContent value="metal" className="mt-8 space-y-8">
+                        <ServiceInfoCard 
+                            title="PREMIUM METAL ROOFING"
+                            description="Lifetime protection with our premium metal roofing systems. Choose from our extensive color palette and see how it looks on your home."
+                            benefits={serviceBenefits.metal}
+                        />
+                        <div className="grid lg:grid-cols-2 gap-8">
+                            <ColorChart colors={metalColors} title="DAIRYTOWN EXTERIORS - METAL COLORS" onColorSelect={setSelectedColor} selectedColor={selectedColor} />
+                            <HouseVisualizer selectedColor={selectedColor} houseStyle={houseStyle} setHouseStyle={setHouseStyle} />
+                        </div>
+                    </TabsContent>
+                    
                     <TabsContent value="other" className="mt-8">
                         <div className="grid md:grid-cols-3 gap-8">
                              <OtherServiceCard 
@@ -102,7 +102,7 @@ export function ServicesSection() {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Button asChild size="lg" variant="secondary" className="font-bold text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-                                <a href="tel:+15067177285">CALL (506) 717-PAUL</a>
+                                <a href="tel:+15065552774">CALL (506) 555-ASPH</a>
                             </Button>
                             <Button asChild size="lg" variant="outline" className="font-bold text-lg text-primary-foreground border-2 border-primary-foreground hover:bg-primary-foreground hover:text-primary">
                                 <Link href="#contact">GET FREE QUOTE</Link>

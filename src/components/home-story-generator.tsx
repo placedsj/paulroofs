@@ -39,7 +39,7 @@ export function HomeStoryGenerator({ client }: HomeStoryGeneratorProps) {
   const form = useForm<StoryFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      roofType: 'a beautiful new metal roof',
+      roofType: 'a beautiful new asphalt shingle roof',
     },
   });
 
@@ -158,8 +158,8 @@ export function HomeStoryGenerator({ client }: HomeStoryGeneratorProps) {
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
                                     <SelectContent>
-                                        <SelectItem value="a beautiful new metal roof">Metal Roof</SelectItem>
                                         <SelectItem value="a strong new set of asphalt shingles">Asphalt Shingles</SelectItem>
+                                        <SelectItem value="a beautiful new metal roof">Metal Roof</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />

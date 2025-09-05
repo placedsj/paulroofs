@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 
-const BOSS_PASSWORD = "paul2025";
+const BOSS_PASSWORD = "asphalt2025";
 
 export function LoginForm() {
   const [password, setPassword] = useState('');

@@ -3,21 +3,21 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 const testimonials = [
   {
-    quote: "Paul's crew did an amazing job on our new metal roof. It looks fantastic and we've already noticed a difference in our energy bills. Highly recommend!",
+    quote: "The Asphalt Bros crew did an amazing job on our new roof. It looks fantastic and our neighbors have all complimented it. Highly recommend!",
     name: "John & Jane Smith",
-    location: "Rothesay, NB",
+    location: "Moncton, NB",
     avatar: "JS"
   },
   {
-    quote: "Professional, punctual, and the quality of work is second to none. The cleanup was immaculate. We couldn't be happier with our decision to go with Paul's Roofing.",
+    quote: "Professional, punctual, and the quality of work is second to none. The cleanup was immaculate. We couldn't be happier with our decision to go with Asphalt Bros Roofing.",
     name: "David Lee",
-    location: "Quispamsis, NB",
+    location: "Riverview, NB",
     avatar: "DL"
   },
   {
-    quote: "After the last big storm, we had some serious damage. Paul's team was out here for an emergency repair in no time. They were a lifesaver!",
+    quote: "After the last big storm, we had some serious damage. The Asphalt Bros team was out here for an emergency repair in no time. They were a lifesaver!",
     name: "Mary Johnson",
-    location: "Saint John, NB",
+    location: "Dieppe, NB",
     avatar: "MJ"
   }
 ];

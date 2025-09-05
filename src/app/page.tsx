@@ -20,28 +20,28 @@ export default function Home() {
         <section id="home" className="relative h-screen min-h-[600px] w-full">
           <Image
             src="/hero-emergency.jpg"
-            alt="Man on a ladder catching water from a leaky ceiling during a storm, highlighting emergency roofing services."
+            alt="A beautiful asphalt shingle roof on a modern home."
             fill
             priority
             className="object-cover"
-            data-ai-hint="leaky roof emergency"
+            data-ai-hint="asphalt shingle roof"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/50 to-transparent" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-primary-foreground px-4">
             <h1 className="text-5xl md:text-7xl font-extrabold text-shadow-outline">
-              OLD SCHOOL WORK ETHIC. NEW SCHOOL ROOFING.
+              QUALITY THAT'S SET IN STONE.
             </h1>
             <p className="mt-6 max-w-2xl text-xl md:text-2xl text-zinc-200 text-shadow-outline-sm">
-              THE LAST ROOF YOU'LL EVER NEED.
+              THE BEST ROOF OVER YOUR HEAD.
             </p>
             <p className="mt-4 max-w-xl text-lg text-zinc-300">
-              Southern New Brunswick's Premier Metal Roofing Specialist.
+              Your trusted experts in Asphalt & Metal Roofing.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="font-bold text-lg">
-                <a href="tel:+15067177285">
+                <a href="tel:+15065552774">
                   <Phone className="mr-2 h-5 w-5" />
-                  CALL (506) 717-PAUL
+                  CALL (506) 555-ASPH
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="font-bold text-lg border-2 border-primary text-primary-foreground bg-transparent hover:bg-primary hover:text-primary-foreground">
@@ -56,19 +56,19 @@ export default function Home() {
         <section id="about" className="py-20 bg-background">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold">30 YEARS OF ROOFING EXCELLENCE</h2>
+                    <h2 className="text-4xl font-bold">ROOFING EXCELLENCE, GUARANTEED</h2>
                     <p className="text-muted-foreground mt-4 max-w-3xl mx-auto text-lg">
-                        Based in Quispamsis, Paul's Roofing has been the trusted choice for homeowners throughout Southern New Brunswick for three decades. We specialize in premium metal and asphalt roofing systems engineered to last, backed by comprehensive warranties and expert craftsmanship.
+                        Asphalt Bros Roofing is the trusted choice for homeowners who demand the best. We specialize in premium asphalt and metal roofing systems engineered to last, backed by comprehensive warranties and expert craftsmanship.
                     </p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="relative rounded-lg overflow-hidden shadow-lg h-96">
                         <Image
                             src="https://picsum.photos/800/600"
-                            alt="A newly installed high-quality metal roof"
+                            alt="A newly installed high-quality asphalt roof"
                             fill
                             className="object-cover"
-                            data-ai-hint="new metal roof"
+                            data-ai-hint="new asphalt roof"
                         />
                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                          <div className="absolute bottom-0 left-0 p-6">
@@ -77,11 +77,11 @@ export default function Home() {
                          </div>
                     </div>
                     <div>
-                        <h3 className="text-2xl font-bold mb-6">WHY CHOOSE PAUL'S ROOFING?</h3>
+                        <h3 className="text-2xl font-bold mb-6">WHY CHOOSE ASPHALT BROS?</h3>
                         <ul className="space-y-4">
                             {[
-                                { title: "30+ Years of Experience", description: "Three decades of dedicated service in Southern NB." },
-                                { title: "Metal Roofing Specialists", description: "Expert installation of durable and beautiful metal roofs." },
+                                { title: "Years of Experience", description: "Decades of dedicated service in the community." },
+                                { title: "Asphalt & Metal Specialists", description: "Expert installation of durable and beautiful roofs." },
                                 { title: "Lifetime Warranties", description: "We stand by our work with available lifetime warranties." },
                                 { title: "Premium Materials", description: "We use only the best materials for a long-lasting finish." },
                                 { title: "24/7 Emergency Service", description: "Ready to respond when you need us most." },
@@ -119,7 +119,7 @@ export default function Home() {
                                     <Phone className="text-primary-foreground" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-lg">(506) 717-PAUL</p>
+                                    <p className="font-semibold text-lg">(506) 555-ASPH</p>
                                     <p className="text-muted-foreground text-sm">Available 24/7 for emergencies</p>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@ export default function Home() {
                                     <Mail className="text-primary-foreground" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-lg">paul@paulsroofing.ca</p>
+                                    <p className="font-semibold text-lg">contact@asphaltbros.ca</p>
                                     <p className="text-muted-foreground text-sm">General inquiries</p>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@ export default function Home() {
                                     <Siren className="text-primary-foreground" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-lg">hurry@paulsroofing.ca</p>
+                                    <p className="font-semibold text-lg">emergency@asphaltbros.ca</p>
                                     <p className="text-muted-foreground text-sm">Emergency repairs</p>
                                 </div>
                             </div>
@@ -146,8 +146,8 @@ export default function Home() {
                                     <MapPin className="text-primary-foreground" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-lg">Quispamsis, New Brunswick</p>
-                                    <p className="text-muted-foreground text-sm">Serving all of Southern NB</p>
+                                    <p className="font-semibold text-lg">Serving our local community</p>
+                                    <p className="text-muted-foreground text-sm">Contact us for service area details</p>
                                 </div>
                             </div>
                         </div>

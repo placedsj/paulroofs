@@ -3,8 +3,8 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Paul's Roofing - Southern NB Specialist",
-  description: "30 Years on the Roof. Ready for Yours. Southern New Brunswick's Premier Metal Roofing Specialist.",
+  title: "Asphalt Bros Roofing",
+  description: "Top Quality Asphalt and Metal Roofing.",
 };
 
 export default function RootLayout({

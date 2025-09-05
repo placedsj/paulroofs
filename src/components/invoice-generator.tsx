@@ -18,7 +18,6 @@ import { Loader2, FileSignature, FileText, Trash2, PlusCircle, Printer } from 'l
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 
-
 const lineItemSchema = z.object({
   item: z.string().min(1, 'Item description is required.'),
   quantity: z.coerce.number().min(0, 'Quantity must be positive.'),
@@ -26,7 +25,7 @@ const lineItemSchema = z.object({
   total: z.number(),
 });
 
-const invoiceFormSchema = z.object({
+const formSchema = z.object({
   clientName: z.string().min(2, "Client name is required."),
   clientAddress: z.string().min(5, "Client address is required."),
   workDescription: z.string().min(10, "Work description is required."),
@@ -37,7 +36,7 @@ const invoiceFormSchema = z.object({
   quoteId: z.string().optional(),
 });
 
-type InvoiceFormValues = z.infer<typeof invoiceFormSchema>;
+type InvoiceFormValues = z.infer<typeof formSchema>;
 type LineItem = z.infer<typeof lineItemSchema>;
 
 type InvoiceGeneratorProps = {
@@ -51,12 +50,12 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
   const { toast } = useToast();
 
   const form = useForm<InvoiceFormValues>({
-    resolver: zodResolver(invoiceFormSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       clientName: "",
       clientAddress: "",
       workDescription: "",
-      lineItems: [{ item: 'Standing Seam Metal Roofing Panels', quantity: 1500, unitCost: 9, total: 13500 }],
+      lineItems: [{ item: 'Asphalt Shingles', quantity: 1500, unitCost: 4, total: 6000 }],
       subtotal: 0,
       tax: 0,
       total: 0,
@@ -70,7 +69,7 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
         clientName: client.name,
         clientAddress: client.address,
         workDescription: `Complete roof replacement for the property at ${client.address}.`,
-        lineItems: [{ item: 'Standing Seam Metal Roofing Panels', quantity: 1500, unitCost: 9, total: 13500 }],
+        lineItems: [{ item: 'Asphalt Shingles', quantity: 1500, unitCost: 4, total: 6000 }],
         quoteId: `Q-2024-` // Example, you might have this stored on the client object
       });
       toast({
@@ -177,11 +176,11 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
                   <FormItem><FormLabel>Client Name</FormLabel><FormControl><Input placeholder="Jane Doe" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="clientAddress" render={({ field }) => (
-                  <FormItem><FormLabel>Project Address</FormLabel><FormControl><Input placeholder="123 Main St, Rothesay" {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel>Project Address</FormLabel><FormControl><Input placeholder="123 Main St" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
               </div>
               <FormField control={form.control} name="workDescription" render={({ field }) => (
-                <FormItem><FormLabel>Work Description</FormLabel><FormControl><Textarea placeholder="e.g., Complete roof replacement with metal panels." {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>Work Description</FormLabel><FormControl><Textarea placeholder="e.g., Complete roof replacement with asphalt shingles." {...field} /></FormControl><FormMessage /></FormItem>
               )} />
                <FormField control={form.control} name="quoteId" render={({ field }) => (
                 <FormItem><FormLabel>Original Quote ID (Optional)</FormLabel><FormControl><Input placeholder="e.g., Q-2024-001" {...field} /></FormControl><FormMessage /></FormItem>
@@ -249,9 +248,8 @@ export function InvoiceGenerator({ client }: InvoiceGeneratorProps) {
                       <p className="text-sm text-muted-foreground mt-4"><strong>Bill To:</strong><br />{invoice.input.clientName}<br />{invoice.input.clientAddress}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-lg">Paul's Roofing</p>
-                    <p className="text-sm text-muted-foreground">Quispamsis, NB</p>
-                    <p className="text-sm text-muted-foreground">paul@paulsroofing.ca</p>
+                    <p className="font-bold text-lg">Asphalt Bros Roofing</p>
+                    <p className="text-sm text-muted-foreground">contact@asphaltbros.ca</p>
                     <div className="mt-4 text-sm">
                       <p><strong>Issue Date:</strong> {invoice.issueDate}</p>
                       <p><strong>Due Date:</strong> {invoice.dueDate}</p>

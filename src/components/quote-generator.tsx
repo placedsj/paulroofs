@@ -44,7 +44,7 @@ export function QuoteGenerator({ client }: QuoteGeneratorProps) {
     defaultValues: {
       clientName: "",
       clientAddress: "",
-      roofType: 'Metal',
+      roofType: 'Asphalt Shingles',
       roofSize: 1500,
       specialRequests: "",
     },
@@ -108,7 +108,7 @@ export function QuoteGenerator({ client }: QuoteGeneratorProps) {
               <FormField control={form.control} name="clientAddress" render={({ field }) => (
                 <FormItem>
                   <FormLabel>Project Address</FormLabel>
-                  <FormControl><Input placeholder="e.g., 123 Main St, Rothesay, NB" {...field} /></FormControl>
+                  <FormControl><Input placeholder="e.g., 123 Main St, Moncton, NB" {...field} /></FormControl>
                   <FormMessage />
                 </FormItem>
               )} />
@@ -119,8 +119,8 @@ export function QuoteGenerator({ client }: QuoteGeneratorProps) {
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
                       <SelectContent>
-                        <SelectItem value="Metal">Metal</SelectItem>
                         <SelectItem value="Asphalt Shingles">Asphalt Shingles</SelectItem>
+                        <SelectItem value="Metal">Metal</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

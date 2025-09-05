@@ -12,30 +12,25 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
+export type GeneratePromotionInput = z.infer<typeof GeneratePromotionInputSchema>;
 const GeneratePromotionInputSchema = z.object({
   roofType: z.string().describe('The type of roofing material used (e.g., "Standing Seam Metal", "Asphalt Shingles").'),
   roofColor: z.string().describe('The color of the new roof (e.g., "Charcoal Grey", "Driftwood").'),
   location: z.string().describe('The general location of the project (e.g., "in Rothesay", "near Quispamsis").'),
   keyDetail: z.string().optional().describe('A key highlight or special detail about the project (e.g., "Finished in just two days!", "Replaced a 30-year-old leaky roof.").'),
 });
-export type GeneratePromotionInput = z.infer<typeof GeneratePromotionInputSchema>;
 
-
+export type GeneratePromotionOutput = z.infer<typeof GeneratePromotionOutputSchema>;
 const GeneratePromotionOutputSchema = z.object({
   socialMediaPost: z.string().describe('The generated social media post text, including hashtags.'),
 });
-export type GeneratePromotionOutput = z.infer<typeof GeneratePromotionOutputSchema>;
 
-
-export async function generatePromotion(input: GeneratePromotionInput): Promise<GeneratePromotionOutput> {
-  return generatePromotionFlow(input);
-}
 
 const prompt = ai.definePrompt({
   name: 'generatePromotionPrompt',
   input: { schema: GeneratePromotionInputSchema },
   output: { schema: GeneratePromotionOutputSchema },
-  prompt: `You are a friendly and professional social media manager for "Paul's Roofing". Your goal is to generate an engaging social media post to showcase a recently completed project.
+  prompt: `You are a friendly and professional social media manager for "Asphalt Bros Roofing". Your goal is to generate an engaging social media post to showcase a recently completed project.
 
 The tone should be proud, professional, and focused on quality and customer satisfaction.
 
@@ -49,10 +44,9 @@ Instructions:
 1.  Write a short, engaging paragraph about the project.
 2.  Mention the type and color of the roof.
 3.  Include a call to action, like asking people to call for a free quote.
-4.  End with relevant hashtags, such as #PaulsRoofing #NewRoof #MetalRoofing #AsphaltShingles #QualityCraftsmanship and a location-specific hashtag based on the input.
+4.  End with relevant hashtags, such as #AsphaltBros #NewRoof #AsphaltShingles #QualityCraftsmanship and a location-specific hashtag based on the input.
 `,
 });
-
 
 const generatePromotionFlow = ai.defineFlow(
   {
@@ -65,3 +59,7 @@ const generatePromotionFlow = ai.defineFlow(
     return output!;
   }
 );
+
+export async function generatePromotion(input: GeneratePromotionInput): Promise<GeneratePromotionOutput> {
+  return generatePromotionFlow(input);
+}

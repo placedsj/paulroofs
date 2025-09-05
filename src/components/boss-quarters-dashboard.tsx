@@ -99,7 +99,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('promoter')} isActive={active_view === 'promoter'}><Megaphone/> Project Promoter</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('promoter')} isActive={activeView === 'promoter'}><Megaphone/> Project Promoter</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('blog')} isActive={activeView === 'blog'}><PenSquare/> Blog Writer</SidebarMenuButton>
@@ -123,7 +123,7 @@ export function BossQuartersDashboard() {
                 </header>
                 {renderContent()}
                  <footer className="mt-12 text-center text-muted-foreground text-sm">
-                    <p>PAUL'S ROOFING BOSS QUARTERS | SECURE ADMINISTRATIVE ACCESS</p>
+                    <p>ASPHALT BROS ROOFING | SECURE ADMINISTRATIVE ACCESS</p>
                 </footer>
             </main>
         </div>

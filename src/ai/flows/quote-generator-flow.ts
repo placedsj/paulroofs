@@ -11,6 +11,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
+export type GenerateQuoteInput = z.infer<typeof GenerateQuoteInputSchema>;
 const GenerateQuoteInputSchema = z.object({
   clientName: z.string().describe('The name of the client.'),
   clientAddress: z.string().describe('The address of the project.'),
@@ -18,7 +19,6 @@ const GenerateQuoteInputSchema = z.object({
   roofSize: z.number().describe('The size of the roof in square feet.'),
   specialRequests: z.string().optional().describe('Any special requests from the client.'),
 });
-export type GenerateQuoteInput = z.infer<typeof GenerateQuoteInputSchema>;
 
 const LineItemSchema = z.object({
     item: z.string().describe('Description of the line item.'),
@@ -26,7 +26,7 @@ const LineItemSchema = z.object({
     unitCost: z.number().describe('Cost per unit.'),
     total: z.number().describe('Total cost for the line item (quantity * unitCost).')
 });
-
+export type GenerateQuoteOutput = z.infer<typeof GenerateQuoteOutputSchema>;
 const GenerateQuoteOutputSchema = z.object({
   quoteId: z.string().describe('A unique identifier for the quote (e.g., Q-2024-001).'),
   date: z.string().describe('The date the quote was generated (e.g., YYYY-MM-DD).'),
@@ -37,17 +37,12 @@ const GenerateQuoteOutputSchema = z.object({
   total: z.number().describe('The final quote total (subtotal + tax).'),
   notes: z.string().describe('Additional notes, terms, or warranty information.'),
 });
-export type GenerateQuoteOutput = z.infer<typeof GenerateQuoteOutputSchema>;
-
-export async function generateQuote(input: GenerateQuoteInput): Promise<GenerateQuoteOutput> {
-  return quoteGeneratorFlow(input);
-}
 
 const prompt = ai.definePrompt({
   name: 'quoteGeneratorPrompt',
   input: { schema: GenerateQuoteInputSchema },
   output: { schema: GenerateQuoteOutputSchema },
-  prompt: `You are an expert roofing estimator for "Paul's Roofing". Generate a detailed and professional quote based on the following project information.
+  prompt: `You are an expert roofing estimator for "Asphalt Bros Roofing". Generate a detailed and professional quote based on the following project information.
 
 Current Date: ${new Date().toISOString().split('T')[0]}
 
@@ -61,7 +56,7 @@ Project Details:
 Instructions:
 1.  Generate a unique Quote ID starting with "Q-2024-".
 2.  Set the quote date to today and the expiry date to 30 days from today.
-3.  Create realistic line items for materials and labor. 
+3.  Create realistic line items for materials and labor.
     - For Metal roofs, use a base material cost of $9 per sq ft.
     - For Asphalt Shingles, use a base material cost of $4 per sq ft.
     - Labor cost is $6 per sq ft for both.
@@ -85,3 +80,7 @@ const quoteGeneratorFlow = ai.defineFlow(
     return output!;
   }
 );
+
+export async function generateQuote(input: GenerateQuoteInput): Promise<GenerateQuoteOutput> {
+  return quoteGeneratorFlow(input);
+}

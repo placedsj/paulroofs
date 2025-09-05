@@ -40,9 +40,9 @@ export function ProjectPromoter({ client }: ProjectPromoterProps) {
   const form = useForm<PromotionFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      roofType: 'Standing Seam Metal',
+      roofType: 'Asphalt Shingles',
       roofColor: 'Charcoal Grey',
-      location: 'Quispamsis',
+      location: 'Local Area',
       keyDetail: '',
     },
   });
@@ -51,7 +51,7 @@ export function ProjectPromoter({ client }: ProjectPromoterProps) {
     if (client) {
       form.reset({
         ...form.getValues(),
-        location: client.address.split(',')[1] || client.address.split(',')[0] || 'Southern New Brunswick',
+        location: client.address.split(',')[1] || client.address.split(',')[0] || 'our community',
         keyDetail: `Another fantastic project completed for the owners of the ${client.name}!`,
       });
        toast({
@@ -109,8 +109,8 @@ export function ProjectPromoter({ client }: ProjectPromoterProps) {
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
                                     <SelectContent>
-                                        <SelectItem value="Standing Seam Metal">Standing Seam Metal</SelectItem>
                                         <SelectItem value="Asphalt Shingles">Asphalt Shingles</SelectItem>
+                                        <SelectItem value="Standing Seam Metal">Standing Seam Metal</SelectItem>
                                         <SelectItem value="Other Metal">Other Metal</SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -127,7 +127,7 @@ export function ProjectPromoter({ client }: ProjectPromoterProps) {
                         <FormField control={form.control} name="location" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Project Location (Town/Area)</FormLabel>
-                                <FormControl><Input placeholder="e.g., Rothesay" {...field} /></FormControl>
+                                <FormControl><Input placeholder="e.g., Moncton" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />

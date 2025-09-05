@@ -17,8 +17,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
-  topic: z.string().min(1, 'The main topic of the blog post (e.g., "Benefits of Metal Roofing in Winter").'),
-  keywords: z.array(z.string()).min(1, 'A list of SEO keywords to include in the post (e.g., "Quispamsis roofing", "metal roof").'),
+  topic: z.string().min(1, 'The main topic of the blog post (e.g., "Benefits of Asphalt Shingles").'),
+  keywords: z.array(z.string()).min(1, 'A list of SEO keywords to include in the post (e.g., "roofing contractors", "asphalt shingles").'),
 });
 
 type BlogFormValues = z.infer<typeof formSchema>;
@@ -32,8 +32,8 @@ export function BlogPostGenerator() {
   const form = useForm<BlogFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      topic: 'Benefits of Metal Roofing in Winter',
-      keywords: ['Quispamsis roofing', 'metal roof', 'winter'],
+      topic: 'Benefits of Asphalt Shingles',
+      keywords: ['asphalt shingles', 'roofing', 'curb appeal'],
     },
   });
 
@@ -57,7 +57,7 @@ export function BlogPostGenerator() {
         const textToCopy = `
 Title: ${blogPost.title}
 Slug: ${blogPost.slug}
-Category: Metal Roofing (You can change this)
+Category: Asphalt Roofing (You can change this)
 Published Date: ${blogPost.publishedDate}
 
 ---
@@ -92,7 +92,7 @@ ${blogPost.conclusion}
             <PenSquare /> AI Blog Post Generator
         </CardTitle>
         <CardDescription>
-            Generate a new dad-joke-filled, SEO-friendly blog post for your website. Just provide a topic and some keywords.
+            Generate a new SEO-friendly blog post for your website. Just provide a topic and some keywords.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -103,14 +103,14 @@ ${blogPost.conclusion}
                          <FormField control={form.control} name="topic" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Blog Post Topic</FormLabel>
-                                <FormControl><Input placeholder="e.g., Benefits of Metal Roofing" {...field} /></FormControl>
+                                <FormControl><Input placeholder="e.g., Benefits of Asphalt Shingles" {...field} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
                         <FormField control={form.control} name="keywords" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>SEO Keywords (comma-separated)</FormLabel>
-                                <FormControl><Input placeholder="e.g., metal roof, rothesay" {...field} onChange={(e) => field.onChange(e.target.value.split(',').map(k => k.trim()))} /></FormControl>
+                                <FormControl><Input placeholder="e.g., asphalt shingles, roofing" {...field} onChange={(e) => field.onChange(e.target.value.split(',').map(k => k.trim()))} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
@@ -126,7 +126,7 @@ ${blogPost.conclusion}
                 {isLoading && (
                     <div className="flex flex-col items-center justify-center h-full text-center p-8 border rounded-lg bg-background">
                         <Loader2 className="h-12 w-12 text-primary animate-spin mb-4" />
-                        <p className="text-lg font-semibold">Our AI writer is brewing coffee and jokes...</p>
+                        <p className="text-lg font-semibold">Our AI writer is working on it...</p>
                         <p className="text-muted-foreground">This might take a moment.</p>
                     </div>
                 )}
