@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, Facebook, ShieldCheck } from 'lucide-react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { ServicesSection } from '@/components/services-section';
@@ -74,6 +74,31 @@ export default function Home() {
                         <div className="space-y-4 text-muted-foreground text-lg">
                            <p>Asphalt Bros Roofing LTD is a family-run and owned roofing company dedicated to delivering quality roofing services.</p>
                            <p>Mike has been in the roofing industry for many years and has always wanted a company of his own to showcase his talent. Caleb although new to the roofing industry has years of business experience and was very excited for this new opportunity with his brother in law.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section className="py-20 bg-secondary/20">
+            <div className="container mx-auto px-4">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 className="text-4xl font-bold mb-6">PROVEN PERFORMANCE IN EVERY SHINGLE</h2>
+                        <p className="text-lg text-muted-foreground mb-6">Your roof is your home's first line of defense against the ravages of severe weather, as well as everyday wind, rain, snow, and extreme temperatures. That's why proven performance isn't just a nice-to-have. It's a must.</p>
+                        <Card className="bg-background">
+                            <CardHeader className="flex flex-row items-center gap-4">
+                                <ShieldCheck className="w-12 h-12 text-primary" />
+                                <div>
+                                    <CardTitle>CLASS 3 IMPACT RESISTANCE</CardTitle>
+                                    <CardDescription>IKO Dynasty shingles qualify for a Class 3 impact resistance rating, which may enable you to a reduction in your homeowner insurance premium, if available.</CardDescription>
+                                </div>
+                            </CardHeader>
+                        </Card>
+                    </div>
+                     <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[450px]">
+                        <div className="col-span-2 row-span-2 rounded-lg overflow-hidden shadow-lg">
+                             <Image src="https://ik.imagekit.io/ik5x4q7jl/Gemini_Generated_Image_13yq9113yq9113yq.png?updatedAt=1757039964062" alt="A beautiful home with a durable IKO Dynasty roof" width={800} height={600} className="w-full h-full object-cover" data-ai-hint="durable roof" />
                         </div>
                     </div>
                 </div>
