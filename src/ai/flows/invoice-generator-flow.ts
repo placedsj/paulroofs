@@ -1,13 +1,6 @@
 
 'use server';
 
-/**
- * @fileOverview An AI-powered tool for generating professional invoices.
- * - generateInvoice - A function that creates a detailed invoice from project details.
- * - GenerateInvoiceInput - The input type for the generateInvoice function.
- * - GenerateInvoiceOutput - The return type for the generateInvoice function.
- */
-
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
@@ -39,43 +32,32 @@ const GenerateInvoiceOutputSchema = z.object({
 });
 
 
-const prompt = ai.definePrompt({
-  name: 'generateInvoicePrompt',
-  input: { schema: GenerateInvoiceInputSchema },
-  output: { schema: GenerateInvoiceOutputSchema },
-  prompt: `You are the accounting department for "Asphalt Bros Roofing". Generate a professional invoice based on the following completed project information.
-
-Current Date: ${new Date().toISOString().split('T')[0]}
-
-Project Details:
-- Client Name: {{{clientName}}}
-- Project Address: {{{clientAddress}}}
-- Work Summary: {{{workDescription}}}
-- Original Quote ID: {{{quoteId}}}
-- Subtotal: {{{subtotal}}}
-- Tax: {{{tax}}}
-- Total: {{{total}}}
-
-Instructions:
-1.  Generate a unique Invoice ID starting with "INV-2024-".
-2.  Set the Issue Date to today.
-3.  Set the Due Date to 14 days from today.
-4.  Include professional notes with payment instructions (e.g., "Payment can be made via e-transfer to contact@asphaltbros.ca or by cheque.") and a brief thank you message to the client.
-`,
-});
-
-const generateInvoiceFlow = ai.defineFlow(
-  {
-    name: 'generateInvoiceFlow',
-    inputSchema: GenerateInvoiceInputSchema,
-    outputSchema: GenerateInvoiceOutputSchema,
-  },
-  async (input) => {
-    const { output } = await prompt(input);
-    return output!;
-  }
-);
-
 export async function generateInvoice(input: GenerateInvoiceInput): Promise<GenerateInvoiceOutput> {
-  return generateInvoiceFlow(input);
+  const prompt = ai.definePrompt({
+    name: 'generateInvoicePrompt',
+    input: { schema: GenerateInvoiceInputSchema },
+    output: { schema: GenerateInvoiceOutputSchema },
+    prompt: `You are the accounting department for "Asphalt Bros Roofing LTD". Generate a professional invoice based on the following completed project information.
+
+    Current Date: ${new Date().toISOString().split('T')[0]}
+
+    Project Details:
+    - Client Name: {{{clientName}}}
+    - Project Address: {{{clientAddress}}}
+    - Work Summary: {{{workDescription}}}
+    - Original Quote ID: {{{quoteId}}}
+    - Subtotal: {{{subtotal}}}
+    - Tax: {{{tax}}}
+    - Total: {{{total}}}
+
+    Instructions:
+    1.  Generate a unique Invoice ID starting with "INV-2024-".
+    2.  Set the Issue Date to today.
+    3.  Set the Due Date to 14 days from today.
+    4.  Include professional notes with payment instructions (e.g., "Payment can be made via e-transfer to mikehenderson.abr@gmail.com or by cheque.") and a brief thank you message to the client for supporting a family-run business.
+    `,
+  });
+  
+  const { output } = await prompt(input);
+  return output!;
 }

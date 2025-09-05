@@ -1,160 +1,83 @@
 
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { ColorChart, type ColorOption } from '@/components/color-chart';
-import { HouseVisualizer } from '@/components/house-visualizer';
-import { Check, Wrench, Building, Droplets } from 'lucide-react';
-import { metalColors, shingleColors } from '@/lib/colors';
+import { Wrench, Repeat, Droplets, Wind, Home, Building, Snowflake, Sun, Search } from 'lucide-react';
 
-const serviceBenefits = {
-    metal: ["40+ Year Warranty", "Energy Efficient", "Storm Resistant", "Fire Resistant", "Low Maintenance", "Eco-Friendly"],
-    shingles: ["25-30 Year Warranty", "Wind Resistant", "Impact Resistant", "Algae Resistant", "Cost Effective", "Quick Installation"]
-};
+
+const services = [
+    {
+        icon: <Wrench className="h-8 w-8 text-primary" />,
+        title: "Roof Repair",
+        description: "Our team of experts will repair any leaks, damage, or wear and tear on your roof. We use high-quality materials and provide expert service and advice."
+    },
+    {
+        icon: <Repeat className="h-8 w-8 text-primary" />,
+        title: "Roof Replacement",
+        description: "If your roof is beyond repair, we offer affordable and efficient roof replacement services. Our team will work with you to find the best solution for your home."
+    },
+    {
+        icon: <Droplets className="h-8 w-8 text-primary" />,
+        title: "Gutter Installation & Repair",
+        description: "Properly functioning gutters are crucial to protecting your home from water damage. We offer installation and maintenance services to ensure your gutters are working properly."
+    },
+    {
+        icon: <Wind className="h-8 w-8 text-primary" />,
+        title: "Storm Damage Repair",
+        description: "If your roof has been damaged by a storm, our team will quickly assess the damage and provide a solution. We work with you to provide a stress free process. We are available 7 days a week for emergency repairs."
+    },
+    {
+        icon: <Home className="h-8 w-8 text-primary" />,
+        title: "Roof Maintenance",
+        description: "Preventative maintenance is key to extending the life of your roof. We offer regular maintenance services to keep your roof in top condition."
+    },
+    {
+        icon: <Building className="h-8 w-8 text-primary" />,
+        title: "Commercial Roofing",
+        description: "We also offer commercial roofing services for businesses of any size. Our team has experience in a variety of roofing types and can provide the best solution for your business."
+    },
+    {
+        icon: <Snowflake className="h-8 w-8 text-primary" />,
+        title: "Snow Removal",
+        description: "Snow and ice building up on your roof? Our experts are here to provide snow removal off of your roof to relieve your roof of the very heavy snow load."
+    },
+    {
+        icon: <Search className="h-8 w-8 text-primary" />,
+        title: "Roof Inspections",
+        description: "We offer a roof inspection service. We will do an assessment and provide you with a detailed report of the condition of your roof, expected remaining lifespan and any repairs that need done."
+    },
+    {
+        icon: <Sun className="h-8 w-8 text-primary" />,
+        title: "Roof Cleaning Services",
+        description: "Is your roof dirty? Covered in dirt and moss? We offer roof cleaning services. Reach out today for a free quote! Our experts are happy to help."
+    }
+]
 
 export function ServicesSection() {
-    const [selectedService, setSelectedService] = useState('shingles');
-    const [selectedColor, setSelectedColor] = useState<ColorOption | null>(shingleColors[0]);
-    const [houseStyle, setHouseStyle] = useState('ranch');
-    
-    const handleTabChange = (value: string) => {
-        setSelectedService(value);
-        if (value === 'metal') {
-            setSelectedColor(metalColors[0]);
-        } else if (value === 'shingles') {
-            setSelectedColor(shingleColors[0]);
-        } else {
-            setSelectedColor(null);
-        }
-    };
-
-    const currentColors = selectedService === 'metal' ? metalColors : shingleColors;
-
     return (
         <section id="services" className="py-20 bg-secondary/20">
             <div className="container mx-auto px-4">
-                <h2 className="text-4xl font-bold text-center mb-12">OUR SERVICES</h2>
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold">Expert Roofing Services</h2>
+                    <p className="text-muted-foreground mt-4 max-w-3xl mx-auto text-lg">
+                        Welcome to Asphalt Bros Roofing, where we provide quality roofing solutions for your home or business. Our experienced team is ready to assist you with all your roofing needs. Contact us today for a free estimate!
+                    </p>
+                </div>
                 
-                <Tabs defaultValue="shingles" onValueChange={handleTabChange} className="w-full">
-                    <TabsList className="grid w-full grid-cols-3 mx-auto max-w-lg h-auto">
-                        <TabsTrigger value="shingles">ASPHALT SHINGLES</TabsTrigger>
-                        <TabsTrigger value="metal">METAL ROOFING</TabsTrigger>
-                        <TabsTrigger value="other">OTHER SERVICES</TabsTrigger>
-                    </TabsList>
-                    
-                    <TabsContent value="shingles" className="mt-8 space-y-8">
-                        <ServiceInfoCard 
-                            title="PREMIUM ASPHALT SHINGLES"
-                            description="Traditional roofing with modern performance. Our architectural shingles provide excellent protection and curb appeal."
-                            benefits={serviceBenefits.shingles}
-                        />
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            <ColorChart colors={shingleColors} title="IKO CAMBRIDGE - SHINGLE COLORS" onColorSelect={setSelectedColor} selectedColor={selectedColor} />
-                            <HouseVisualizer selectedColor={selectedColor} houseStyle={houseStyle} setHouseStyle={setHouseStyle} />
-                        </div>
-                    </TabsContent>
-
-                    <TabsContent value="metal" className="mt-8 space-y-8">
-                        <ServiceInfoCard 
-                            title="PREMIUM METAL ROOFING"
-                            description="Lifetime protection with our premium metal roofing systems. Choose from our extensive color palette and see how it looks on your home."
-                            benefits={serviceBenefits.metal}
-                        />
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            <ColorChart colors={metalColors} title="DAIRYTOWN EXTERIORS - METAL COLORS" onColorSelect={setSelectedColor} selectedColor={selectedColor} />
-                            <HouseVisualizer selectedColor={selectedColor} houseStyle={houseStyle} setHouseStyle={setHouseStyle} />
-                        </div>
-                    </TabsContent>
-                    
-                    <TabsContent value="other" className="mt-8">
-                        <div className="grid md:grid-cols-3 gap-8">
-                             <OtherServiceCard 
-                                icon={<Wrench className="h-8 w-8 text-primary" />}
-                                title="ROOF REPAIRS" 
-                                description="Emergency repairs and maintenance for all roofing types. Available 24/7 for urgent situations."
-                                items={["Leak Detection & Repair", "Storm Damage Assessment", "Gutter Repair & Cleaning", "Emergency Tarping"]}
-                            />
-                            <OtherServiceCard 
-                                icon={<Building className="h-8 w-8 text-primary" />}
-                                title="SIDING & EXTERIORS" 
-                                description="Complete exterior renovations with Hardie Board and other premium materials."
-                                items={["Hardie Board Siding", "Vinyl Siding", "Wood Siding", "Trim & Soffit Work"]}
-                            />
-                            <OtherServiceCard 
-                                icon={<Droplets className="h-8 w-8 text-primary" />}
-                                title="GUTTERS & EAVESTROUGH" 
-                                description="Expert installation of seamless gutter systems to protect your foundation and landscaping."
-                                items={["Seamless Gutter Systems", "Gutter Guard Installation", "Downspout Repair & Install", "Soffit & Fascia Vents"]}
-                            />
-                        </div>
-                    </TabsContent>
-                </Tabs>
-                
-                <div className="mt-16 text-center">
-                    <div className="bg-primary/90 p-8 rounded-lg">
-                        <h3 className="text-3xl font-bold text-primary-foreground mb-4">READY TO GET STARTED?</h3>
-                        <p className="text-primary-foreground/80 text-lg mb-6">
-                            Get a free estimate for your roofing project. We'll help you choose the perfect materials and colors.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button asChild size="lg" variant="secondary" className="font-bold text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-                                <a href="tel:+15065552774">CALL (506) 555-ASPH</a>
-                            </Button>
-                            <Button asChild size="lg" variant="outline" className="font-bold text-lg text-primary-foreground border-2 border-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                                <Link href="#contact">GET FREE QUOTE</Link>
-                            </Button>
-                        </div>
-                    </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {services.map(service => (
+                         <Card key={service.title} className="flex flex-col">
+                            <CardHeader className="items-center text-center">
+                                {service.icon}
+                                <CardTitle className="mt-4">{service.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent className="flex-grow">
+                                <p className="text-muted-foreground text-center">{service.description}</p>
+                            </CardContent>
+                        </Card>
+                    ))}
                 </div>
             </div>
         </section>
-    );
-}
-
-function ServiceInfoCard({ title, description, benefits }: { title: string, description: string, benefits: string[] }) {
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="text-3xl">{title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <p className="text-muted-foreground text-lg mb-6">{description}</p>
-                <div className="grid md:grid-cols-3 gap-4 text-foreground">
-                    {benefits.map(benefit => (
-                         <div key={benefit} className="flex items-center">
-                            <Check className="h-5 w-5 text-primary mr-2" />
-                            <span>{benefit}</span>
-                        </div>
-                    ))}
-                </div>
-            </CardContent>
-        </Card>
-    );
-}
-
-
-function OtherServiceCard({ icon, title, description, items }: { icon: React.ReactNode, title: string, description: string, items: string[] }) {
-    return (
-        <Card className="flex flex-col">
-            <CardHeader className="items-center text-center">
-                {icon}
-                <CardTitle className="mt-4">{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow">
-                <ul className="space-y-3">
-                    {items.map(item => (
-                        <li key={item} className="flex items-start">
-                            <Check className="h-4 w-4 text-primary/80 mr-2 mt-1 shrink-0" />
-                            <span className="text-muted-foreground text-sm">{item}</span>
-                        </li>
-                    ))}
-                </ul>
-            </CardContent>
-        </Card>
     );
 }

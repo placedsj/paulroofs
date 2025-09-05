@@ -3,22 +3,22 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 const testimonials = [
   {
-    quote: "The Asphalt Bros crew did an amazing job on our new roof. It looks fantastic and our neighbors have all complimented it. Highly recommend!",
-    name: "John & Jane Smith",
-    location: "Moncton, NB",
-    avatar: "JS"
+    quote: "Called Asphalt Bros Roofing to repair my mothers roof. They showed up bright and early and got the job done in a few hours, Great service!",
+    name: "J. Armstrong",
+    location: "Review via Website",
+    avatar: "JA"
   },
   {
-    quote: "Professional, punctual, and the quality of work is second to none. The cleanup was immaculate. We couldn't be happier with our decision to go with Asphalt Bros Roofing.",
-    name: "David Lee",
-    location: "Riverview, NB",
-    avatar: "DL"
+    quote: "Asphalt Bros Roofing Ltd are highly recommended. They came and done a free estimate and quote which is reasonable and started the job within 2 weeks. They are hard workers and very respectful of our property. They also did a great job and cleaned up thoroughly. We had no complaints at all and would definitely recommend them.",
+    name: "P. Feran",
+    location: "Review via Website",
+    avatar: "PF"
   },
   {
-    quote: "After the last big storm, we had some serious damage. The Asphalt Bros team was out here for an emergency repair in no time. They were a lifesaver!",
-    name: "Mary Johnson",
-    location: "Dieppe, NB",
-    avatar: "MJ"
+    quote: "From the first phone call to the last shingle every aspect of the recent work done on our roof by Asphalt Bros was handled in a professional manner. The quote was free, the price was reasonable, and the work was done in a timely and organized way. I would recommend them to anyone!",
+    name: "B. Golding",
+    location: "Review via Website",
+    avatar: "BG"
   }
 ];
 

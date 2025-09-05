@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, Mail, MapPin, Siren, Check } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { ServicesSection } from '@/components/services-section';
@@ -29,19 +29,16 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/50 to-transparent" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-primary-foreground px-4">
             <h1 className="text-5xl md:text-7xl font-extrabold text-shadow-outline">
-              QUALITY THAT'S SET IN STONE.
+              ASPHALT BROS ROOFING LTD
             </h1>
             <p className="mt-6 max-w-2xl text-xl md:text-2xl text-zinc-200 text-shadow-outline-sm">
-              THE BEST ROOF OVER YOUR HEAD.
-            </p>
-            <p className="mt-4 max-w-xl text-lg text-zinc-300">
-              Your trusted experts in Asphalt & Metal Roofing.
+              Reliable Roofing Solutions for Your Home
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="font-bold text-lg">
-                <a href="tel:+15065552774">
+                <a href="tel:+15066500407">
                   <Phone className="mr-2 h-5 w-5" />
-                  CALL (506) 555-ASPH
+                  CALL (506) 650-0407
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="font-bold text-lg border-2 border-primary text-primary-foreground bg-transparent hover:bg-primary hover:text-primary-foreground">
@@ -56,48 +53,28 @@ export default function Home() {
         <section id="about" className="py-20 bg-background">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold">ROOFING EXCELLENCE, GUARANTEED</h2>
-                    <p className="text-muted-foreground mt-4 max-w-3xl mx-auto text-lg">
-                        Asphalt Bros Roofing is the trusted choice for homeowners who demand the best. We specialize in premium asphalt and metal roofing systems engineered to last, backed by comprehensive warranties and expert craftsmanship.
-                    </p>
+                    <h2 className="text-4xl font-bold">ABOUT ASPHALT BROS ROOFING</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="relative rounded-lg overflow-hidden shadow-lg h-96">
                         <Image
                             src="https://picsum.photos/800/600"
-                            alt="A newly installed high-quality asphalt roof"
+                            alt="The Asphalt Bros Roofing family team"
                             fill
                             className="object-cover"
-                            data-ai-hint="new asphalt roof"
+                            data-ai-hint="family team photo"
                         />
                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                          <div className="absolute bottom-0 left-0 p-6">
-                            <h3 className="text-2xl font-bold text-white text-shadow-outline">Licensed & Insured</h3>
-                            <p className="text-white/90 text-shadow-outline-sm">Peace of mind guaranteed.</p>
+                            <h3 className="text-2xl font-bold text-white text-shadow-outline">Our Family</h3>
                          </div>
                     </div>
                     <div>
-                        <h3 className="text-2xl font-bold mb-6">WHY CHOOSE ASPHALT BROS?</h3>
-                        <ul className="space-y-4">
-                            {[
-                                { title: "Years of Experience", description: "Decades of dedicated service in the community." },
-                                { title: "Asphalt & Metal Specialists", description: "Expert installation of durable and beautiful roofs." },
-                                { title: "Lifetime Warranties", description: "We stand by our work with available lifetime warranties." },
-                                { title: "Premium Materials", description: "We use only the best materials for a long-lasting finish." },
-                                { title: "24/7 Emergency Service", description: "Ready to respond when you need us most." },
-                                { title: "Locally Owned & Operated", description: "Proudly serving our local community." },
-                            ].map((item) => (
-                                <li key={item.title} className="flex items-start">
-                                    <div className="flex-shrink-0">
-                                        <Check className="h-6 w-6 text-primary mr-3 mt-1" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-lg">{item.title}</h4>
-                                        <p className="text-muted-foreground">{item.description}</p>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                        <h3 className="text-2xl font-bold mb-6">A FAMILY-RUN & OWNED COMPANY</h3>
+                        <div className="space-y-4 text-muted-foreground text-lg">
+                           <p>Asphalt Bros Roofing LTD is a family-run and owned roofing company dedicated to delivering quality roofing services.</p>
+                           <p>Mike has been in the roofing industry for many years and has always wanted a company of his own to showcase his talent. Caleb although new to the roofing industry has years of business experience and was very excited for this new opportunity with his brother in law.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,15 +89,16 @@ export default function Home() {
                 <h2 className="text-4xl font-bold text-center mb-16">GET IN TOUCH</h2>
                 <div className="grid md:grid-cols-2 gap-12">
                     <div>
-                        <h3 className="text-2xl font-bold mb-6">CONTACT INFORMATION</h3>
+                        <h3 className="text-2xl font-bold mb-6">CONTACT US</h3>
+                        <p className="text-muted-foreground mb-6">To get a free quote, or if you have questions or special requests, just drop us a line. We look forward to hearing from you!</p>
                         <div className="space-y-6">
                             <div className="flex items-center">
                                 <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
                                     <Phone className="text-primary-foreground" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-lg">(506) 555-ASPH</p>
-                                    <p className="text-muted-foreground text-sm">Available 24/7 for emergencies</p>
+                                    <p className="font-semibold text-lg">(506) 650-0407</p>
+                                    <p className="text-muted-foreground text-sm">Open 9am - 5pm, 7 days a week for emergencies</p>
                                 </div>
                             </div>
                             <div className="flex items-center">
@@ -128,26 +106,27 @@ export default function Home() {
                                     <Mail className="text-primary-foreground" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-lg">contact@asphaltbros.ca</p>
+                                    <p className="font-semibold text-lg">mikehenderson.abr@gmail.com</p>
+                                     <p className="font-semibold text-lg">calebtiner.abr@gmail.com</p>
                                     <p className="text-muted-foreground text-sm">General inquiries</p>
-                                </div>
-                            </div>
-                             <div className="flex items-center">
-                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
-                                    <Siren className="text-primary-foreground" />
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-lg">emergency@asphaltbros.ca</p>
-                                    <p className="text-muted-foreground text-sm">Emergency repairs</p>
                                 </div>
                             </div>
                             <div className="flex items-center">
                                 <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
-                                    <MapPin className="text-primary-foreground" />
+                                    <Instagram className="text-primary-foreground" />
                                 </div>
                                 <div>
-                                    <p className="font-semibold text-lg">Serving our local community</p>
-                                    <p className="text-muted-foreground text-sm">Contact us for service area details</p>
+                                    <p className="font-semibold text-lg">@asphaltbrosroofing</p>
+                                    <p className="text-muted-foreground text-sm">Follow us on Instagram!</p>
+                                </div>
+                            </div>
+                             <div className="flex items-center">
+                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
+                                    <Facebook className="text-primary-foreground" />
+                                </div>
+                                <div>
+                                    <p className="font-semibold text-lg">Find us on Facebook</p>
+                                    <p className="text-muted-foreground text-sm">Promotions & pictures of our work.</p>
                                 </div>
                             </div>
                         </div>

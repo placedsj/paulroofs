@@ -3,8 +3,8 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Asphalt Bros Roofing",
-  description: "Top Quality Asphalt and Metal Roofing.",
+  title: "Asphalt Bros Roofing LTD",
+  description: "Reliable Roofing Solutions for Your Home.",
 };
 
 export default function RootLayout({

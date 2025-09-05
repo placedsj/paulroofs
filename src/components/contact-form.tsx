@@ -15,6 +15,7 @@ const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().optional(),
+  address: z.string().optional(),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
 
@@ -28,6 +29,7 @@ export function ContactForm() {
             name: "",
             email: "",
             phone: "",
+            address: "",
             message: "",
         },
     });
@@ -58,8 +60,8 @@ export function ContactForm() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-2xl">REQUEST A QUOTE</CardTitle>
-                <CardDescription>Fill out the form below and we'll get back to you.</CardDescription>
+                <CardTitle className="text-2xl">REQUEST A FREE QUOTE!</CardTitle>
+                <CardDescription>Let us know the details of what you are looking for, and we'll contact you with a quote.</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
@@ -94,19 +96,29 @@ export function ContactForm() {
                                 </FormItem>
                             )}
                         />
+                        <FormField
+                            control={form.control}
+                            name="address"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl><Input placeholder="Address (Street, City, Zip Code)" {...field} /></FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                          <FormField
                             control={form.control}
                             name="message"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormControl><Textarea placeholder="Describe your roofing needs..." rows={4} {...field} /></FormControl>
+                                    <FormControl><Textarea placeholder="Tell us about your project..." rows={4} {...field} /></FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                         <Button type="submit" className="w-full font-bold" disabled={isLoading}>
                             {isLoading && <Loader2 className="animate-spin" />}
-                            {isLoading ? 'SENDING...' : 'SEND REQUEST'}
+                            {isLoading ? 'SENDING...' : 'SEND'}
                         </Button>
                     </form>
                 </Form>

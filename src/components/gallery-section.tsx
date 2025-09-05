@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const galleryImages = [
-  { src: "https://placehold.co/600x400/png?text=Modern+home+with+a+charcoal+metal+roof", alt: "Modern home with a charcoal metal roof.", hint: "metal roof" },
-  { src: "https://placehold.co/600x400/png?text=Close-up+of+a+new+standing+seam+metal+roof", alt: "Close-up of a new standing seam metal roof.", hint: "metal roof" },
-  { src: "https://placehold.co/600x400/png?text=Ranch+style+house+with+a+new+forest+green+metal+roof", alt: "Ranch style house with a new forest green metal roof.", hint: "green metal roof" },
-  { src: "https://placehold.co/600x400/png?text=Two-story+house+with+a+brand+new+red+metal+roof", alt: "Two-story house with a brand new red metal roof.", hint: "red metal roof" },
-  { src: "https://placehold.co/600x400/png?text=Detailed+view+of+metal+roof+flashing+and+trim+work", alt: "Detailed view of metal roof flashing and trim work.", hint: "metal roof" },
-  { src: "https://placehold.co/600x400/png?text=Completed+metal+roofing+project+on+a+large+luxury+house", alt: "Completed metal roofing project on a large luxury house.", hint: "metal roof house" },
+  { src: "https://picsum.photos/seed/img1/600/400", alt: "Asphalt shingle roof", hint: "asphalt shingle" },
+  { src: "https://picsum.photos/seed/img2/600/400", alt: "Roof repair in progress", hint: "roof repair" },
+  { src: "https://picsum.photos/seed/img3/600/400", alt: "New roof installation", hint: "new roof" },
+  { src: "https://picsum.photos/seed/img4/600/400", alt: "Commercial roofing project", hint: "commercial roof" },
+  { src: "https://picsum.photos/seed/img5/600/400", alt: "Cleaned roof after moss removal", hint: "roof cleaning" },
+  { src: "https://picsum.photos/seed/img6/600/400", alt: "Team working on a roof", hint: "roofing team" },
+  { src: "https://picsum.photos/seed/img7/600/400", alt: "Detailed gutter work", hint: "gutter installation" },
+  { src: "https://picsum.photos/seed/img8/600/400", alt: "Storm damaged roof before repair", hint: "storm damage" },
 ];
 
 export function GallerySection() {
@@ -16,12 +18,12 @@ export function GallerySection() {
     <section id="gallery" className="py-20 bg-secondary/20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold">OUR WORK</h2>
+          <h2 className="text-4xl font-bold">EXPLORE OUR WORK</h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
-            A showcase of our quality craftsmanship and the beautiful, durable roofs we've installed across Southern New Brunswick.
+            A showcase of our quality craftsmanship and the beautiful, durable roofs we've installed.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {galleryImages.map((image, index) => (
             <div key={index} className="group overflow-hidden rounded-lg shadow-lg">
               <Image
@@ -29,7 +31,7 @@ export function GallerySection() {
                 alt={image.alt}
                 width={600}
                 height={400}
-                className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
+                className="object-cover w-full h-full aspect-[4/3] transform transition-transform duration-500 group-hover:scale-110"
                 data-ai-hint={image.hint}
               />
             </div>

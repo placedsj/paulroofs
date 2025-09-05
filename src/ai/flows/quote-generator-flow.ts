@@ -1,13 +1,6 @@
 
 'use server';
 
-/**
- * @fileOverview An AI-powered tool for generating roofing quotes.
- * - generateQuote - A function that creates a detailed quote based on project details.
- * - GenerateQuoteInput - The input type for the generateQuote function.
- * - GenerateQuoteOutput - The return type for the generateQuote function.
- */
-
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
@@ -38,49 +31,37 @@ const GenerateQuoteOutputSchema = z.object({
   notes: z.string().describe('Additional notes, terms, or warranty information.'),
 });
 
-const prompt = ai.definePrompt({
-  name: 'quoteGeneratorPrompt',
-  input: { schema: GenerateQuoteInputSchema },
-  output: { schema: GenerateQuoteOutputSchema },
-  prompt: `You are an expert roofing estimator for "Asphalt Bros Roofing". Generate a detailed and professional quote based on the following project information.
+export async function generateQuote(input: GenerateQuoteInput): Promise<GenerateQuoteOutput> {
+    const prompt = ai.definePrompt({
+        name: 'quoteGeneratorPrompt',
+        input: { schema: GenerateQuoteInputSchema },
+        output: { schema: GenerateQuoteOutputSchema },
+        prompt: `You are an expert roofing estimator for "Asphalt Bros Roofing LTD", a family-run company. Generate a detailed and professional quote based on the following project information.
 
-Current Date: ${new Date().toISOString().split('T')[0]}
+        Current Date: ${new Date().toISOString().split('T')[0]}
 
-Project Details:
-- Client Name: {{{clientName}}}
-- Project Address: {{{clientAddress}}}
-- Roof Type: {{{roofType}}}
-- Roof Size (sq ft): {{{roofSize}}}
-- Special Requests: {{{specialRequests}}}
+        Project Details:
+        - Client Name: {{{clientName}}}
+        - Project Address: {{{clientAddress}}}
+        - Roof Type: {{{roofType}}}
+        - Roof Size (sq ft): {{{roofSize}}}
+        - Special Requests: {{{specialRequests}}}
 
-Instructions:
-1.  Generate a unique Quote ID starting with "Q-2024-".
-2.  Set the quote date to today and the expiry date to 30 days from today.
-3.  Create realistic line items for materials and labor.
-    - For Metal roofs, use a base material cost of $9 per sq ft.
-    - For Asphalt Shingles, use a base material cost of $4 per sq ft.
-    - Labor cost is $6 per sq ft for both.
-    - Include line items for underlayment, flashing, fasteners/nails, ventilation, and waste disposal. Adjust quantities based on roof size.
-4.  Calculate the subtotal from the line items.
-5.  Calculate tax (HST) at 15% of the subtotal.
-6.  Calculate the final total.
-7.  Include professional notes about the warranty (e.g., "40-Year Material Warranty for Metal" or "25-Year Material Warranty for Shingles") and a thank you message.
-`,
-});
+        Instructions:
+        1.  Generate a unique Quote ID starting with "Q-2024-".
+        2.  Set the quote date to today and the expiry date to 30 days from today.
+        3.  Create realistic line items for materials and labor.
+            - For Metal roofs, use a base material cost of $9 per sq ft.
+            - For Asphalt Shingles, use a base material cost of $4 per sq ft.
+            - Labor cost is $6 per sq ft for both.
+            - Include line items for underlayment, flashing, fasteners/nails, ventilation, and waste disposal. Adjust quantities based on roof size.
+        4.  Calculate the subtotal from the line items.
+        5.  Calculate tax (HST) at 15% of the subtotal.
+        6.  Calculate the final total.
+        7.  Include professional notes about the warranty (e.g., "40-Year Material Warranty for Metal" or "25-Year Material Warranty for Shingles") and a thank you message from the family team at Asphalt Bros.
+        `,
+    });
 
-
-const quoteGeneratorFlow = ai.defineFlow(
-  {
-    name: 'quoteGeneratorFlow',
-    inputSchema: GenerateQuoteInputSchema,
-    outputSchema: GenerateQuoteOutputSchema,
-  },
-  async (input) => {
     const { output } = await prompt(input);
     return output!;
-  }
-);
-
-export async function generateQuote(input: GenerateQuoteInput): Promise<GenerateQuoteOutput> {
-  return quoteGeneratorFlow(input);
 }
