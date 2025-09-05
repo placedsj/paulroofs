@@ -14,9 +14,6 @@ export function Footer() {
               height={48}
               className="rounded-lg"
             />
-            <h3 className="text-2xl font-bold font-headline text-primary">
-              ASPHALT BROS ROOFING LTD
-            </h3>
         </div>
         <p className="text-muted-foreground mb-4 max-w-md mx-auto">
           Reliable Roofing Solutions for Your Home
