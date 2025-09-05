@@ -1,9 +1,10 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const galleryImages = [
-  { src: "https://picsum.photos/seed/img1/600/400", alt: "Asphalt shingle roof", hint: "asphalt shingle" },
+  { src: "https://ik.imagekit.io/ik5x4q7jl/sdfada_gJM9TZDCe?updatedAt=1757040358273", alt: "High-quality asphalt shingle roof", hint: "asphalt shingle" },
   { src: "https://picsum.photos/seed/img2/600/400", alt: "Roof repair in progress", hint: "roof repair" },
   { src: "https://picsum.photos/seed/img3/600/400", alt: "New roof installation", hint: "new roof" },
   { src: "https://picsum.photos/seed/img4/600/400", alt: "Commercial roofing project", hint: "commercial roof" },
