@@ -59,18 +59,34 @@ export function Header() {
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right">
-                <div className="grid gap-4 py-6">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
-                    >
-                      {link.label}
+              <SheetContent side="right" className="p-0">
+                <div className="flex flex-col h-full">
+                  <div className="p-6 border-b">
+                     <Link href="/" className="flex items-center gap-2">
+                      <Image 
+                        src="https://ik.imagekit.io/ik5x4q7jl/495541199_10161644959733867_8106039805902393432_n.jpg?updatedAt=1757040223678"
+                        alt="Asphalt Bros Roofing Logo"
+                        width={52}
+                        height={39}
+                        className="rounded-md"
+                      />
+                      <span className="text-xl font-bold font-headline text-primary">
+                        ASPHALT BROS
+                      </span>
                     </Link>
-                  ))}
-                  <div className="border-t pt-4 space-y-2">
+                  </div>
+                  <div className="p-6 space-y-4 flex-1">
+                    {navLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="block text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="p-6 border-t space-y-2">
                     <Button asChild variant="outline" className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground">
                         <Link href="/visualizer"><WandSparkles className="mr-2 h-4 w-4" />AI Visualizer</Link>
                     </Button>
