@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -10,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Loader2 } from 'lucide-react';
+import { Loader2, WandSparkles } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const formSchema = z.object({
@@ -18,20 +19,22 @@ const formSchema = z.object({
   location: z.string().min(2, "Please enter a location."),
 });
 
+type RecommendationFormValues = z.infer<typeof formSchema>;
+
 export function RecommendationForm() {
   const [recommendation, setRecommendation] = useState<RecommendMaterialsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<RecommendationFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      houseStyle: "",
-      location: "",
+      houseStyle: "Ranch",
+      location: "Quispamsis, New Brunswick",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: RecommendationFormValues) {
     setIsLoading(true);
     setError(null);
     setRecommendation(null);
@@ -47,7 +50,7 @@ export function RecommendationForm() {
   }
 
   return (
-    <div>
+    <div className="space-y-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -68,6 +71,7 @@ export function RecommendationForm() {
                     <SelectItem value="Modern">Modern</SelectItem>
                     <SelectItem value="Cape Cod">Cape Cod</SelectItem>
                     <SelectItem value="Victorian">Victorian</SelectItem>
+                    <SelectItem value="Craftsman">Craftsman</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -87,12 +91,18 @@ export function RecommendationForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isLoading ? 'Getting Recommendation...' : 'Get Recommendation'}
+          <Button type="submit" className="w-full font-bold text-lg py-6" disabled={isLoading}>
+            {isLoading ? <><Loader2 className="animate-spin" /> Thinking...</> : <><WandSparkles /> Get My Recommendation</>}
           </Button>
         </form>
       </Form>
+
+       {isLoading && (
+        <div className="text-center text-muted-foreground">
+            <Loader2 className="h-8 w-8 mx-auto animate-spin mb-2" />
+            <p>Our AI expert is considering your options...</p>
+        </div>
+      )}
 
       {error && (
         <Alert variant="destructive" className="mt-6">
@@ -104,19 +114,19 @@ export function RecommendationForm() {
       {recommendation && (
         <Card className="mt-8 bg-secondary/30">
           <CardHeader>
-            <CardTitle>Your Custom Recommendation</CardTitle>
+            <CardTitle>Your AI-Powered Recommendation</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
+            <div className="p-4 bg-background/50 rounded-lg">
               <h3 className="font-bold text-lg text-primary">Recommended Material</h3>
               <p>{recommendation.materialRecommendation}</p>
             </div>
-            <div>
+            <div className="p-4 bg-background/50 rounded-lg">
               <h3 className="font-bold text-lg text-primary">Recommended Color</h3>
               <p>{recommendation.colorRecommendation}</p>
             </div>
-            <div>
-              <h3 className="font-bold text-lg text-primary">Reasoning</h3>
+            <div className="p-4 bg-background/50 rounded-lg">
+              <h3 className="font-bold text-lg text-primary">Designer's Reasoning</h3>
               <p className="text-muted-foreground">{recommendation.reasoning}</p>
             </div>
           </CardContent>

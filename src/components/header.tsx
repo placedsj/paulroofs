@@ -4,8 +4,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, WandSparkles } from "lucide-react";
+import { Menu, WandSparkles, ChevronDown } from "lucide-react";
 
 export function Header() {
   const navLinks = [
@@ -16,6 +24,12 @@ export function Header() {
     { href: "/#gallery", label: "OUR WORK" },
     { href: "/blog", label: "BLOG" },
     { href: "/#contact", label: "CONTACT" },
+  ];
+
+  const aiToolsLinks = [
+     { href: "/visualizer", label: "AI Roof Visualizer" },
+     { href: "/recommendations", label: "AI Recommender" },
+     { href: "/color-coordinator", label: "AI Color Coordinator" },
   ];
 
   return (
@@ -44,9 +58,20 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-             <Button asChild variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-                <Link href="/visualizer"><WandSparkles className="mr-2 h-4 w-4" /> AI Visualizer</Link>
-            </Button>
+             <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+                  <WandSparkles className="mr-2 h-4 w-4" /> AI Tools <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {aiToolsLinks.map(link => (
+                    <DropdownMenuItem key={link.href} asChild>
+                        <Link href={link.href}>{link.label}</Link>
+                    </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button asChild size="sm">
                 <Link href="/login">BOSS QUARTERS</Link>
             </Button>
@@ -85,11 +110,20 @@ export function Header() {
                         {link.label}
                       </Link>
                     ))}
+                    <div className="pt-4 border-t">
+                        <p className="text-sm font-semibold text-primary mb-2">AI Tools</p>
+                        {aiToolsLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="block text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                    </div>
                   </div>
                   <div className="p-6 border-t space-y-2">
-                    <Button asChild variant="outline" className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-                        <Link href="/visualizer"><WandSparkles className="mr-2 h-4 w-4" />AI Visualizer</Link>
-                    </Button>
                     <Button asChild className="w-full">
                         <Link href="/login">BOSS QUARTERS</Link>
                     </Button>
