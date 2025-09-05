@@ -19,7 +19,7 @@ export default function Home() {
       <main className="flex-1">
         <section id="home" className="relative h-screen min-h-[600px] w-full">
           <Image
-            src="/hero-emergency.jpg"
+            src="https://ik.imagekit.io/ik5x4q7jl/sdfada_gJM9TZDCe?updatedAt=1757040358273"
             alt="A beautiful asphalt shingle roof on a modern home."
             fill
             priority
