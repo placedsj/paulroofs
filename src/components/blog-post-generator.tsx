@@ -176,5 +176,3 @@ ${blogPost.conclusion}
         </div>
       </CardContent>
     </Card>
-  );
-}

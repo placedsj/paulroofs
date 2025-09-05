@@ -520,7 +520,7 @@ export const posts: Post[] = [
       {
         heading: "Wrapping Your Home in a Blanket",
         paragraphs: [
-          "Insulated siding has a rigid foam backing that is fused to the vinyl panel. This adds a layer of insulation to your entire home exterior, reducing heat loss in the winter and heat gain in the summer.",
+          "Insulated siding has a rigid foam backing that is fused to the vinyl panel. This adds a layer of insulation to your entire home, reducing heat loss in the winter and heat gain in the summer.",
           "This 'blanket' of insulation can significantly reduce your heating and cooling costs, putting money back in your pocket. It's an investment that 'pays for itself' over time."
         ]
       },
