@@ -4,9 +4,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { LogOut, Palette, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Home, Users, Film } from 'lucide-react';
+import { LogOut, Palette, FileText, Megaphone, PenSquare, FileSignature, LayoutDashboard, Home, Users, Film, WandSparkles } from 'lucide-react';
 import { QuoteGenerator, type GeneratedQuote } from './quote-generator';
-import { ColorCoordinator } from './color-coordinator';
 import { InvoiceGenerator } from './invoice-generator';
 import { ProjectPromoter } from './project-promoter';
 import { BlogPostGenerator } from './blog-post-generator';
@@ -14,10 +13,13 @@ import { HomeStoryGenerator } from './home-story-generator';
 import { ClientManager } from './client-manager';
 import { DashboardHome } from './dashboard-home';
 import { VideoAdGenerator } from './video-ad-generator';
+import { RoofVisualizer } from './roof-visualizer';
+import { RecommendationForm } from '../app/recommendations/recommendation-form';
+import { ColorCoordinatorForm } from '../app/color-coordinator/color-coordinator-form';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 import type { Client } from './client-manager';
 
-type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller' | 'video';
+type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller' | 'video' | 'visualizer' | 'recommender';
 
 export function BossQuartersDashboard() {
   const router = useRouter();
@@ -72,12 +74,14 @@ export function BossQuartersDashboard() {
         case 'dashboard': return <DashboardHome setActiveView={setActiveView} />;
         case 'clients': return <ClientManager onClientAction={handleClientAction} />;
         case 'quotes': return <QuoteGenerator client={contextualClient} onQuoteGenerated={onQuoteGenerated} />;
-        case 'coordinator': return <ColorCoordinator />;
         case 'invoices': return <InvoiceGenerator client={contextualClient} quote={contextualQuote} />;
         case 'promoter': return <ProjectPromoter client={contextualClient} />;
         case 'blog': return <BlogPostGenerator />;
         case 'storyteller': return <HomeStoryGenerator client={contextualClient} />;
         case 'video': return <VideoAdGenerator client={contextualClient} />;
+        case 'visualizer': return <RoofVisualizer />;
+        case 'recommender': return <RecommendationForm />;
+        case 'coordinator': return <ColorCoordinatorForm />;
         default: return <DashboardHome setActiveView={setActiveView} />;
     }
   }
@@ -105,10 +109,16 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('storyteller')} isActive={activeView === 'storyteller'}><Home/> Homestead Storyteller</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
+                                <SidebarMenuButton onClick={() => setActiveView('visualizer')} isActive={activeView === 'visualizer'}><WandSparkles/> Roof Visualizer</SidebarMenuButton>
+                            </SidebarMenuItem>
+                             <SidebarMenuItem>
+                                <SidebarMenuButton onClick={() => setActiveView('recommender')} isActive={activeView === 'recommender'}><WandSparkles/> Recommender</SidebarMenuButton>
+                            </SidebarMenuItem>
+                            <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('quotes')} isActive={activeView === 'quotes'}><FileText/> Quote Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeViremovew === 'coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
@@ -148,3 +158,5 @@ export function BossQuartersDashboard() {
     </SidebarProvider>
   );
 }
+
+    
