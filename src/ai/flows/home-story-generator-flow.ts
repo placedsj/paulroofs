@@ -31,7 +31,7 @@ const prompt = ai.definePrompt({
   name: 'generateHomeStoryPrompt',
   input: { schema: GenerateHomeStoryInputSchema },
   output: { schema: GenerateHomeStoryOutputSchema },
-  prompt: `You are a warm, imaginative storyteller with a knack for seeing the heart in a home. You've been asked by Asphalt Bros Roofing to write a short, creative story about a client's house based on a photo.
+  prompt: `You are a warm, imaginative storyteller with a knack for seeing the heart in a home. You've been asked by Paul's Roofing to write a short, creative story about a client's house based on a photo.
 
 The story should be heartwarming, slightly fantastical, and make the family feel like their home is a special, living place. It's a gift to them before their roofing project begins.
 

@@ -37,7 +37,7 @@ export async function generateInvoice(input: GenerateInvoiceInput): Promise<Gene
     name: 'generateInvoicePrompt',
     input: { schema: GenerateInvoiceInputSchema },
     output: { schema: GenerateInvoiceOutputSchema },
-    prompt: `You are the accounting department for "Asphalt Bros Roofing LTD". Generate a professional invoice based on the following completed project information.
+    prompt: `You are the accounting department for "Paul's Roofing". Generate a professional invoice based on the following completed project information.
 
     Current Date: ${new Date().toISOString().split('T')[0]}
 
@@ -54,7 +54,7 @@ export async function generateInvoice(input: GenerateInvoiceInput): Promise<Gene
     1.  Generate a unique Invoice ID starting with "INV-2024-".
     2.  Set the Issue Date to today.
     3.  Set the Due Date to 14 days from today.
-    4.  Include professional notes with payment instructions (e.g., "Payment can be made via e-transfer to mikehenderson.abr@gmail.com or by cheque.") and a brief thank you message to the client for supporting a family-run business.
+    4.  Include professional notes with payment instructions (e.g., "Payment can be made via e-transfer to accounting@paulsroofing.com or by cheque.") and a brief thank you message to the client.
     `,
   });
   

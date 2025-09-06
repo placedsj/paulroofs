@@ -23,7 +23,7 @@ export async function generatePromotion(input: GeneratePromotionInput): Promise<
     name: 'generatePromotionPrompt',
     input: { schema: GeneratePromotionInputSchema },
     output: { schema: GeneratePromotionOutputSchema },
-    prompt: `You are a friendly and professional social media manager for "Asphalt Bros Roofing LTD". Your goal is to generate an engaging social media post to showcase a recently completed project.
+    prompt: `You are a friendly and professional social media manager for "Paul's Roofing". Your goal is to generate an engaging social media post to showcase a recently completed project.
 
     The tone should be proud, professional, and focused on quality and customer satisfaction.
 
@@ -37,7 +37,7 @@ export async function generatePromotion(input: GeneratePromotionInput): Promise<
     1.  Write a short, engaging paragraph about the project.
     2.  Mention the type and color of the roof.
     3.  Include a call to action, like asking people to call for a free quote.
-    4.  End with relevant hashtags, such as #AsphaltBrosRoofing #NewRoof #AsphaltShingles #QualityCraftsmanship and a location-specific hashtag based on the input.
+    4.  End with relevant hashtags, such as #PaulsRoofing #NewRoof #AsphaltShingles #QualityCraftsmanship and a location-specific hashtag based on the input.
     `,
   });
   

@@ -64,7 +64,7 @@ export function BossQuartersDashboard() {
   if (!isMounted) {
     return (
         <div className="flex min-h-screen items-center justify-center bg-background">
-             <h1 className="text-2xl">Loading Boss Quarters...</h1>
+             <h1 className="text-2xl">Loading Dashboard...</h1>
         </div>
     );
   }
@@ -92,7 +92,7 @@ export function BossQuartersDashboard() {
             <Sidebar>
                 <div className="flex flex-col h-full">
                     <div className="p-4 border-b">
-                         <h2 className="text-2xl font-bold font-headline text-primary">BOSS QUARTERS</h2>
+                         <h2 className="text-2xl font-bold font-headline text-primary">PAUL'S ROOFING</h2>
                     </div>
                     <div className="flex-1 overflow-y-auto">
                         <SidebarMenu>
@@ -146,17 +146,15 @@ export function BossQuartersDashboard() {
                 <header className="flex items-center justify-between mb-6 text-foreground sm:justify-end">
                     <SidebarTrigger className="sm:hidden" />
                     <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-wider text-shadow-outline hidden sm:block">
-                        Boss Quarters
+                        Paul's Roofing
                     </h1>
                 </header>
                 {renderContent()}
                  <footer className="mt-12 text-center text-muted-foreground text-sm">
-                    <p>ASPHALT BROS ROOFING | SECURE ADMINISTRATIVE ACCESS</p>
+                    <p>PAUL'S ROOFING | SECURE ADMINISTRATIVE ACCESS</p>
                 </footer>
             </main>
         </div>
     </SidebarProvider>
   );
 }
-
-    

@@ -36,7 +36,7 @@ export async function generateQuote(input: GenerateQuoteInput): Promise<Generate
         name: 'quoteGeneratorPrompt',
         input: { schema: GenerateQuoteInputSchema },
         output: { schema: GenerateQuoteOutputSchema },
-        prompt: `You are an expert roofing estimator for "Asphalt Bros Roofing LTD", a family-run company. Generate a detailed and professional quote based on the following project information.
+        prompt: `You are an expert roofing estimator for "Paul's Roofing", a family-run company. Generate a detailed and professional quote based on the following project information.
 
         Current Date: ${new Date().toISOString().split('T')[0]}
 
@@ -58,7 +58,7 @@ export async function generateQuote(input: GenerateQuoteInput): Promise<Generate
         4.  Calculate the subtotal from the line items.
         5.  Calculate tax (HST) at 15% of the subtotal.
         6.  Calculate the final total.
-        7.  Include professional notes about the warranty (e.g., "40-Year Material Warranty for Metal" or "25-Year Material Warranty for Shingles") and a thank you message from the family team at Asphalt Bros.
+        7.  Include professional notes about the warranty (e.g., "40-Year Material Warranty for Metal" or "25-Year Material Warranty for Shingles") and a thank you message from the team at Paul's Roofing.
         `,
     });
 

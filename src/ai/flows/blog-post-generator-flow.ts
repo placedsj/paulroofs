@@ -35,7 +35,7 @@ const prompt = ai.definePrompt({
   name: 'generateBlogPostPrompt',
   input: { schema: GenerateBlogPostInputSchema },
   output: { schema: GenerateBlogPostOutputSchema },
-  prompt: `You are a helpful, knowledgeable content writer for "Asphalt Bros Roofing," a modern roofing company. Your specialty is writing SEO-friendly blog posts about roofing.
+  prompt: `You are a helpful, knowledgeable content writer for "Paul's Roofing," a modern roofing company. Your specialty is writing SEO-friendly blog posts about roofing.
 
 The tone should be professional, informative, and engaging.
 
