@@ -263,7 +263,7 @@ export function InvoiceGenerator({ client, quote }: InvoiceGeneratorProps) {
                       <p className="text-sm text-muted-foreground mt-4"><strong>Bill To:</strong><br />{invoice.input.clientName}<br />{invoice.input.clientAddress}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-lg">Asphalt Bros Roofing</p>
+                    <p className="font-bold text-lg">Paul's Roofing</p>
                     <p className="text-sm text-muted-foreground">contact@asphaltbros.ca</p>
                     <div className="mt-4 text-sm">
                       <p><strong>Issue Date:</strong> {invoice.issueDate}</p>
