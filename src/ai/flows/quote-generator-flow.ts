@@ -52,9 +52,9 @@ export async function generateQuote(input: GenerateQuoteInput): Promise<Generate
         2.  Set the quote date to today and the expiry date to 30 days from today.
         3.  Create realistic line items for materials and labor.
             - For Metal roofs, use a base material cost of $9 per sq ft.
-            - For Asphalt Shingles, use a base material cost of $4 per sq ft.
-            - Labor cost is $6 per sq ft for both.
-            - Include line items for underlayment, flashing, fasteners/nails, ventilation, and waste disposal. Adjust quantities based on roof size.
+            - For Asphalt Shingles, use a base material cost of $3 per sq ft. This cost is comprehensive and covers underlayment, shingles, ventilation, and fasteners.
+            - Labor cost is $3 per sq ft for Asphalt Shingles and $6 per sq ft for Metal roofs.
+            - Include line items for flashing and waste disposal. Adjust quantities based on roof size.
         4.  Calculate the subtotal from the line items.
         5.  Calculate tax (HST) at 15% of the subtotal.
         6.  Calculate the final total.
