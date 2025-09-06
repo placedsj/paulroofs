@@ -118,7 +118,7 @@ export function BossQuartersDashboard() {
                                 <SidebarMenuButton onClick={() => setActiveView('quotes')} isActive={activeView === 'quotes'}><FileText/> Quote Generator</SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
-                                <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeViremovew === 'coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
+                                <SidebarMenuButton onClick={() => setActiveView('coordinator')} isActive={activeView === 'coordinator'}><Palette/> Color Coordinator</SidebarMenuButton>
                             </SidebarMenuItem>
                              <SidebarMenuItem>
                                 <SidebarMenuButton onClick={() => setActiveView('invoices')} isActive={activeView === 'invoices'}><FileSignature/> Invoice Generator</SidebarMenuButton>
