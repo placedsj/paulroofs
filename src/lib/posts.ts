@@ -95,100 +95,59 @@ export const posts: Post[] = [
     conclusion: "Asphalt shingles offer a great balance of performance, style, and value. They're a classic for a reason. Why don't roofers ever play poker? Because they always have a flush!"
   },
   {
-    title: "Is Your Roof Ready for a New Brunswick Winter?",
-    slug: "new-brunswick-winter-roof-prep",
+    title: "Gutter Talk: A Clean Gutter is a Happy Home",
+    slug: "gutter-cleaning-happy-home",
     category: "Maintenance",
-    publishedDate: "2024-07-08",
-    introduction: "Why are roofers always so calm? Because they know how to handle the pressure! As winter approaches in New Brunswick, a little prep work for your roof can save you a lot of stress.",
+    publishedDate: "2024-10-01",
+    introduction: "What did one gutter say to the other? 'I've got a feeling we're in for a real downpour of leaves!' Fall is here, and that means it's time to talk about the unsung hero of your roofing system: your gutters.",
     mainContent: [
       {
-        heading: "Clean Out Those Gutters",
+        heading: "Why Bother Cleaning Gutters?",
         paragraphs: [
-          "If your gutters are full of leaves, they can't do their job. Water can back up and freeze, creating ice dams that can damage your roof and shingles. It's a 'dam' shame if that happens.",
-          "Cleaning them out is a 'leaf'-saver. It ensures water can flow freely away from your house, which is exactly where it belongs. Don't be a 'dam' fool, clean your gutters!"
+          "Clogged gutters are no joke. When they're full of leaves, twigs, and other debris, they can't do their job of directing water away from your home. This can lead to a whole host of problems, from a leaky roof and water-damaged siding to a flooded basement and a cracked foundation.",
+          "Think of your gutters as your home's arteries. If they get clogged, it's bad news. Keeping them clean is a simple preventative measure that can save you a 'boatload' of money on repairs."
         ]
       },
       {
-        heading: "Get a Professional Inspection",
+        heading: "The Dangers of DIY Gutter Cleaning",
         paragraphs: [
-          "Before the snow flies, it's a good idea to have a professional look things over. We can spot small issues, like a loose shingle or cracked flashing, before they become big, expensive problems. It's like a check-up, but for your roof's health.",
-          "A small repair now can prevent a major 'leak' in your budget later. We're always 'looking up' for our customers!"
+          "While it might seem like a simple task, climbing up on a ladder to clean your gutters can be dangerous. Every year, thousands of people are injured in ladder-related falls. It's a 'high-risk' job that's best left to the professionals.",
+          "Our team has the right equipment and training to clean your gutters safely and efficiently. We'll make sure they're flowing freely, so you can have peace of mind. Don't 'fall' for the DIY trap, give us a call!"
         ]
       }
     ],
-    conclusion: "A little fall maintenance goes a long way in protecting your home through our tough winters. Don't get left out in the cold! What did the roof say to the other roof? 'The next round is on the house!'"
-  },
-   {
-    title: "Stop Leaking Money: How a New Roof Can Save You Cash",
-    slug: "stop-leaking-money-new-roof-savings",
-    category: "Financial Benefits",
-    publishedDate: "2024-08-12",
-    introduction: "Why did the roofer get a promotion? Because he was a real 'over-achiever'! Speaking of achieving, a new roof can achieve some serious savings for your household.",
-    mainContent: [
-      {
-        heading: "An Investment That Pays for Itself",
-        paragraphs: [
-          "Think of a new roof as an investment, not just an expense. An old, leaky roof can lead to a flood of problems, from water damage to mold growth. These issues can be incredibly expensive to fix. By replacing your roof, you're not just getting a new covering; you're 'raising the roof' on your home's protection and value.",
-          "A new roof can also significantly improve your home's energy efficiency. This means lower heating and cooling bills, which will have you 'laughing all the way to the bank'. It's a decision that will make your wallet 'swell' with pride, not water damage."
-        ]
-      },
-      {
-        heading: "The 'Cool' Factor of a New Roof",
-        paragraphs: [
-          "Modern roofing materials, especially metal, are designed to reflect more sunlight and absorb less heat. This means your attic stays cooler, and your air conditioner doesn't have to work as hard. It's the 'coolest' home improvement project you can do.",
-          "This energy efficiency is not only great for your wallet, but it's also great for the environment. You'll be 'soaking up' the savings while reducing your carbon footprint. It's a win-win that will have you on 'top of the world'."
-        ]
-      }
-    ],
-    conclusion: "Don't let an old roof 'drain' your finances. A new roof is a smart investment that can save you money, improve your home's energy efficiency, and increase its value. Why did the scarecrow get a new roof? Because he was tired of being 'straw-ful'!"
+    conclusion: "Don't 'leaf' your gutters to chance this fall. A professional cleaning from Asphalt Bros will ensure your home is ready for whatever winter throws at it. It's a small investment that can prevent a 'flood' of problems."
   },
   {
-    title: "The Shingle Most Important Decision for Your Home",
-    slug: "the-shingle-most-important-decision",
-    category: "Asphalt Shingles",
-    publishedDate: "2024-08-19",
-    introduction: "Why don't shingles ever get lonely? Because they always 'hang out' in bundles! All jokes aside, choosing the right shingles is the single most important decision you'll make for your roof.",
+    title: "Christmas Light Safety: Don't Get Your Tinsel in a Tangle",
+    slug: "christmas-light-safety",
+    category: "Safety",
+    publishedDate: "2024-11-20",
+    introduction: "Why did Santa get a parking ticket on Christmas Eve? He left his sleigh in a 'snow parking' zone! As you get ready to deck the halls, let's talk about how to hang your Christmas lights without damaging your roof or your dignity.",
     mainContent: [
       {
-        heading: "Not All Shingles Are Created Equal",
+        heading: "Don't Be a Staple Gun Enthusiast",
         paragraphs: [
-          "When it comes to shingles, you get what you pay for. Cheaper shingles might save you money upfront, but they'll cost you in the long run with repairs and early replacement. It's a 'classic' case of 'you get what you pay for'.",
-          "High-quality architectural shingles, like the IKO Cambridge shingles we use, are thicker, more durable, and offer a longer lifespan. They're the 'peak' of shingle technology, and they'll keep your home protected for years to come. It's a 'shingle-minded' approach to quality."
+          "Never, ever use staples or nails to attach lights to your shingles. Puncturing a shingle is like sending a tiny, engraved invitation for water to come into your home. Each hole is a potential leak waiting to happen.",
+          "This kind of damage can void your roof's warranty and lead to costly repairs. It's the fastest way to get on your roof's 'naughty' list."
         ]
       },
       {
-        heading: "The Beauty of the 'Bundle'",
+        heading: "Use the Right Clips for the Job",
         paragraphs: [
-          "Asphalt shingles come in a wide variety of colors and styles to match any home. From traditional to modern, there's a shingle that will make your home the 'talk of the town'. You can choose a color that 'blends in' or one that 'stands out'.",
-          "The right shingle can dramatically improve your home's curb appeal. It's like a new 'coat' for your house, but one that also protects it from the elements. It's a 'makeover' that will have your neighbors 'green' with envy."
-        ]
-      }
-    ],
-    conclusion: "Choosing the right shingles is a big decision, but it doesn't have to be a stressful one. With a little research and the help of a trusted professional, you can make the 'shingle' best choice for your home. Why did the shingle go to school? To get a little 'brighter'!"
-  },
-  {
-    title: "Metal Roofs: The Iron-Clad Choice for Durability",
-    slug: "metal-roofs-iron-clad-durability",
-    category: "Metal Roofing",
-    publishedDate: "2024-08-26",
-    introduction: "What do you call a metal roof that's also a detective? Sherlock Holmes, of course! But you don't need to be a detective to see that a metal roof is an iron-clad choice for durability.",
-    mainContent: [
-      {
-        heading: "Strength That's 'Un-be-leaf-able'",
-        paragraphs: [
-          "Metal roofs are tough. They can withstand just about anything Mother Nature can throw at them, from high winds and heavy snow to hail and falling branches. They're so tough, they make other roofs look like 'softies'.",
-          "This durability means you won't have to worry about frequent repairs or replacements. A metal roof is a long-term investment that will protect your home for decades to come. It's a 'steel' of a deal!"
+          "The best way to hang Christmas lights is to use specially designed plastic clips that attach to your gutters or the edges of your shingles without causing damage. They're inexpensive, easy to use, and won't harm your roof.",
+          "These clips are the 'elves' of the light-hanging world—they do all the work without causing any trouble. They're a 'bright' idea for a festive and damage-free holiday season."
         ]
       },
       {
-        heading: "A 'Rust-ic' Appearance That Lasts",
+        heading: "Ladder Safety is No Laughing Matter",
         paragraphs: [
-          "Modern metal roofs are treated with special coatings that prevent rust and corrosion. This means they'll look great for years to come, with minimal maintenance. They're the 'low-maintenance' relationship you've always dreamed of.",
-          "With a wide range of colors and finishes available, you can choose a metal roof that perfectly complements your home's style. It's a look that's both 'timeless' and 'on-trend'."
+          "Before you channel your inner Clark Griswold, make sure your ladder is on a stable, level surface. Always maintain three points of contact with the ladder (two feet and one hand, or one foot and two hands).",
+          "It's also a good idea to have a 'spotter' on the ground to hold the ladder steady. The emergency room is not a very 'festive' place to spend the holidays. Stay safe up there!"
         ]
       }
     ],
-    conclusion: "When it comes to durability, a metal roof is in a class of its own. It's a strong, long-lasting, and eco-friendly choice that will protect your home for years to come. Why did the roofer choose a metal roof? Because he wanted a career that was 'on the up and up'!"
+    conclusion: "With a little planning and the right equipment, you can have a beautifully decorated home without damaging your roof. From all of us at Asphalt Bros Roofing, we wish you a safe and happy holiday season. May your lights be bright and your roof be watertight!"
   },
   {
     title: "Siding Showdown: Vinyl vs. The World",
