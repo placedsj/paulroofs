@@ -21,6 +21,7 @@ export function Footer() {
         <div className="flex justify-center space-x-6 mb-6 flex-wrap">
             <Link href="#home" className="text-sm text-muted-foreground hover:text-primary">HOME</Link>
             <Link href="#services" className="text-sm text-muted-foreground hover:text-primary">SERVICES</Link>
+            <Link href="/dynasty-shingles" className="text-sm text-muted-foreground hover:text-primary">PRODUCTS</Link>
             <Link href="#about" className="text-sm text-muted-foreground hover:text-primary">ABOUT</Link>
             <Link href="#testimonials" className="text-sm text-muted-foreground hover:text-primary">TESTIMONIALS</Link>
             <Link href="#gallery" className="text-sm text-muted-foreground hover:text-primary">OUR WORK</Link>

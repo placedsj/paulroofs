@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, WandSparkles, ChevronDown } from "lucide-react";
+import { Menu, WandSparkles, ChevronDown, Package } from "lucide-react";
 
 export function Header() {
   const navLinks = [
@@ -24,6 +24,10 @@ export function Header() {
     { href: "/#gallery", label: "OUR WORK" },
     { href: "/blog", label: "BLOG" },
     { href: "/#contact", label: "CONTACT" },
+  ];
+
+  const productLinks = [
+      { href: "/dynasty-shingles", label: "IKO Dynasty Shingles" },
   ];
 
   const aiToolsLinks = [
@@ -58,6 +62,19 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+             <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary outline-none">
+                    PRODUCTS <ChevronDown className="ml-1 h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    {productLinks.map(link => (
+                        <DropdownMenuItem key={link.href} asChild>
+                            <Link href={link.href}>{link.label}</Link>
+                        </DropdownMenuItem>
+                    ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
+
              <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
@@ -110,6 +127,18 @@ export function Header() {
                         {link.label}
                       </Link>
                     ))}
+                     <div className="pt-4 border-t">
+                        <p className="text-sm font-semibold text-primary mb-2">Products</p>
+                        {productLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="block text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                    </div>
                     <div className="pt-4 border-t">
                         <p className="text-sm font-semibold text-primary mb-2">AI Tools</p>
                         {aiToolsLinks.map((link) => (

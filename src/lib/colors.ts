@@ -3,7 +3,6 @@ export type ColorOption = {
     name: string;
     color: string;
     image: string; // URL to the shingle sample image
-    code?: string;
 };
 
 export const dynastyShingleColors: ColorOption[] = [
