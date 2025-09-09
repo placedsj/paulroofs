@@ -3,9 +3,9 @@
 
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, FileText, PlusCircle, BarChart, Settings } from "lucide-react";
+import { Users, FileText, PlusCircle, BarChart, Settings, FileSignature } from "lucide-react";
 
-type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller';
+type View = 'dashboard' | 'clients' | 'quotes' | 'coordinator' | 'invoices' | 'promoter' | 'blog' | 'storyteller' | 'video' | 'visualizer' | 'recommender';
 
 type DashboardHomeProps = {
     setActiveView: (view: View) => void;
@@ -24,7 +24,7 @@ export function DashboardHome({ setActiveView }: DashboardHomeProps) {
         { title: "New Client Project", view: "clients", icon: <PlusCircle /> },
         { title: "Generate Quote", view: "quotes", icon: <FileText /> },
         { title: "Manage Clients", view: "clients", icon: <Users /> },
-        { title: "Generate Invoice", view: "invoices", icon: <Settings /> },
+        { title: "Generate Invoice", view: "invoices", icon: <FileSignature /> },
     ];
 
 
@@ -57,7 +57,7 @@ export function DashboardHome({ setActiveView }: DashboardHomeProps) {
                         <Button 
                             key={action.title} 
                             variant="outline" 
-                            className="p-6 h-auto flex flex-col items-start justify-start gap-2"
+                            className="p-6 h-auto flex flex-col items-start justify-start gap-2 text-left"
                             onClick={() => setActiveView(action.view as View)}
                         >
                            {action.icon}

@@ -92,7 +92,7 @@ export function RecommendationForm() {
             )}
           />
           <Button type="submit" className="w-full font-bold text-lg py-6" disabled={isLoading}>
-            {isLoading ? <><Loader2 className="animate-spin" /> Thinking...</> : <><WandSparkles /> Get My Recommendation</>}
+            {isLoading ? <><Loader2 className="animate-spin" /> Thinking...</> : <><WandSparkles className="mr-2"/> Get My Recommendation</>}
           </Button>
         </form>
       </Form>
@@ -117,15 +117,15 @@ export function RecommendationForm() {
             <CardTitle>Your AI-Powered Recommendation</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 bg-background/50 rounded-lg">
+            <div className="p-4 bg-background/50 rounded-lg border">
               <h3 className="font-bold text-lg text-primary">Recommended Material</h3>
-              <p>{recommendation.materialRecommendation}</p>
+              <p className="text-foreground">{recommendation.materialRecommendation}</p>
             </div>
-            <div className="p-4 bg-background/50 rounded-lg">
+            <div className="p-4 bg-background/50 rounded-lg border">
               <h3 className="font-bold text-lg text-primary">Recommended Color</h3>
-              <p>{recommendation.colorRecommendation}</p>
+              <p className="text-foreground">{recommendation.colorRecommendation}</p>
             </div>
-            <div className="p-4 bg-background/50 rounded-lg">
+            <div className="p-4 bg-background/50 rounded-lg border">
               <h3 className="font-bold text-lg text-primary">Designer's Reasoning</h3>
               <p className="text-muted-foreground">{recommendation.reasoning}</p>
             </div>
