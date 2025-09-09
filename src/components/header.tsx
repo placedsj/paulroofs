@@ -90,6 +90,9 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
             <Button asChild size="sm">
+                <Link href="/crew-hub">CREW HUB</Link>
+            </Button>
+            <Button asChild size="sm">
                 <Link href="/login">BOSS QUARTERS</Link>
             </Button>
           </nav>
@@ -153,6 +156,9 @@ export function Header() {
                     </div>
                   </div>
                   <div className="p-6 border-t space-y-2">
+                     <Button asChild className="w-full">
+                        <Link href="/crew-hub">CREW HUB</Link>
+                    </Button>
                     <Button asChild className="w-full">
                         <Link href="/login">BOSS QUARTERS</Link>
                     </Button>
