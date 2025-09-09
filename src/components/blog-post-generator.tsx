@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Loader2, PenSquare, Copy, FileText } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
@@ -153,18 +152,18 @@ ${blogPost.conclusion}
                         </CardHeader>
                         <CardContent className="space-y-4">
                            <div className="bg-background/50 p-4 rounded-lg whitespace-pre-wrap text-sm text-foreground max-h-96 overflow-y-auto">
-                                <h3 className="font-bold">Introduction</h3>
-                                <p>{blogPost.introduction}</p>
-                                <hr className="my-4" />
+                                <h3 className="font-bold text-primary">Introduction</h3>
+                                <p className="mt-1">{blogPost.introduction}</p>
+                                <hr className="my-3 border-border" />
                                 {blogPost.mainContent.map((section, index) => (
-                                    <div key={index} className="mb-4">
-                                        <h3 className="font-bold">{section.heading}</h3>
-                                        {section.paragraphs.map((p, i) => <p key={i} className="mt-2">{p}</p>)}
+                                    <div key={index} className="mb-3">
+                                        <h3 className="font-bold text-primary">{section.heading}</h3>
+                                        {section.paragraphs.map((p, i) => <p key={i} className="mt-1">{p}</p>)}
                                     </div>
                                 ))}
-                                <hr className="my-4" />
-                                <h3 className="font-bold">Conclusion</h3>
-                                <p>{blogPost.conclusion}</p>
+                                <hr className="my-3 border-border" />
+                                <h3 className="font-bold text-primary">Conclusion</h3>
+                                <p className="mt-1">{blogPost.conclusion}</p>
                            </div>
                            <Button onClick={handleCopy} className="w-full font-bold">
                                <Copy className="mr-2 h-4 w-4" /> Copy Post Content
