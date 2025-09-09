@@ -88,12 +88,17 @@ const ServicesSection = () => {
                                 <stop offset="0" stopColor="#ffffff" stopOpacity=".15"></stop>
                                 <stop offset=".5" stopColor="#000000" stopOpacity=".0"></stop>
                             </linearGradient>
+                            <pattern id="shingleGrain" patternUnits="userSpaceOnUse" width="10" height="10">
+                                <path d="M0 5 L10 5" stroke="#000" strokeWidth="0.5" strokeOpacity="0.1"/>
+                                <path d="M5 0 L5 10" stroke="#000" strokeWidth="0.5" strokeOpacity="0.1"/>
+                            </pattern>
                         </defs>
                         <rect x="90" y="90" width="120" height="70" fill="#E5E7EB" stroke="#1F2937" strokeWidth="2" />
                         <rect x="145" y="120" width="30" height="40" fill="#8B5E34" />
                         <rect x="105" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
                         <rect x="170" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
                         <polygon points="80,90 150,50 220,90" fill={selectedColor.color}></polygon>
+                        {selectedService === 'shingles' && <polygon points="80,90 150,50 220,90" fill="url(#shingleGrain)"></polygon>}
                         <polygon points="80,90 150,50 220,90" fill="url(#roofShine)"></polygon>
                     </svg>
                 </div>
@@ -716,3 +721,6 @@ export default function Home() {
 
     
 
+
+
+    
