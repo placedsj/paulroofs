@@ -8,18 +8,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 // -- SERVICES SECTION COMPONENT -- //
 const ServicesSection = () => {
     const [selectedService, setSelectedService] = useState('metal');
-    const [selectedColor, setSelectedColor] = useState<{name: string, color: string, code: string} | null>(null);
+    const [selectedColor, setSelectedColor] = useState<{name: string, color: string, code: string}>({ name: 'CHARCOAL GRAY', color: '#4b5563', code: 'MG-001' });
     const [houseStyle, setHouseStyle] = useState('colonial');
 
     const metalColors = [
-        { name: 'CHARCOAL GRAY', color: '#36454F', code: 'MG-001' },
-        { name: 'SLATE BLUE', color: '#6A7B8A', code: 'MG-002' },
-        { name: 'FOREST GREEN', color: '#355E3B', code: 'MG-003' },
-        { name: 'BRICK RED', color: '#CB4154', code: 'MG-004' },
-        { name: 'COPPER BRONZE', color: '#B87333', code: 'MG-005' },
-        { name: 'ARCTIC WHITE', color: '#F8F8FF', code: 'MG-006' },
-        { name: 'STORM GRAY', color: '#708090', code: 'MG-007' },
-        { name: 'BURNISHED SLATE', color: '#2F4F4F', code: 'MG-008' }
+        { name: 'CHARCOAL GRAY', color: '#4b5563', code: 'MG-001' },
+        { name: 'SLATE BLUE', color: '#64748b', code: 'MG-002' },
+        { name: 'FOREST GREEN', color: '#14532d', code: 'MG-003' },
+        { name: 'BRICK RED', color: '#be123c', code: 'MG-004' },
+        { name: 'COPPER BRONZE', color: '#b9732f', code: 'MG-005' },
+        { name: 'ARCTIC WHITE', color: '#e7ebf0', code: 'MG-006' },
+        { name: 'STORM GRAY', color: '#6b7280', code: 'MG-007' },
+        { name: 'BURNISHED SLATE', color: '#1f4b49', code: 'MG-008' }
     ];
 
     const shingleColors = [
@@ -31,83 +31,83 @@ const ServicesSection = () => {
         { name: 'DRIFTWOOD', color: '#8F7853', code: 'SH-006' }
     ];
 
-    const ColorChart = ({ colors, title }: {colors: typeof metalColors, title: string}) => (
-        <div className="bg-zinc-700 p-6 rounded-lg border border-zinc-600">
-            <h4 className="text-xl font-bold text-zinc-50 mb-4">{title}</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {colors.map((colorOption) => (
-                    <div
-                        key={colorOption.code}
-                        className="cursor-pointer group"
-                        onClick={() => setSelectedColor(colorOption)}
-                    >
-                        <div 
-                            className="w-full h-16 rounded-lg border-2 border-zinc-500 group-hover:border-orange-500 transition-colors mb-2"
-                            style={{ backgroundColor: colorOption.color }}
-                        ></div>
-                        <p className="text-xs text-zinc-400 text-center">{colorOption.name}</p>
-                        <p className="text-xs text-zinc-500 text-center">{colorOption.code}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+    const currentColors = selectedService === 'metal' ? metalColors : shingleColors;
+    const initialColor = selectedService === 'metal' ? metalColors[0] : shingleColors[0];
+    
+    useEffect(() => {
+        setSelectedColor(initialColor);
+    }, [selectedService]);
 
-    const HouseVisualizer = () => (
-        <div className="bg-zinc-700 p-6 rounded-lg border border-zinc-600">
-            <h4 className="text-xl font-bold text-zinc-50 mb-4">ROOF VISUALIZER</h4>
-            <div className="mb-4">
-                <label className="block text-zinc-300 mb-2">House Style:</label>
-                <select 
-                    value={houseStyle} 
-                    onChange={(e) => setHouseStyle(e.target.value)}
-                    className="w-full p-2 bg-zinc-600 border border-zinc-500 rounded text-zinc-100"
-                >
-                    <option value="colonial">Colonial</option>
-                    <option value="ranch">Ranch</option>
-                    <option value="cape">Cape Cod</option>
-                    <option value="modern">Modern</option>
-                </select>
-            </div>
-            <div className="bg-gradient-to-b from-blue-400 to-blue-600 p-8 rounded-lg relative overflow-hidden min-h-64">
-                {/* Sky background */}
-                <div className="absolute inset-0 bg-gradient-to-b from-blue-300 to-blue-500"></div>
-                
-                {/* House visualization */}
-                <div className="relative z-10 flex justify-center items-end h-full">
-                    <div className="relative">
-                        {/* House body */}
-                        <div className="w-32 h-20 bg-gray-200 border-2 border-gray-400"></div>
-                        
-                        {/* Roof */}
-                        <div 
-                            className="absolute -top-8 left-0 w-32 h-12 transform -translate-y-2"
-                            style={{
-                                backgroundColor: selectedColor ? selectedColor.color : '#708090',
-                                clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-                                border: '2px solid #333'
-                            }}
-                        ></div>
-                        
-                        {/* Door */}
-                        <div className="absolute bottom-0 left-12 w-8 h-12 bg-amber-800 border border-amber-900"></div>
-                        
-                        {/* Windows */}
-                        <div className="absolute bottom-8 left-4 w-6 h-6 bg-sky-200 border border-sky-400"></div>
-                        <div className="absolute bottom-8 right-4 w-6 h-6 bg-sky-200 border border-sky-400"></div>
-                    </div>
+
+    const ColorChartAndVisualizer = () => (
+        <div className="grid lg:grid-cols-2 gap-6">
+            <section className="glass rounded-2xl p-6 elevate">
+                <h3 className="text-xl font-semibold mb-4 text-slate-100 normal-case">{selectedService === 'metal' ? 'Metal Roofing Colors' : 'Asphalt Shingle Colors'}</h3>
+                <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {currentColors.map((colorOption) => (
+                        <li key={colorOption.code}>
+                            <button 
+                                className="swatch w-full rounded-xl p-3 text-left glass/50"
+                                style={{ background: colorOption.color }}
+                                onClick={() => setSelectedColor(colorOption)}
+                                aria-label={`${colorOption.name} ${colorOption.code}`}
+                            >
+                                <div className={`${colorOption.name === 'ARCTIC WHITE' ? 'bg-black/5' : 'bg-white/10'} rounded-lg p-3`}>
+                                    <span className={`block text-sm font-medium ${colorOption.name === 'ARCTIC WHITE' ? 'text-slate-900' : 'text-slate-100'}`}>{colorOption.name}</span>
+                                    <span className={`block text-xs ${colorOption.name === 'ARCTIC WHITE' ? 'text-slate-700' : 'text-slate-300'}`}>{colorOption.code}</span>
+                                </div>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+                <p className="mt-4 text-xs text-slate-300">Tip: keep foreground/background contrast ≥ 4.5:1 for labels and UI text. [WCAG‑AA]</p>
+            </section>
+            
+            <section className="glass rounded-2xl p-6 elevate">
+                 <div className="flex items-center justify-between gap-3 mb-4">
+                    <h3 className="text-xl font-semibold text-slate-100 normal-case">Roof Visualizer</h3>
+                     <label className="text-sm">
+                        <span className="sr-only">House style</span>
+                        <select 
+                            id="houseStyle" 
+                            className="bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-slate-100"
+                            value={houseStyle}
+                            onChange={(e) => setHouseStyle(e.target.value)}
+                        >
+                            <option value="colonial">Colonial</option>
+                            <option value="ranch">Ranch</option>
+                            <option value="modern">Modern</option>
+                        </select>
+                    </label>
                 </div>
                 
-                {selectedColor && (
-                    <div className="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white p-2 rounded">
-                        <p className="text-sm font-bold">{selectedColor.name}</p>
-                        <p className="text-xs">{selectedColor.code}</p>
-                    </div>
-                )}
-            </div>
-            <p className="text-zinc-400 text-sm mt-4">
-                Click on colors above to preview them on your roof style.
-            </p>
+                <div className="rounded-xl overflow-hidden bg-gradient-to-b from-sky-400/40 to-indigo-600/40 p-8">
+                    <svg viewBox="0 0 300 200" className="w-full h-[260px] mx-auto">
+                        <defs>
+                            <linearGradient id="roofShine" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stopColor="#ffffff" stopOpacity=".15"></stop>
+                                <stop offset=".5" stopColor="#000000" stopOpacity=".0"></stop>
+                            </linearGradient>
+                        </defs>
+                        <rect x="90" y="90" width="120" height="70" fill="#E5E7EB" stroke="#1F2937" strokeWidth="2" />
+                        <rect x="145" y="120" width="30" height="40" fill="#8B5E34" />
+                        <rect x="105" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
+                        <rect x="170" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
+                        <polygon points="80,90 150,50 220,90" fill={selectedColor.color}></polygon>
+                        <polygon points="80,90 150,50 220,90" fill="url(#roofShine)"></polygon>
+                    </svg>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between">
+                    <p className="text-sm text-slate-300">Click a color to apply to the roof.</p>
+                    <button 
+                        onClick={() => setSelectedColor(initialColor)}
+                        className="text-sm px-3 py-2 rounded-lg bg-white/10 border border-white/10 hover:bg-white/20"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </section>
         </div>
     );
 
@@ -152,59 +152,9 @@ const ServicesSection = () => {
                     </div>
                 </div>
 
-                {/* Metal Roofing Section */}
-                {selectedService === 'metal' && (
-                    <div className="space-y-8">
-                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
-                            <h3 className="text-3xl font-bold text-zinc-50 mb-4">PREMIUM METAL ROOFING</h3>
-                            <p className="text-zinc-400 text-lg mb-6">
-                                Lifetime protection with our premium metal roofing systems. Choose from our extensive color palette and see how it looks on your home.
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-zinc-300">
-                                <div>• 40+ Year Warranty</div>
-                                <div>• Energy Efficient</div>
-                                <div>• Storm Resistant</div>
-                                <div>• Fire Resistant</div>
-                                <div>• Low Maintenance</div>
-                                <div>• Eco-Friendly</div>
-                            </div>
-                        </div>
-                        
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            <ColorChart colors={metalColors} title="METAL ROOFING COLORS" />
-                            <HouseVisualizer />
-                        </div>
-                    </div>
-                )}
-
-                {/* Shingles Section */}
-                {selectedService === 'shingles' && (
-                    <div className="space-y-8">
-                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
-                            <h3 className="text-3xl font-bold text-zinc-50 mb-4">PREMIUM ASPHALT SHINGLES</h3>
-                            <p className="text-zinc-400 text-lg mb-6">
-                                Traditional roofing with modern performance. Our architectural shingles provide excellent protection and curb appeal.
-                            </p>
-                            <div className="grid md:grid-cols-3 gap-4 text-zinc-300">
-                                <div>• 25-30 Year Warranty</div>
-                                <div>• Wind Resistant</div>
-                                <div>• Impact Resistant</div>
-                                <div>• Algae Resistant</div>
-                                <div>• Cost Effective</div>
-                                <div>• Quick Installation</div>
-                            </div>
-                        </div>
-                        
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            <ColorChart colors={shingleColors} title="SHINGLE COLORS" />
-                            <HouseVisualizer />
-                        </div>
-                    </div>
-                )}
-
-                {/* Other Services Section */}
-                {selectedService === 'other' && (
-                    <div className="grid md:grid-cols-3 gap-8">
+                {/* Service Content */}
+                {selectedService === 'other' ? (
+                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
                             <h3 className="text-2xl font-bold text-zinc-50 mb-4">ROOF REPAIRS</h3>
                             <p className="text-zinc-400 mb-4">Emergency repairs and maintenance for all roofing types. Available 24/7 for urgent situations.</p>
@@ -236,8 +186,44 @@ const ServicesSection = () => {
                             </ul>
                         </div>
                     </div>
+                ) : (
+                    <div className="space-y-8">
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                             <h3 className="text-3xl font-bold text-zinc-50 mb-4">
+                                {selectedService === 'metal' ? 'PREMIUM METAL ROOFING' : 'PREMIUM ASPHALT SHINGLES'}
+                            </h3>
+                            <p className="text-zinc-400 text-lg mb-6">
+                                {selectedService === 'metal' 
+                                    ? "Lifetime protection with our premium metal roofing systems. Choose from our extensive color palette and see how it looks on your home."
+                                    : "Traditional roofing with modern performance. Our architectural shingles provide excellent protection and curb appeal."
+                                }
+                            </p>
+                            <div className="grid md:grid-cols-3 gap-4 text-zinc-300">
+                                {selectedService === 'metal' ? (
+                                    <>
+                                        <div>• 40+ Year Warranty</div>
+                                        <div>• Energy Efficient</div>
+                                        <div>• Storm Resistant</div>
+                                        <div>• Fire Resistant</div>
+                                        <div>• Low Maintenance</div>
+                                        <div>• Eco-Friendly</div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div>• 25-30 Year Warranty</div>
+                                        <div>• Wind Resistant</div>
+                                        <div>• Impact Resistant</div>
+                                        <div>• Algae Resistant</div>
+                                        <div>• Cost Effective</div>
+                                        <div>• Quick Installation</div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                        <ColorChartAndVisualizer />
+                    </div>
                 )}
-
+                
                 {/* Call to Action */}
                 <div className="mt-16 text-center">
                     <div className="bg-orange-600 p-8 rounded-lg">
@@ -729,3 +715,4 @@ export default function Home() {
 };
 
     
+
