@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Asphalt Bros Roofing LTD",
-  description: "Reliable Roofing Solutions for Your Home.",
+  title: "Paul's Roofing - Southern NB Specialist",
+  description: "The last roof you'll ever need.",
 };
 
 export default function RootLayout({
@@ -13,15 +12,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Roboto+Slab:wght@700;800&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body bg-background">
+      <body>
         {children}
-        <Toaster />
       </body>
     </html>
   );

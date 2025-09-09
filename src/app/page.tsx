@@ -1,167 +1,731 @@
 
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { Phone, Mail, MapPin, Instagram, Facebook, ShieldCheck } from 'lucide-react';
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
-import { ServicesSection } from '@/components/services-section';
-import { Testimonials } from '@/components/testimonials';
-import { GallerySection } from '@/components/gallery-section';
-import { ContactForm } from '@/components/contact-form';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import React, { useState, useEffect, useCallback } from 'react';
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1">
-        <section id="home" className="relative h-screen min-h-[600px] w-full">
-          <Image
-            src="https://ik.imagekit.io/ik5x4q7jl/sdfada_gJM9TZDCe?updatedAt=1757040358273"
-            alt="A beautiful asphalt shingle roof on a modern home."
-            fill
-            priority
-            className="object-cover"
-            data-ai-hint="asphalt shingle roof"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/50 to-transparent" />
-          <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-primary-foreground px-4">
-            <h1 className="text-5xl md:text-7xl font-extrabold text-shadow-outline">
-              ASPHALT BROS ROOFING LTD
-            </h1>
-            <p className="mt-6 max-w-2xl text-xl md:text-2xl text-zinc-200 text-shadow-outline-sm">
-              Reliable Roofing Solutions for Your Home
+// Since this is a single file, we define all components here.
+
+// -- SERVICES SECTION COMPONENT -- //
+const ServicesSection = () => {
+    const [selectedService, setSelectedService] = useState('metal');
+    const [selectedColor, setSelectedColor] = useState<{name: string, color: string, code: string} | null>(null);
+    const [houseStyle, setHouseStyle] = useState('colonial');
+
+    const metalColors = [
+        { name: 'CHARCOAL GRAY', color: '#36454F', code: 'MG-001' },
+        { name: 'SLATE BLUE', color: '#6A7B8A', code: 'MG-002' },
+        { name: 'FOREST GREEN', color: '#355E3B', code: 'MG-003' },
+        { name: 'BRICK RED', color: '#CB4154', code: 'MG-004' },
+        { name: 'COPPER BRONZE', color: '#B87333', code: 'MG-005' },
+        { name: 'ARCTIC WHITE', color: '#F8F8FF', code: 'MG-006' },
+        { name: 'STORM GRAY', color: '#708090', code: 'MG-007' },
+        { name: 'BURNISHED SLATE', color: '#2F4F4F', code: 'MG-008' }
+    ];
+
+    const shingleColors = [
+        { name: 'WEATHERED WOOD', color: '#8B7355', code: 'SH-001' },
+        { name: 'MISSION BROWN', color: '#654321', code: 'SH-002' },
+        { name: 'OYSTER GRAY', color: '#8B8680', code: 'SH-003' },
+        { name: 'ESTATE GRAY', color: '#555555', code: 'SH-004' },
+        { name: 'PEWTER GRAY', color: '#96A8A1', code: 'SH-005' },
+        { name: 'DRIFTWOOD', color: '#8F7853', code: 'SH-006' }
+    ];
+
+    const ColorChart = ({ colors, title }: {colors: typeof metalColors, title: string}) => (
+        <div className="bg-zinc-700 p-6 rounded-lg border border-zinc-600">
+            <h4 className="text-xl font-bold text-zinc-50 mb-4">{title}</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {colors.map((colorOption) => (
+                    <div
+                        key={colorOption.code}
+                        className="cursor-pointer group"
+                        onClick={() => setSelectedColor(colorOption)}
+                    >
+                        <div 
+                            className="w-full h-16 rounded-lg border-2 border-zinc-500 group-hover:border-orange-500 transition-colors mb-2"
+                            style={{ backgroundColor: colorOption.color }}
+                        ></div>
+                        <p className="text-xs text-zinc-400 text-center">{colorOption.name}</p>
+                        <p className="text-xs text-zinc-500 text-center">{colorOption.code}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    const HouseVisualizer = () => (
+        <div className="bg-zinc-700 p-6 rounded-lg border border-zinc-600">
+            <h4 className="text-xl font-bold text-zinc-50 mb-4">ROOF VISUALIZER</h4>
+            <div className="mb-4">
+                <label className="block text-zinc-300 mb-2">House Style:</label>
+                <select 
+                    value={houseStyle} 
+                    onChange={(e) => setHouseStyle(e.target.value)}
+                    className="w-full p-2 bg-zinc-600 border border-zinc-500 rounded text-zinc-100"
+                >
+                    <option value="colonial">Colonial</option>
+                    <option value="ranch">Ranch</option>
+                    <option value="cape">Cape Cod</option>
+                    <option value="modern">Modern</option>
+                </select>
+            </div>
+            <div className="bg-gradient-to-b from-blue-400 to-blue-600 p-8 rounded-lg relative overflow-hidden min-h-64">
+                {/* Sky background */}
+                <div className="absolute inset-0 bg-gradient-to-b from-blue-300 to-blue-500"></div>
+                
+                {/* House visualization */}
+                <div className="relative z-10 flex justify-center items-end h-full">
+                    <div className="relative">
+                        {/* House body */}
+                        <div className="w-32 h-20 bg-gray-200 border-2 border-gray-400"></div>
+                        
+                        {/* Roof */}
+                        <div 
+                            className="absolute -top-8 left-0 w-32 h-12 transform -translate-y-2"
+                            style={{
+                                backgroundColor: selectedColor ? selectedColor.color : '#708090',
+                                clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                                border: '2px solid #333'
+                            }}
+                        ></div>
+                        
+                        {/* Door */}
+                        <div className="absolute bottom-0 left-12 w-8 h-12 bg-amber-800 border border-amber-900"></div>
+                        
+                        {/* Windows */}
+                        <div className="absolute bottom-8 left-4 w-6 h-6 bg-sky-200 border border-sky-400"></div>
+                        <div className="absolute bottom-8 right-4 w-6 h-6 bg-sky-200 border border-sky-400"></div>
+                    </div>
+                </div>
+                
+                {selectedColor && (
+                    <div className="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white p-2 rounded">
+                        <p className="text-sm font-bold">{selectedColor.name}</p>
+                        <p className="text-xs">{selectedColor.code}</p>
+                    </div>
+                )}
+            </div>
+            <p className="text-zinc-400 text-sm mt-4">
+                Click on colors above to preview them on your roof style.
             </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="font-bold text-lg">
-                <a href="tel:+15066500407">
-                  <Phone className="mr-2 h-5 w-5" />
-                  CALL (506) 650-0407
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="font-bold text-lg border-2 border-primary text-primary-foreground bg-transparent hover:bg-primary hover:text-primary-foreground">
-                <Link href="#contact">GET FREE QUOTE</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        </div>
+    );
 
-        <ServicesSection />
-
-        <section id="about" className="py-20 bg-background">
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold">ABOUT ASPHALT BROS ROOFING</h2>
-                </div>
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div className="relative rounded-lg overflow-hidden shadow-lg h-96">
-                        <Image
-                            src="https://ik.imagekit.io/ik5x4q7jl/ffds_s7bYdqKz7?updatedAt=1757040303489"
-                            alt="The Asphalt Bros Roofing family team"
-                            fill
-                            className="object-cover"
-                            data-ai-hint="family team photo"
-                        />
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                         <div className="absolute bottom-0 left-0 p-6">
-                            <h3 className="text-2xl font-bold text-white text-shadow-outline">Our Family</h3>
-                         </div>
+    return (
+        <section id="services" className="py-20 bg-zinc-800">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-4xl font-bold text-center text-zinc-50 mb-16">OUR SERVICES</h2>
+                
+                {/* Service Selection Tabs */}
+                <div className="flex justify-center mb-12">
+                    <div className="flex bg-zinc-700 rounded-lg p-1 border border-zinc-600">
+                        <button
+                            onClick={() => setSelectedService('metal')}
+                            className={`px-6 py-3 rounded-md font-bold transition-colors ${
+                                selectedService === 'metal' 
+                                    ? 'bg-orange-600 text-white' 
+                                    : 'text-zinc-400 hover:text-zinc-200'
+                            }`}
+                        >
+                            METAL ROOFING
+                        </button>
+                        <button
+                            onClick={() => setSelectedService('shingles')}
+                            className={`px-6 py-3 rounded-md font-bold transition-colors ${
+                                selectedService === 'shingles' 
+                                    ? 'bg-orange-600 text-white' 
+                                    : 'text-zinc-400 hover:text-zinc-200'
+                            }`}
+                        >
+                            ASPHALT SHINGLES
+                        </button>
+                        <button
+                            onClick={() => setSelectedService('other')}
+                            className={`px-6 py-3 rounded-md font-bold transition-colors ${
+                                selectedService === 'other' 
+                                    ? 'bg-orange-600 text-white' 
+                                    : 'text-zinc-400 hover:text-zinc-200'
+                            }`}
+                        >
+                            OTHER SERVICES
+                        </button>
                     </div>
-                    <div>
-                        <h3 className="text-2xl font-bold mb-6">A FAMILY-RUN & OWNED COMPANY</h3>
-                        <div className="space-y-4 text-muted-foreground text-lg">
-                           <p>Asphalt Bros Roofing LTD is a family-run and owned roofing company dedicated to delivering quality roofing services.</p>
-                           <p>Mike has been in the roofing industry for many years and has always wanted a company of his own to showcase his talent. Caleb although new to the roofing industry has years of business experience and was very excited for this new opportunity with his brother in law.</p>
+                </div>
+
+                {/* Metal Roofing Section */}
+                {selectedService === 'metal' && (
+                    <div className="space-y-8">
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                            <h3 className="text-3xl font-bold text-zinc-50 mb-4">PREMIUM METAL ROOFING</h3>
+                            <p className="text-zinc-400 text-lg mb-6">
+                                Lifetime protection with our premium metal roofing systems. Choose from our extensive color palette and see how it looks on your home.
+                            </p>
+                            <div className="grid md:grid-cols-3 gap-4 text-zinc-300">
+                                <div>• 40+ Year Warranty</div>
+                                <div>• Energy Efficient</div>
+                                <div>• Storm Resistant</div>
+                                <div>• Fire Resistant</div>
+                                <div>• Low Maintenance</div>
+                                <div>• Eco-Friendly</div>
+                            </div>
+                        </div>
+                        
+                        <div className="grid lg:grid-cols-2 gap-8">
+                            <ColorChart colors={metalColors} title="METAL ROOFING COLORS" />
+                            <HouseVisualizer />
+                        </div>
+                    </div>
+                )}
+
+                {/* Shingles Section */}
+                {selectedService === 'shingles' && (
+                    <div className="space-y-8">
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                            <h3 className="text-3xl font-bold text-zinc-50 mb-4">PREMIUM ASPHALT SHINGLES</h3>
+                            <p className="text-zinc-400 text-lg mb-6">
+                                Traditional roofing with modern performance. Our architectural shingles provide excellent protection and curb appeal.
+                            </p>
+                            <div className="grid md:grid-cols-3 gap-4 text-zinc-300">
+                                <div>• 25-30 Year Warranty</div>
+                                <div>• Wind Resistant</div>
+                                <div>• Impact Resistant</div>
+                                <div>• Algae Resistant</div>
+                                <div>• Cost Effective</div>
+                                <div>• Quick Installation</div>
+                            </div>
+                        </div>
+                        
+                        <div className="grid lg:grid-cols-2 gap-8">
+                            <ColorChart colors={shingleColors} title="SHINGLE COLORS" />
+                            <HouseVisualizer />
+                        </div>
+                    </div>
+                )}
+
+                {/* Other Services Section */}
+                {selectedService === 'other' && (
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                            <h3 className="text-2xl font-bold text-zinc-50 mb-4">ROOF REPAIRS</h3>
+                            <p className="text-zinc-400 mb-4">Emergency repairs and maintenance for all roofing types. Available 24/7 for urgent situations.</p>
+                            <ul className="text-zinc-300 space-y-2">
+                                <li>• Leak Detection & Repair</li>
+                                <li>• Storm Damage Assessment</li>
+                                <li>• Gutter Repair & Cleaning</li>
+                                <li>• Emergency Tarping</li>
+                            </ul>
+                        </div>
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                            <h3 className="text-2xl font-bold text-zinc-50 mb-4">SIDING INSTALLATION</h3>
+                            <p className="text-zinc-400 mb-4">Complete exterior renovations with Hardie Board and premium materials.</p>
+                            <ul className="text-zinc-300 space-y-2">
+                                <li>• Hardie Board Siding</li>
+                                <li>• Vinyl Siding</li>
+                                <li>• Wood Siding</li>
+                                <li>• Trim & Soffit Work</li>
+                            </ul>
+                        </div>
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                            <h3 className="text-2xl font-bold text-zinc-50 mb-4">GUTTERS & EAVESTROUGH</h3>
+                            <p className="text-zinc-400 mb-4">Complete gutter systems to protect your foundation and landscaping.</p>
+                            <ul className="text-zinc-300 space-y-2">
+                                <li>• Seamless Gutters</li>
+                                <li>• Gutter Guards</li>
+                                <li>• Downspout Installation</li>
+                                <li>• Gutter Maintenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                )}
+
+                {/* Call to Action */}
+                <div className="mt-16 text-center">
+                    <div className="bg-orange-600 p-8 rounded-lg">
+                        <h3 className="text-3xl font-bold text-white mb-4">READY TO GET STARTED?</h3>
+                        <p className="text-orange-100 text-lg mb-6">
+                            Get a free estimate for your roofing project. We'll help you choose the perfect materials and colors.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="tel:+15067177285" className="bg-white text-orange-600 hover:bg-orange-50 px-8 py-4 rounded-lg font-bold text-lg transition-colors">
+                                CALL (506) 717-PAUL
+                            </a>
+                            <a href="#contact" className="border-2 border-white text-white hover:bg-white hover:text-orange-600 px-8 py-4 rounded-lg font-bold text-lg transition-colors">
+                                GET FREE QUOTE
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+    );
+};
 
-        <section className="py-20 bg-secondary/20">
-            <div className="container mx-auto px-4">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 className="text-4xl font-bold mb-6">PROVEN PERFORMANCE IN EVERY SHINGLE</h2>
-                        <p className="text-lg text-muted-foreground mb-6">Your roof is your home's first line of defense against the ravages of severe weather, as well as everyday wind, rain, snow, and extreme temperatures. That's why proven performance isn't just a nice-to-have. It's a must.</p>
-                        <Card className="bg-background">
-                            <CardHeader className="flex flex-row items-center gap-4">
-                                <ShieldCheck className="w-12 h-12 text-primary" />
-                                <div>
-                                    <CardTitle>CLASS 3 IMPACT RESISTANCE</CardTitle>
-                                    <CardDescription>IKO Dynasty shingles qualify for a Class 3 impact resistance rating, which may enable you to a reduction in your homeowner insurance premium, if available.</CardDescription>
-                                </div>
-                            </CardHeader>
-                        </Card>
-                    </div>
-                     <div className="grid grid-cols-2 grid-rows-2 gap-4 h-[450px]">
-                        <div className="col-span-2 row-span-2 rounded-lg overflow-hidden shadow-lg">
-                             <Image src="https://ik.imagekit.io/ik5x4q7jl/Gemini_Generated_Image_13yq9113yq9113yq.png?updatedAt=1757039964062" alt="A beautiful home with a durable IKO Dynasty roof" width={800} height={600} className="w-full h-full object-cover" data-ai-hint="durable roof" />
+// Boss Quarters Component (Your Firebase App)
+const BossQuarters = ({ onLogout }: {onLogout: () => void}) => {
+    // Simulated user ID for demo purposes
+    const [userId, setUserId] = useState("demo-user-123");
+
+    // Project-level state
+    const [projectName, setProjectName] = useState("SAMPLE ROOFING PROJECT");
+    const [clientContact, setClientContact] = useState("John Smith - (506) 555-0123");
+    
+    // State for daily logs
+    type LogEntry = { id: string; text: string; timestamp: Date };
+    const [dailyProgressLog, setDailyProgressLog] = useState<LogEntry[]>([]);
+
+    // UI States
+    const [currentPhase, setCurrentPhase] = useState('overview');
+
+    // Functions for adding entries
+    const addDailyProgressEntry = useCallback((entryText: string) => {
+        const newEntry: LogEntry = {
+            id: Date.now().toString(),
+            text: entryText,
+            timestamp: new Date()
+        };
+        setDailyProgressLog(prev => [...prev, newEntry]);
+    }, []);
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-green-500 to-green-700 flex flex-col items-center p-6">
+            {/* Header with Logout */}
+            <div className="w-full max-w-4xl flex justify-between items-center mb-6">
+                <h1 className="text-5xl font-extrabold text-white uppercase tracking-wider text-shadow-outline">
+                    BOSS QUARTERS
+                </h1>
+                <button
+                    onClick={onLogout}
+                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                >
+                    🚪 LOGOUT
+                </button>
+            </div>
+
+            <p className="text-xl text-white mb-10 text-center max-w-3xl text-shadow-outline-sm">
+                PROJECT MANAGEMENT | QUOTES | INVOICES | ADMIN TOOLS
+            </p>
+
+            {/* Navigation Tabs */}
+            <div className="flex flex-wrap justify-center bg-white p-2 rounded-full shadow-lg mb-10 gap-2">
+                <button
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 ease-in-out ${currentPhase === 'overview' ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-100'}`}
+                    onClick={() => setCurrentPhase('overview')}
+                >
+                    PROJECT OVERVIEW
+                </button>
+                <button
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 ease-in-out ${currentPhase === 'quotes' ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-100'}`}
+                    onClick={() => setCurrentPhase('quotes')}
+                >
+                    QUOTES
+                </button>
+                <button
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 ease-in-out ${currentPhase === 'invoices' ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-100'}`}
+                    onClick={() => setCurrentPhase('invoices')}
+                >
+                    INVOICES
+                </button>
+                <button
+                    className={`px-4 py-2 rounded-full font-bold text-sm transition-all duration-300 ease-in-out ${currentPhase === 'during' ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-100'}`}
+                    onClick={() => setCurrentPhase('during')}
+                >
+                    PROJECT TRACKING
+                </button>
+            </div>
+
+            {/* Content Based on Phase */}
+            {currentPhase === 'overview' && (
+                <div className="p-8 bg-white rounded-lg shadow-xl max-w-4xl w-full">
+                    <h2 className="text-4xl font-extrabold text-green-800 mb-6 uppercase tracking-wide text-shadow-outline">PROJECT OVERVIEW 📊</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg">
+                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <h3 className="font-bold text-gray-700 mb-2 uppercase">PROJECT NAME:</h3>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded-md text-gray-800"
+                                value={projectName}
+                                onChange={(e) => setProjectName(e.target.value)}
+                            />
+                        </div>
+                        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 shadow-sm">
+                            <h3 className="font-bold text-gray-700 mb-2 uppercase">CLIENT CONTACT:</h3>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded-md text-gray-800"
+                                value={clientContact}
+                                onChange={(e) => setClientContact(e.target.value)}
+                            />
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            )}
 
-        <Testimonials />
+            {currentPhase === 'quotes' && (
+                <div className="p-8 bg-white rounded-lg shadow-xl max-w-4xl w-full">
+                    <h2 className="text-4xl font-extrabold text-green-800 mb-6 uppercase tracking-wide text-shadow-outline">QUOTE MANAGEMENT 💰</h2>
+                    <div className="space-y-6">
+                        <div className="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                            <h3 className="text-2xl font-bold text-blue-700 mb-4">CREATE NEW QUOTE</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Client Name" className="p-3 border rounded-lg" />
+                                <input type="email" placeholder="Client Email" className="p-3 border rounded-lg" />
+                                <input type="text" placeholder="Project Type" className="p-3 border rounded-lg" />
+                                <input type="number" placeholder="Estimated Cost" className="p-3 border rounded-lg" />
+                            </div>
+                            <textarea placeholder="Project Description" rows={4} className="w-full p-3 border rounded-lg mt-4"></textarea>
+                            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold mt-4 hover:bg-blue-700">
+                                GENERATE QUOTE
+                            </button>
+                        </div>
+                        <div className="bg-gray-50 p-6 rounded-lg border border-gray-300">
+                            <h3 className="text-2xl font-bold text-gray-700 mb-4">RECENT QUOTES</h3>
+                            <p className="text-gray-600">No quotes created yet. Create your first quote above.</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
-        <GallerySection />
+            {currentPhase === 'invoices' && (
+                <div className="p-8 bg-white rounded-lg shadow-xl max-w-4xl w-full">
+                    <h2 className="text-4xl font-extrabold text-green-800 mb-6 uppercase tracking-wide text-shadow-outline">INVOICE MANAGEMENT 📋</h2>
+                    <div className="space-y-6">
+                        <div className="bg-purple-50 p-6 rounded-lg border border-purple-300">
+                            <h3 className="text-2xl font-bold text-purple-700 mb-4">CREATE NEW INVOICE</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Invoice Number" className="p-3 border rounded-lg" />
+                                <input type="date" placeholder="Due Date" className="p-3 border rounded-lg" />
+                                <input type="text" placeholder="Client Name" className="p-3 border rounded-lg" />
+                                <input type="number" placeholder="Total Amount" className="p-3 border rounded-lg" />
+                            </div>
+                            <textarea placeholder="Invoice Items & Details" rows={4} className="w-full p-3 border rounded-lg mt-4"></textarea>
+                            <button className="bg-purple-600 text-white px-6 py-3 rounded-lg font-bold mt-4 hover:bg-purple-700">
+                                GENERATE INVOICE
+                            </button>
+                        </div>
+                        <div className="bg-gray-50 p-6 rounded-lg border border-gray-300">
+                            <h3 className="text-2xl font-bold text-gray-700 mb-4">PENDING INVOICES</h3>
+                            <p className="text-gray-600">No pending invoices. Create your first invoice above.</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
-        <section id="contact" className="py-20 bg-secondary/20">
-            <div className="container mx-auto px-4">
-                <h2 className="text-4xl font-bold text-center mb-16">GET IN TOUCH</h2>
-                <div className="grid md:grid-cols-2 gap-12">
-                    <div>
-                        <h3 className="text-2xl font-bold mb-6">CONTACT US</h3>
-                        <p className="text-muted-foreground mb-6">To get a free quote, or if you have questions or special requests, just drop us a line. We look forward to hearing from you!</p>
-                        <div className="space-y-6">
-                            <div className="flex items-center">
-                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
-                                    <Phone className="text-primary-foreground" />
+            {currentPhase === 'during' && (
+                <div className="p-8 bg-white rounded-lg shadow-xl max-w-4xl w-full">
+                    <h2 className="text-4xl font-extrabold text-green-800 mb-6 uppercase tracking-wide text-shadow-outline">PROJECT TRACKING 📝</h2>
+                    
+                    <div className="mb-8">
+                        <h3 className="text-2xl font-bold text-green-700 mb-4 uppercase text-shadow-outline-sm">DAILY PROGRESS LOG</h3>
+                        <div className="flex mb-3">
+                            <input
+                                type="text"
+                                className="flex-grow p-3 border border-green-300 rounded-l-lg bg-green-50 text-gray-800 text-base focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="ADD NEW DAILY PROGRESS ENTRY..."
+                                onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                                    const target = e.target as HTMLInputElement;
+                                    if (e.key === 'Enter' && target.value.trim()) {
+                                        addDailyProgressEntry(target.value.trim());
+                                        target.value = '';
+                                    }
+                                }}
+                            />
+                            <button
+                                onClick={(e) => {
+                                    const button = e.target as HTMLButtonElement;
+                                    const input = button.previousElementSibling as HTMLInputElement;
+                                    if (input.value.trim()) {
+                                        addDailyProgressEntry(input.value.trim());
+                                        input.value = '';
+                                    }
+                                }}
+                                className="bg-green-600 text-white px-5 rounded-r-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-md"
+                            >
+                                ADD
+                            </button>
+                        </div>
+                        <div className="bg-green-100 p-4 rounded-lg border border-green-300 shadow-sm text-base max-h-60 overflow-y-auto">
+                            <ul className="list-disc list-inside space-y-2">
+                                {dailyProgressLog.length === 0 ? (
+                                    <li>NO DAILY PROGRESS LOGGED YET.</li>
+                                ) : (
+                                    dailyProgressLog.map((entry) => (
+                                        <li key={entry.id}>
+                                            **{entry.timestamp.toLocaleDateString()}:** {entry.text}
+                                        </li>
+                                    ))
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Footer */}
+            <footer className="mt-12 w-full max-w-5xl text-center text-white text-lg p-4 bg-green-800 rounded-lg shadow-lg text-shadow-outline-sm">
+                <p className="font-bold">PAUL'S ROOFING BOSS QUARTERS</p>
+                <p className="text-sm mt-2 text-green-300">Secure Administrative Access | User ID: {userId}</p>
+            </footer>
+        </div>
+    );
+};
+
+
+// -- MAIN APP COMPONENT -- //
+export default function Home() {
+    const [showBossQuarters, setShowBossQuarters] = useState(false);
+    const [passwordAttempt, setPasswordAttempt] = useState('');
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
+    // Simple password protection
+    const BOSS_PASSWORD = "paul2025";
+    
+    const handlePasswordSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (passwordAttempt === BOSS_PASSWORD) {
+            setIsAuthenticated(true);
+            setShowBossQuarters(true);
+        } else {
+            alert('INCORRECT PASSWORD');
+            setPasswordAttempt('');
+        }
+    };
+
+    const handleLogout = () => {
+        setIsAuthenticated(false);
+        setShowBossQuarters(false);
+        setPasswordAttempt('');
+    };
+
+    if (showBossQuarters && isAuthenticated) {
+        return <BossQuarters onLogout={handleLogout} />;
+    }
+
+    return (
+        <div className="min-h-screen bg-zinc-900">
+            {/* Navigation */}
+            <nav className="fixed top-0 left-0 right-0 bg-zinc-900/95 backdrop-blur-sm border-b border-zinc-700 z-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center py-4">
+                        <div className="text-2xl font-bold text-zinc-50">PAUL'S ROOFING</div>
+                        <div className="hidden md:flex space-x-8">
+                            <a href="#home" className="text-zinc-400 hover:text-orange-500 transition-colors">HOME</a>
+                            <a href="#services" className="text-zinc-400 hover:text-orange-500 transition-colors">SERVICES</a>
+                            <a href="#about" className="text-zinc-400 hover:text-orange-500 transition-colors">ABOUT</a>
+                            <a href="#contact" className="text-zinc-400 hover:text-orange-500 transition-colors">CONTACT</a>
+                            <button 
+                                onClick={() => setShowBossQuarters(true)}
+                                className="text-zinc-400 hover:text-orange-500 transition-colors"
+                            >
+                                BOSS QUARTERS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Hero Section */}
+            <section id="home" className="hero-bg min-h-screen flex items-center justify-center pt-20">
+                <div className="text-center px-4">
+                    <h1 className="text-5xl md:text-7xl font-extrabold text-zinc-50 mb-6 text-shadow-outline">
+                        THE LAST ROOF YOU'LL EVER NEED.
+                    </h1>
+                    <p className="text-xl md:text-2xl text-zinc-300 mb-4 text-shadow-outline-sm">
+                        30 YEARS ON THE ROOF. READY FOR YOURS.
+                    </p>
+                    <p className="text-lg text-zinc-400 mb-8">
+                        Southern New Brunswick's Premier Metal Roofing Specialist.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="tel:+15067177285" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors">
+                            CALL (506) 717-PAUL
+                        </a>
+                        <a href="#contact" className="border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors">
+                            GET FREE QUOTE
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* Services Section */}
+            <ServicesSection />
+
+            {/* About Section */}
+            <section id="about" className="py-20 bg-zinc-900">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 className="text-4xl font-bold text-zinc-50 mb-8">30 YEARS OF EXCELLENCE</h2>
+                            <p className="text-zinc-400 text-lg mb-6">
+                                Based in Quispamsis, New Brunswick, Paul's Roofing has been the trusted choice for homeowners throughout Southern NB for three decades.
+                            </p>
+                            <p className="text-zinc-400 text-lg mb-6">
+                                We specialize in premium metal roofing systems that are engineered to last a lifetime, backed by comprehensive warranties and expert craftsmanship.
+                            </p>
+                            <div className="space-y-4">
+                                <div className="flex items-center">
+                                    <div className="w-2 h-2 bg-orange-600 rounded-full mr-4"></div>
+                                    <span className="text-zinc-300">Licensed & Insured</span>
                                 </div>
-                                <div>
-                                    <p className="font-semibold text-lg">(506) 650-0407</p>
-                                    <p className="text-muted-foreground text-sm">Open 9am - 5pm, 7 days a week for emergencies</p>
+                                <div className="flex items-center">
+                                    <div className="w-2 h-2 bg-orange-600 rounded-full mr-4"></div>
+                                    <span className="text-zinc-300">Lifetime Warranties Available</span>
                                 </div>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
-                                    <Mail className="text-primary-foreground" />
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-lg">mikehenderson.abr@gmail.com</p>
-                                     <p className="font-semibold text-lg">calebtiner.abr@gmail.com</p>
-                                    <p className="text-muted-foreground text-sm">General inquiries</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
-                                    <Instagram className="text-primary-foreground" />
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-lg">@asphaltbrosroofing</p>
-                                    <p className="text-muted-foreground text-sm">Follow us on Instagram!</p>
-                                </div>
-                            </div>
-                             <div className="flex items-center">
-                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4 shrink-0">
-                                    <Facebook className="text-primary-foreground" />
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-lg">Find us on Facebook</p>
-                                    <p className="text-muted-foreground text-sm">Promotions & pictures of our work.</p>
+                                <div className="flex items-center">
+                                    <div className="w-2 h-2 bg-orange-600 rounded-full mr-4"></div>
+                                    <span className="text-zinc-300">Emergency Services 24/7</span>
                                 </div>
                             </div>
                         </div>
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                            <h3 className="text-2xl font-bold text-zinc-50 mb-4">WHY CHOOSE US?</h3>
+                            <ul className="space-y-3 text-zinc-400">
+                                <li>• 30+ years of roofing experience</li>
+                                <li>• Specialized in metal roofing systems</li>
+                                <li>• Serving all of Southern New Brunswick</li>
+                                <li>• Premium materials and workmanship</li>
+                                <li>• Comprehensive warranty coverage</li>
+                                <li>• Emergency repair services</li>
+                            </ul>
+                        </div>
                     </div>
-                    <ContactForm />
                 </div>
-            </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
-  );
-}
+            </section>
+
+            {/* Contact Section */}
+            <section id="contact" className="py-20 bg-zinc-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-4xl font-bold text-center text-zinc-50 mb-16">GET IN TOUCH</h2>
+                    <div className="grid md:grid-cols-2 gap-12">
+                        <div>
+                            <h3 className="text-2xl font-bold text-zinc-50 mb-6">CONTACT INFORMATION</h3>
+                            <div className="space-y-4">
+                                <div className="flex items-center">
+                                    <div className="w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center mr-4">
+                                        <span className="text-white text-sm">📞</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-zinc-300 font-semibold">(506) 717-PAUL</p>
+                                        <p className="text-zinc-400 text-sm">Available 24/7 for emergencies</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center">
+                                    <div className="w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center mr-4">
+                                        <span className="text-white text-sm">✉️</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-zinc-300 font-semibold">paul@paulsroofing.ca</p>
+                                        <p className="text-zinc-400 text-sm">General inquiries</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center">
+                                    <div className="w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center mr-4">
+                                        <span className="text-white text-sm">🚨</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-zinc-300 font-semibold">hurry@paulsroofing.ca</p>
+                                        <p className="text-zinc-400 text-sm">Emergency repairs</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center">
+                                    <div className="w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center mr-4">
+                                        <span className="text-white text-sm">📍</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-zinc-300 font-semibold">Quispamsis, New Brunswick</p>
+                                        <p className="text-zinc-400 text-sm">Serving all of Southern NB</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                            <h3 className="text-2xl font-bold text-zinc-50 mb-6">REQUEST A QUOTE</h3>
+                            <form className="space-y-4">
+                                <input 
+                                    type="text" 
+                                    placeholder="Your Name" 
+                                    className="w-full p-3 bg-zinc-600 border border-zinc-500 rounded text-zinc-100 placeholder-zinc-400"
+                                />
+                                <input 
+                                    type="email" 
+                                    placeholder="Your Email" 
+                                    className="w-full p-3 bg-zinc-600 border border-zinc-500 rounded text-zinc-100 placeholder-zinc-400"
+                                />
+                                <input 
+                                    type="tel" 
+                                    placeholder="Your Phone" 
+                                    className="w-full p-3 bg-zinc-600 border border-zinc-500 rounded text-zinc-100 placeholder-zinc-400"
+                                />
+                                <textarea 
+                                    placeholder="Describe your roofing needs..." 
+                                    rows={4}
+                                    className="w-full p-3 bg-zinc-600 border border-zinc-500 rounded text-zinc-100 placeholder-zinc-400"
+                                ></textarea>
+                                <button 
+                                    type="submit"
+                                    className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded font-bold transition-colors"
+                                >
+                                    SEND REQUEST
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Boss Quarters Password Modal */}
+            {showBossQuarters && !isAuthenticated && (
+                <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+                    <div className="bg-zinc-800 p-8 rounded-lg border border-zinc-600 max-w-md w-full mx-4">
+                        <h2 className="text-2xl font-bold text-zinc-50 mb-6 text-center">🔐 BOSS QUARTERS ACCESS</h2>
+                        <form onSubmit={handlePasswordSubmit} className="space-y-4">
+                            <input
+                                type="password"
+                                placeholder="Enter password..."
+                                value={passwordAttempt}
+                                onChange={(e) => setPasswordAttempt(e.target.value)}
+                                className="w-full p-3 bg-zinc-700 border border-zinc-600 rounded text-zinc-100 placeholder-zinc-400"
+                                autoFocus
+                            />
+                            <div className="flex gap-4">
+                                <button
+                                    type="submit"
+                                    className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded font-bold transition-colors"
+                                >
+                                    ACCESS
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowBossQuarters(false);
+                                        setPasswordAttempt('');
+                                    }}
+                                    className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 rounded font-bold transition-colors"
+                                >
+                                    CANCEL
+                                </button>
+                            </div>
+                        </form>
+                        <p className="text-zinc-400 text-sm text-center mt-4">
+                            Access restricted to authorized personnel only.
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {/* Footer */}
+            <footer className="bg-zinc-900 border-t border-zinc-700 py-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center">
+                        <h3 className="text-2xl font-bold text-zinc-50 mb-4">PAUL'S ROOFING</h3>
+                        <p className="text-zinc-400 mb-4">Southern New Brunswick's Premier Metal Roofing Specialist</p>
+                        <p className="text-zinc-500 text-sm">
+                            © 2025 Paul's Roofing. All rights reserved. | Licensed & Insured
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    );
+};
+
+    
