@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { ColorOption } from './color-chart';
+import type { ColorOption } from '../lib/colors';
 import { RoofVisualizerImage } from './roof-visualizer-image';
 
 type HouseVisualizerProps = {
@@ -13,9 +13,9 @@ type HouseVisualizerProps = {
 };
 
 const houseStyles = [
-    { value: 'ranch', label: 'Ranch', image: 'https://placehold.co/800x600/png?text=Ranch+Style+House', roofPath: 'M0,250 L400,100 L800,250 L800,310 L750,300 L50,220 L0,230 Z' },
-    { value: 'colonial', label: 'Colonial', image: 'https://placehold.co/800x600/png?text=Colonial+Style+House', roofPath: 'M15,220 L400,100 L785,220 L785,280 L400,160 L15,280 Z' },
-    { value: 'modern', label: 'Modern', image: 'https://placehold.co/800x600/png?text=Modern+Style+House', roofPath: 'M100,200 L500,150 L800,220 L800,280 L500,210 L100,260 Z' },
+    { value: 'ranch', label: 'Ranch', image: 'https://ik.imagekit.io/ik5x4q7jl/ranch-house.jpg', roofPath: 'M0,250 L400,100 L800,250 L800,310 L750,300 L50,220 L0,230 Z' },
+    { value: 'colonial', label: 'Colonial', image: 'https://ik.imagekit.io/ik5x4q7jl/colonial-house.jpg', roofPath: 'M15,220 L400,100 L785,220 L785,280 L400,160 L15,280 Z' },
+    { value: 'modern', label: 'Modern', image: 'https://ik.imagekit.io/ik5x4q7jl/modern-house.jpg', roofPath: 'M100,200 L500,150 L800,220 L800,280 L500,210 L100,260 Z' },
 ];
 
 
@@ -52,10 +52,11 @@ export function HouseVisualizer({ selectedColor, houseStyle, setHouseStyle }: Ho
                 {selectedColor && (
                     <div className="mt-4 bg-background border rounded-md p-2 text-center">
                         <p className="text-sm font-bold">{selectedColor.name}</p>
-                        <p className="text-xs text-muted-foreground">{selectedColor.code}</p>
                     </div>
                 )}
             </CardContent>
         </Card>
     );
 }
+
+    
