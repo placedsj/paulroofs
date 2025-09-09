@@ -8,53 +8,186 @@ import React, { useState, useEffect, useCallback } from 'react';
 // -- SERVICES SECTION COMPONENT -- //
 const ServicesSection = () => {
     const [selectedService, setSelectedService] = useState('metal');
-    const [selectedColor, setSelectedColor] = useState<{name: string, color: string, code: string}>({ name: 'CHARCOAL GRAY', color: '#4b5563', code: 'MG-001' });
+    const [selectedRoofColor, setSelectedRoofColor] = useState<{name: string, hex: string, code: string}>({ name: 'CHARCOAL GRAY', hex: '#4b5563', code: 'MG-001' });
+    const [selectedSidingColor, setSelectedSidingColor] = useState<{name: string, hex: string, code: string}>({ name: "Flagstone", hex: "#88919a", code: "MIT-FLAG" });
+    const [selectedSidingBrand, setSelectedSidingBrand] = useState('mittenVinyl');
     const [houseStyle, setHouseStyle] = useState('colonial');
 
-    const metalColors = [
-        { name: 'CHARCOAL GRAY', color: '#4b5563', code: 'MG-001' },
-        { name: 'SLATE BLUE', color: '#64748b', code: 'MG-002' },
-        { name: 'FOREST GREEN', color: '#14532d', code: 'MG-003' },
-        { name: 'BRICK RED', color: '#be123c', code: 'MG-004' },
-        { name: 'COPPER BRONZE', color: '#b9732f', code: 'MG-005' },
-        { name: 'ARCTIC WHITE', color: '#e7ebf0', code: 'MG-006' },
-        { name: 'STORM GRAY', color: '#6b7280', code: 'MG-007' },
-        { name: 'BURNISHED SLATE', color: '#1f4b49', code: 'MG-008' }
-    ];
+    const roofingPalettes = {
+        metal: {
+            label: "Metal Roofing Colors",
+            colors: [
+                { name: 'CHARCOAL GRAY', hex: '#4b5563', code: 'MG-001' },
+                { name: 'SLATE BLUE', hex: '#64748b', code: 'MG-002' },
+                { name: 'FOREST GREEN', hex: '#14532d', code: 'MG-003' },
+                { name: 'BRICK RED', hex: '#be123c', code: 'MG-004' },
+                { name: 'COPPER BRONZE', hex: '#b9732f', code: 'MG-005' },
+                { name: 'ARCTIC WHITE', hex: '#e7ebf0', code: 'MG-006' },
+                { name: 'STORM GRAY', hex: '#6b7280', code: 'MG-007' },
+                { name: 'BURNISHED SLATE', hex: '#1f4b49', code: 'MG-008' }
+            ]
+        },
+        shingles: {
+            label: "Asphalt Shingle Colors",
+            colors: [
+                { name: 'WEATHERED WOOD', hex: '#8B7355', code: 'SH-001' },
+                { name: 'MISSION BROWN', hex: '#654321', code: 'SH-002' },
+                { name: 'OYSTER GRAY', hex: '#8B8680', code: 'SH-003' },
+                { name: 'ESTATE GRAY', hex: '#555555', code: 'SH-004' },
+                { name: 'PEWTER GRAY', hex: '#96A8A1', code: 'SH-005' },
+                { name: 'DRIFTWOOD', hex: '#8F7853', code: 'SH-006' }
+            ]
+        }
+    };
+    
+    const sidingPalettes = {
+      mittenVinyl: {
+        label: "Mitten Vinyl",
+        source: "Mitten Building Products",
+        profiles: ["Horizontal", "Dutchlap", "Board & Batten"],
+        colors: [
+          { name: "Flagstone", code: "MIT-FLAG", hex: "#88919a" },
+          { name: "Stratus", code: "MIT-STR", hex: "#aeb5bb" },
+          { name: "Satin Grey", code: "MIT-SG", hex: "#9aa0a6" },
+          { name: "Yukon Grey", code: "MIT-YG", hex: "#6d7379" },
+          { name: "Huron Blue", code: "MIT-HB", hex: "#4e6a84" }
+        ]
+      },
+      hardieBoard: {
+        label: "Hardie Board (ColorPlus)",
+        source: "James Hardie ColorPlus",
+        colors: [
+          { name: "Evening Blue (2025 COTY)", code: "JH-EB", hex: "#2d4461" },
+          { name: "Iron Gray", code: "JH-IG", hex: "#3b4046" },
+          { name: "Arctic White", code: "JH-AW", hex: "#f3f4f6" },
+          { name: "Boothbay Blue", code: "JH-BB", hex: "#6f8697" },
+          { name: "Monterey Taupe", code: "JH-MT", hex: "#9a8f80" }
+        ]
+      },
+      hardieShingle: {
+        label: "Hardie Shingle",
+        source: "James Hardie Shingle",
+        colors: [
+          { name: "Evening Blue", code: "JH-EB", hex: "#2d4461" },
+          { name: "Cobble Stone", code: "JH-CS", hex: "#c9c2b8" },
+          { name: "Aged Pewter", code: "JH-AP", hex: "#8a8f92" },
+          { name: "Deep Ocean", code: "JH-DO", hex: "#243b55" }
+        ]
+      }
+    };
 
-    const shingleColors = [
-        { name: 'WEATHERED WOOD', color: '#8B7355', code: 'SH-001' },
-        { name: 'MISSION BROWN', color: '#654321', code: 'SH-002' },
-        { name: 'OYSTER GRAY', color: '#8B8680', code: 'SH-003' },
-        { name: 'ESTATE GRAY', color: '#555555', code: 'SH-004' },
-        { name: 'PEWTER GRAY', color: '#96A8A1', code: 'SH-005' },
-        { name: 'DRIFTWOOD', color: '#8F7853', code: 'SH-006' }
-    ];
+    const currentRoofColors = roofingPalettes[selectedService]?.colors || [];
+    const currentSidingColors = sidingPalettes[selectedSidingBrand]?.colors || [];
 
-    const currentColors = selectedService === 'metal' ? metalColors : shingleColors;
-    const initialColor = selectedService === 'metal' ? metalColors[0] : shingleColors[0];
+    const initialRoofColor = roofingPalettes[selectedService]?.colors[0];
+    const initialSidingColor = sidingPalettes[selectedSidingBrand]?.colors[0];
     
     useEffect(() => {
-        setSelectedColor(initialColor);
+        if (['metal', 'shingles'].includes(selectedService)) {
+            setSelectedRoofColor(initialRoofColor);
+        }
     }, [selectedService]);
 
+    useEffect(() => {
+        setSelectedSidingColor(initialSidingColor);
+    }, [selectedSidingBrand]);
 
-    const ColorChartAndVisualizer = () => (
-        <div className="grid lg:grid-cols-2 gap-6">
+
+    const SidingVisualizer = () => (
+         <div className="grid lg:grid-cols-2 gap-6">
             <section className="glass rounded-2xl p-6 elevate">
-                <h3 className="text-xl font-semibold mb-4 text-slate-100 normal-case">{selectedService === 'metal' ? 'Metal Roofing Colors' : 'Asphalt Shingle Colors'}</h3>
+                 <div className="flex items-center justify-between gap-3 mb-4">
+                    <h3 className="text-xl font-semibold text-slate-100 normal-case">Siding Colors</h3>
+                     <label className="text-sm">
+                        <span className="sr-only">Siding Brand</span>
+                        <select 
+                            id="sidingBrand" 
+                            className="bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-slate-100"
+                            value={selectedSidingBrand}
+                            onChange={(e) => setSelectedSidingBrand(e.target.value)}
+                        >
+                            <option value="mittenVinyl">Mitten Vinyl</option>
+                            <option value="hardieBoard">Hardie Board</option>
+                            <option value="hardieShingle">Hardie Shingle</option>
+                        </select>
+                    </label>
+                </div>
                 <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {currentColors.map((colorOption) => (
+                    {currentSidingColors.map((colorOption) => (
                         <li key={colorOption.code}>
                             <button 
                                 className="swatch w-full rounded-xl p-3 text-left glass/50"
-                                style={{ background: colorOption.color }}
-                                onClick={() => setSelectedColor(colorOption)}
+                                style={{ background: colorOption.hex }}
+                                onClick={() => setSelectedSidingColor(colorOption)}
                                 aria-label={`${colorOption.name} ${colorOption.code}`}
                             >
-                                <div className={`${colorOption.name === 'ARCTIC WHITE' ? 'bg-black/5' : 'bg-white/10'} rounded-lg p-3`}>
-                                    <span className={`block text-sm font-medium ${colorOption.name === 'ARCTIC WHITE' ? 'text-slate-900' : 'text-slate-100'}`}>{colorOption.name}</span>
-                                    <span className={`block text-xs ${colorOption.name === 'ARCTIC WHITE' ? 'text-slate-700' : 'text-slate-300'}`}>{colorOption.code}</span>
+                                <div className={`${colorOption.hex > '#d0d0d0' ? 'bg-black/5' : 'bg-white/10'} rounded-lg p-3`}>
+                                    <span className={`block text-sm font-medium ${colorOption.hex > '#d0d0d0' ? 'text-slate-900' : 'text-slate-100'}`}>{colorOption.name}</span>
+                                    <span className={`block text-xs ${colorOption.hex > '#d0d0d0' ? 'text-slate-700' : 'text-slate-300'}`}>{colorOption.code}</span>
+                                </div>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+                <p className="mt-4 text-xs text-slate-300">Source: {sidingPalettes[selectedSidingBrand].source}</p>
+            </section>
+            
+            <section className="glass rounded-2xl p-6 elevate">
+                 <div className="flex items-center justify-between gap-3 mb-4">
+                    <h3 className="text-xl font-semibold text-slate-100 normal-case">House Visualizer</h3>
+                </div>
+                
+                <div className="rounded-xl overflow-hidden bg-gradient-to-b from-sky-400/40 to-indigo-600/40 p-8">
+                    <svg viewBox="0 0 300 200" className="w-full h-[260px] mx-auto">
+                        <defs>
+                            <linearGradient id="roofShine" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stopColor="#ffffff" stopOpacity=".15"></stop>
+                                <stop offset=".5" stopColor="#000000" stopOpacity=".0"></stop>
+                            </linearGradient>
+                            <pattern id="shingleGrain" patternUnits="userSpaceOnUse" width="10" height="10">
+                                <path d="M0 5 L10 5" stroke="#000" strokeWidth="0.5" strokeOpacity="0.1"/>
+                                <path d="M5 0 L5 10" stroke="#000" strokeWidth="0.5" strokeOpacity="0.1"/>
+                            </pattern>
+                        </defs>
+                        <rect x="90" y="90" width="120" height="70" fill={selectedSidingColor.hex} stroke="#1F2937" strokeWidth="2" />
+                        <rect x="145" y="120" width="30" height="40" fill="#8B5E34" />
+                        <rect x="105" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
+                        <rect x="170" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
+                        <polygon points="80,90 150,50 220,90" fill={selectedRoofColor.hex}></polygon>
+                        {selectedService === 'shingles' && <polygon points="80,90 150,50 220,90" fill="url(#shingleGrain)"></polygon>}
+                        <polygon points="80,90 150,50 220,90" fill="url(#roofShine)"></polygon>
+                    </svg>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between">
+                    <p className="text-sm text-slate-300">Click a color to apply to the siding.</p>
+                    <button 
+                        onClick={() => setSelectedSidingColor(initialSidingColor)}
+                        className="text-sm px-3 py-2 rounded-lg bg-white/10 border border-white/10 hover:bg-white/20"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </section>
+        </div>
+    );
+
+    const RoofVisualizer = () => (
+        <div className="grid lg:grid-cols-2 gap-6">
+            <section className="glass rounded-2xl p-6 elevate">
+                <h3 className="text-xl font-semibold mb-4 text-slate-100 normal-case">{roofingPalettes[selectedService].label}</h3>
+                <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {currentRoofColors.map((colorOption) => (
+                        <li key={colorOption.code}>
+                            <button 
+                                className="swatch w-full rounded-xl p-3 text-left glass/50"
+                                style={{ background: colorOption.hex }}
+                                onClick={() => setSelectedRoofColor(colorOption)}
+                                aria-label={`${colorOption.name} ${colorOption.code}`}
+                            >
+                                <div className={`${colorOption.hex > '#d0d0d0' ? 'bg-black/5' : 'bg-white/10'} rounded-lg p-3`}>
+                                    <span className={`block text-sm font-medium ${colorOption.hex > '#d0d0d0' ? 'text-slate-900' : 'text-slate-100'}`}>{colorOption.name}</span>
+                                    <span className={`block text-xs ${colorOption.hex > '#d0d0d0' ? 'text-slate-700' : 'text-slate-300'}`}>{colorOption.code}</span>
                                 </div>
                             </button>
                         </li>
@@ -93,11 +226,11 @@ const ServicesSection = () => {
                                 <path d="M5 0 L5 10" stroke="#000" strokeWidth="0.5" strokeOpacity="0.1"/>
                             </pattern>
                         </defs>
-                        <rect x="90" y="90" width="120" height="70" fill="#E5E7EB" stroke="#1F2937" strokeWidth="2" />
+                        <rect x="90" y="90" width="120" height="70" fill={selectedSidingColor.hex} stroke="#1F2937" strokeWidth="2" />
                         <rect x="145" y="120" width="30" height="40" fill="#8B5E34" />
                         <rect x="105" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
                         <rect x="170" y="110" width="25" height="20" fill="#93C5FD" stroke="#1F2937" />
-                        <polygon points="80,90 150,50 220,90" fill={selectedColor.color}></polygon>
+                        <polygon points="80,90 150,50 220,90" fill={selectedRoofColor.hex}></polygon>
                         {selectedService === 'shingles' && <polygon points="80,90 150,50 220,90" fill="url(#shingleGrain)"></polygon>}
                         <polygon points="80,90 150,50 220,90" fill="url(#roofShine)"></polygon>
                     </svg>
@@ -106,7 +239,7 @@ const ServicesSection = () => {
                 <div className="mt-4 flex items-center justify-between">
                     <p className="text-sm text-slate-300">Click a color to apply to the roof.</p>
                     <button 
-                        onClick={() => setSelectedColor(initialColor)}
+                        onClick={() => setSelectedRoofColor(initialRoofColor)}
                         className="text-sm px-3 py-2 rounded-lg bg-white/10 border border-white/10 hover:bg-white/20"
                     >
                         Reset
@@ -145,6 +278,16 @@ const ServicesSection = () => {
                             ASPHALT SHINGLES
                         </button>
                         <button
+                            onClick={() => setSelectedService('siding')}
+                            className={`px-6 py-3 rounded-md font-bold transition-colors ${
+                                selectedService === 'siding' 
+                                    ? 'bg-orange-600 text-white' 
+                                    : 'text-zinc-400 hover:text-zinc-200'
+                            }`}
+                        >
+                            SIDING
+                        </button>
+                        <button
                             onClick={() => setSelectedService('other')}
                             className={`px-6 py-3 rounded-md font-bold transition-colors ${
                                 selectedService === 'other' 
@@ -159,7 +302,7 @@ const ServicesSection = () => {
 
                 {/* Service Content */}
                 {selectedService === 'other' ? (
-                     <div className="grid md:grid-cols-3 gap-8">
+                     <div className="grid md:grid-cols-2 gap-8">
                         <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
                             <h3 className="text-2xl font-bold text-zinc-50 mb-4">ROOF REPAIRS</h3>
                             <p className="text-zinc-400 mb-4">Emergency repairs and maintenance for all roofing types. Available 24/7 for urgent situations.</p>
@@ -168,16 +311,6 @@ const ServicesSection = () => {
                                 <li>• Storm Damage Assessment</li>
                                 <li>• Gutter Repair & Cleaning</li>
                                 <li>• Emergency Tarping</li>
-                            </ul>
-                        </div>
-                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
-                            <h3 className="text-2xl font-bold text-zinc-50 mb-4">SIDING INSTALLATION</h3>
-                            <p className="text-zinc-400 mb-4">Complete exterior renovations with Hardie Board and premium materials.</p>
-                            <ul className="text-zinc-300 space-y-2">
-                                <li>• Hardie Board Siding</li>
-                                <li>• Vinyl Siding</li>
-                                <li>• Wood Siding</li>
-                                <li>• Trim & Soffit Work</li>
                             </ul>
                         </div>
                         <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
@@ -190,6 +323,26 @@ const ServicesSection = () => {
                                 <li>• Gutter Maintenance</li>
                             </ul>
                         </div>
+                    </div>
+                ) : selectedService === 'siding' ? (
+                    <div className="space-y-8">
+                        <div className="bg-zinc-700 p-8 rounded-lg border border-zinc-600">
+                             <h3 className="text-3xl font-bold text-zinc-50 mb-4">
+                                PREMIUM SIDING INSTALLATION
+                            </h3>
+                            <p className="text-zinc-400 text-lg mb-6">
+                                Complete exterior renovations with Hardie Board and premium vinyl materials. Explore our color options to find the perfect match for your home.
+                            </p>
+                            <div className="grid md:grid-cols-3 gap-4 text-zinc-300">
+                                <div>• Hardie Board Siding</div>
+                                <div>• Premium Vinyl Siding</div>
+                                <div>• Wood Siding</div>
+                                <div>• Trim & Soffit Work</div>
+                                <div>• Weather Resistant</div>
+                                <div>• Low Maintenance</div>
+                            </div>
+                        </div>
+                        <SidingVisualizer />
                     </div>
                 ) : (
                     <div className="space-y-8">
@@ -225,7 +378,7 @@ const ServicesSection = () => {
                                 )}
                             </div>
                         </div>
-                        <ColorChartAndVisualizer />
+                        <RoofVisualizer />
                     </div>
                 )}
                 
@@ -722,5 +875,7 @@ export default function Home() {
     
 
 
+
+    
 
     
