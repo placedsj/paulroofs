@@ -30,12 +30,12 @@ const ServicesSection = () => {
         shingles: {
             label: "Asphalt Shingle Colors",
             colors: [
-                { name: 'WEATHERED WOOD', hex: '#8B7355', code: 'SH-001' },
-                { name: 'MISSION BROWN', hex: '#654321', code: 'SH-002' },
-                { name: 'OYSTER GRAY', hex: '#8B8680', code: 'SH-003' },
-                { name: 'ESTATE GRAY', hex: '#555555', code: 'SH-004' },
-                { name: 'PEWTER GRAY', hex: '#96A8A1', code: 'SH-005' },
-                { name: 'DRIFTWOOD', hex: '#8F7853', code: 'SH-006' }
+                { name: 'DUAL BLACK', hex: '#2a2a2c', code: 'IKO-DB' },
+                { name: 'DRIFTWOOD', hex: '#a69a8a', code: 'IKO-DW' },
+                { name: 'DUAL GREY', hex: '#8a8d91', code: 'IKO-DG' },
+                { name: 'CHARCOAL GREY', hex: '#646569', code: 'IKO-CG' },
+                { name: 'WEATHERWOOD', hex: '#83776b', code: 'IKO-WW' },
+                { name: 'HARVARD SLATE', hex: '#4f535a', code: 'IKO-HS' }
             ]
         }
     };
@@ -86,11 +86,11 @@ const ServicesSection = () => {
         if (['metal', 'shingles'].includes(selectedService)) {
             setSelectedRoofColor(initialRoofColor);
         }
-    }, [selectedService]);
+    }, [selectedService, initialRoofColor]);
 
     useEffect(() => {
         setSelectedSidingColor(initialSidingColor);
-    }, [selectedSidingBrand]);
+    }, [selectedSidingBrand, initialSidingColor]);
 
 
     const SidingVisualizer = () => (
