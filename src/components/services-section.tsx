@@ -2,7 +2,7 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wrench, Repeat, Droplets, Wind, Home, Building, Snowflake, Sun, Search, Layers, Drone, Sparkles, CalendarCheck } from 'lucide-react';
+import { Wrench, Repeat, Droplets, Wind, Home, Building, Snowflake, Sun, Search, Layers, Camera, Sparkles, CalendarCheck } from 'lucide-react';
 
 
 const services = [
@@ -27,7 +27,7 @@ const services = [
         description: "Clogged or damaged gutters can cause serious water damage. We offer comprehensive cleaning and repair services to ensure they function perfectly."
     },
     {
-        icon: <Drone className="h-8 w-8 text-primary" />,
+        icon: <Camera className="h-8 w-8 text-primary" />,
         title: "Drone-Assisted Inspections",
         description: "Using modern drone technology, we conduct thorough, safe, and efficient roof inspections, providing you with a detailed report of your roof's condition."
     },
