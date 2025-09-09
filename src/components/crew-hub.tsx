@@ -4,9 +4,12 @@
 import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { ProjectCard } from "@/components/project-card";
+import type { Project, ChatMessage, TimeLog } from '@/components/project-card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 // In a real app, this would come from an API
-const initialProjects = [
+const initialProjects: Project[] = [
     {
         id: 'project-1',
         name: 'Smith Residence Roof Replacement',
@@ -25,7 +28,16 @@ const initialProjects = [
             { name: 'Ice & Water Shield', quantity: '3 rolls' },
             { name: 'Roofing Nails', quantity: '2 boxes' },
         ],
-        notes: "Client has a dog named Max, make sure to keep the gate closed. Watch out for the garden on the west side of the house."
+        notes: "Client has a dog named Max, make sure to keep the gate closed. Watch out for the garden on the west side of the house.",
+        chatMessages: [
+            { user: 'Mike Henderson', text: 'Morning everyone, ready to rock today!', timestamp: new Date(new Date().setDate(new Date().getDate()-1)) },
+            { user: 'Caleb Tiner', text: 'Ready to go! Weather looks perfect.', timestamp: new Date(new Date().setDate(new Date().getDate()-1)) },
+        ],
+        timeLogs: [
+            { user: 'John Doe', hours: 8, activity: 'Tear-off and site prep', date: new Date(new Date().setDate(new Date().getDate()-1)) },
+            { user: 'Peter Jones', hours: 8, activity: 'Tear-off', date: new Date(new Date().setDate(new Date().getDate()-1)) },
+        ],
+        eta: '2 days remaining'
     },
      {
         id: 'project-2',
@@ -42,16 +54,26 @@ const initialProjects = [
              { name: 'Vinyl Siding', color: 'Driftwood', quantity: '20 squares' },
              { name: 'J-Channel & Trim', quantity: '15 pieces' },
         ],
-        notes: "Material delivery scheduled for Tuesday morning. Client wants to confirm color before starting."
+        notes: "Material delivery scheduled for Tuesday morning. Client wants to confirm color before starting.",
+        chatMessages: [],
+        timeLogs: [],
+        eta: 'Est. 4 days'
     }
 ];
 
 export function CrewHub() {
-    const [projects, setProjects] = useState(initialProjects);
-    const [selectedProject, setSelectedProject] = useState(initialProjects[0]);
-
+    const [projects, setProjects] = useState<Project[]>(initialProjects);
+    const [selectedProject, setSelectedProject] = useState<Project>(initialProjects[0]);
+    
     // In the future, we can use this to show different views for different roles
-    const userRole = 'owner'; 
+    const currentUser = 'Mike Henderson';
+
+    const handleUpdateProject = (updatedProject: Project) => {
+        const newProjects = projects.map(p => p.id === updatedProject.id ? updatedProject : p);
+        setProjects(newProjects);
+        setSelectedProject(updatedProject);
+    };
+
 
     return (
         <div>
@@ -76,7 +98,11 @@ export function CrewHub() {
                     ))}
                 </div>
                  <div className="lg:col-span-2">
-                    {selectedProject && <ProjectCard project={selectedProject} />}
+                    {selectedProject && <ProjectCard 
+                        project={selectedProject} 
+                        onUpdate={handleUpdateProject}
+                        currentUser={currentUser}
+                        />}
                  </div>
 
             </div>
