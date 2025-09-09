@@ -28,6 +28,10 @@ const initialProjects: Project[] = [
             { name: 'Ice & Water Shield', quantity: '3 rolls' },
             { name: 'Roofing Nails', quantity: '2 boxes' },
         ],
+        tools: ['Fall arrest kits', 'Skill saw', 'Air compressor & nailers', 'Ladders', 'Wheelbarrow'],
+        materialLeftover: [
+             { name: 'IKO Dynasty Shingles', quantity: '1/2 bundle' }
+        ],
         notes: "Client has a dog named Max, make sure to keep the gate closed. Watch out for the garden on the west side of the house.",
         chatMessages: [
             { user: 'Mike Henderson', text: 'Morning everyone, ready to rock today!', timestamp: new Date(new Date().setDate(new Date().getDate()-1)) },
@@ -54,6 +58,8 @@ const initialProjects: Project[] = [
              { name: 'Vinyl Siding', color: 'Driftwood', quantity: '20 squares' },
              { name: 'J-Channel & Trim', quantity: '15 pieces' },
         ],
+        tools: ['Siding nailers', 'Ladders & scaffolding', 'Tin snips', 'Level'],
+        materialLeftover: [],
         notes: "Material delivery scheduled for Tuesday morning. Client wants to confirm color before starting.",
         chatMessages: [],
         timeLogs: [],

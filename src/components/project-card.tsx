@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Users, MapPin, HardHat, ClipboardList, Package, MessageSquare, Camera, Clock, UserCheck } from "lucide-react";
+import { Users, MapPin, HardHat, ClipboardList, Package, MessageSquare, Camera, Clock, UserCheck, Wrench, PackagePlus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,6 +32,8 @@ export type Project = {
     status: string;
     tasks: { id: string, description: string, completed: boolean }[];
     materials: { name: string, color?: string, quantity: string }[];
+    tools: string[];
+    materialLeftover: { name: string, quantity: string }[];
     notes: string;
     chatMessages: ChatMessage[];
     timeLogs: TimeLog[];
@@ -121,6 +123,27 @@ export function ProjectCard({ project, onUpdate, currentUser }: ProjectCardProps
                         ))}
                      </div>
                 </InfoSection>
+                
+                 <div className="grid md:grid-cols-2 gap-6">
+                    <InfoSection icon={<Wrench />} title="Required Tools">
+                        <ul className="list-disc pl-5">
+                            {project.tools.map(tool => (
+                                <li key={tool}>{tool}</li>
+                            ))}
+                        </ul>
+                    </InfoSection>
+
+                    <InfoSection icon={<PackagePlus />} title="Material Leftover">
+                        {project.materialLeftover.length > 0 ? (
+                            <ul className="list-disc pl-5">
+                                {project.materialLeftover.map(mat => (
+                                    <li key={mat.name}>{mat.quantity} of {mat.name}</li>
+                                ))}
+                            </ul>
+                        ) : <p>None reported.</p>}
+                    </InfoSection>
+                </div>
+
 
                 <Separator />
 
