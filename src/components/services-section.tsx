@@ -2,54 +2,54 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wrench, Repeat, Droplets, Wind, Home, Building, Snowflake, Sun, Search, Layers } from 'lucide-react';
+import { Wrench, Repeat, Droplets, Wind, Home, Building, Snowflake, Sun, Search, Layers, Drone, Sparkles, CalendarCheck } from 'lucide-react';
 
 
 const services = [
     {
         icon: <Repeat className="h-8 w-8 text-primary" />,
         title: "Roof Replacement",
-        description: "If your roof is beyond repair, we offer affordable and efficient roof replacement services. Our team will work with you to find the best solution for your home."
+        description: "Full roof tear-off and replacement. We work with you to choose the best materials, ensuring a long-lasting, high-quality roof for your home."
     },
     {
         icon: <Wrench className="h-8 w-8 text-primary" />,
         title: "Roof Repair",
-        description: "Our team of experts will repair any leaks, damage, or wear and tear on your roof. We use high-quality materials and provide expert service and advice."
+        description: "From minor leaks to significant wear, our expert team will diagnose and fix any issue, extending the life of your existing roof with quality materials."
     },
     {
         icon: <Layers className="h-8 w-8 text-primary" />,
         title: "Siding Installation & Repair",
-        description: "Boost your home's curb appeal and protection with new siding. We install and repair a variety of siding materials to match your style and budget."
+        description: "Boost your home's curb appeal and protection. We install and repair a variety of siding materials to match your style and budget."
     },
     {
         icon: <Droplets className="h-8 w-8 text-primary" />,
-        title: "Gutter Installation & Repair",
-        description: "Properly functioning gutters are crucial to protecting your home from water damage. We offer installation and maintenance services to ensure your gutters are working properly."
+        title: "Gutter Cleaning & Repair",
+        description: "Clogged or damaged gutters can cause serious water damage. We offer comprehensive cleaning and repair services to ensure they function perfectly."
     },
     {
+        icon: <Drone className="h-8 w-8 text-primary" />,
+        title: "Drone-Assisted Inspections",
+        description: "Using modern drone technology, we conduct thorough, safe, and efficient roof inspections, providing you with a detailed report of your roof's condition."
+    },
+     {
         icon: <Wind className="h-8 w-8 text-primary" />,
         title: "Storm Damage Repair",
-        description: "If your roof has been damaged by a storm, our team will quickly assess the damage and provide a solution. We work with you to provide a stress free process. We are available 7 days a week for emergency repairs."
+        description: "Fast, reliable emergency repairs for storm-damaged roofs. We work quickly to secure your home and prevent further damage. Available 7 days a week."
     },
     {
-        icon: <Home className="h-8 w-8 text-primary" />,
-        title: "Roof Maintenance",
-        description: "Preventative maintenance is key to extending the life of your roof. We offer regular maintenance services to keep your roof in top condition."
+        icon: <CalendarCheck className="h-8 w-8 text-primary" />,
+        title: "Seasonal Maintenance Packages",
+        description: "Preventative care to extend the life of your roof and siding. Our annual packages include gutter cleaning, a full exterior inspection, and a heat-loss check."
     },
     {
         icon: <Snowflake className="h-8 w-8 text-primary" />,
-        title: "Snow Removal",
-        description: "Snow and ice building up on your roof? Our experts are here to provide snow removal off of your roof to relieve your roof of the very heavy snow load."
+        title: "Rooftop Snow Removal",
+        description: "Heavy snow load can be dangerous for your roof's structure. Our team provides safe and effective snow and ice dam removal to protect your home."
     },
     {
-        icon: <Search className="h-8 w-8 text-primary" />,
-        title: "Roof Inspections",
-        description: "We offer a roof inspection service. We will do an assessment and provide you with a detailed report of the condition of your roof, expected remaining lifespan and any repairs that need done."
-    },
-    {
-        icon: <Sun className="h-8 w-8 text-primary" />,
-        title: "Roof Cleaning Services",
-        description: "Is your roof dirty? Covered in dirt and moss? We offer roof cleaning services. Reach out today for a free quote! Our experts are happy to help."
+        icon: <Sparkles className="h-8 w-8 text-primary" />,
+        title: "Holiday Light Installation",
+        description: "Let us handle the hassle of holiday decorating. We offer professional, safe, and beautiful Christmas light installation and takedown services."
     }
 ]
 
