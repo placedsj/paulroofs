@@ -390,8 +390,8 @@ const ServicesSection = () => {
                             Get a free estimate for your roofing project. We'll help you choose the perfect materials and colors.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="tel:+15067177285" className="bg-white text-orange-600 hover:bg-orange-50 px-8 py-4 rounded-lg font-bold text-lg transition-colors">
-                                CALL (506) 717-PAUL
+                            <a href="tel:+15062714162" className="bg-white text-orange-600 hover:bg-orange-50 px-8 py-4 rounded-lg font-bold text-lg transition-colors">
+                                CALL (506) 271-4162
                             </a>
                             <a href="#contact" className="border-2 border-white text-white hover:bg-white hover:text-orange-600 px-8 py-4 rounded-lg font-bold text-lg transition-colors">
                                 GET FREE QUOTE
@@ -680,8 +680,8 @@ export default function Home() {
                         Southern New Brunswick's Premier Metal Roofing Specialist.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="tel:+15067177285" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors">
-                            CALL (506) 717-PAUL
+                        <a href="tel:+15062714162" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors">
+                            CALL (506) 271-4162
                         </a>
                         <a href="#contact" className="border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors">
                             GET FREE QUOTE
@@ -748,7 +748,7 @@ export default function Home() {
                                         <span className="text-white text-sm">📞</span>
                                     </div>
                                     <div>
-                                        <p className="text-zinc-300 font-semibold">(506) 717-PAUL</p>
+                                        <p className="text-zinc-300 font-semibold">(506) 271-4162</p>
                                         <p className="text-zinc-400 text-sm">Available 24/7 for emergencies</p>
                                     </div>
                                 </div>
@@ -879,3 +879,4 @@ export default function Home() {
     
 
     
+
