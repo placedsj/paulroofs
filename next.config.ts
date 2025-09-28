@@ -1,7 +1,7 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -29,18 +29,6 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       }
     ],
-  },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '4.5mb',
-    },
-  },
-  serverActions: {
-    // 2 minute timeout for video generation
-    bodySizeLimit: '4.5mb',
-    serverActions: {
-      bodySizeLimit: '4.5mb',
-    },
   },
 };
 

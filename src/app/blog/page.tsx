@@ -1,6 +1,5 @@
-
 import Link from 'next/link';
-import { posts } from '@/lib/posts';
+import { posts } from '../../lib/posts';
 import Image from 'next/image';
 
 export default function BlogIndex() {
@@ -28,7 +27,7 @@ export default function BlogIndex() {
                 <div className="bg-zinc-800 rounded-lg overflow-hidden group border border-zinc-700 hover:border-orange-600 transition-all duration-300 transform hover:-translate-y-1">
                     <div className="relative w-full h-48">
                         <Image
-                            src={post.image}
+                            src={post.imageUrl}
                             alt={post.title}
                             layout="fill"
                             objectFit="cover"
@@ -37,7 +36,7 @@ export default function BlogIndex() {
                     </div>
                     <div className="p-6">
                         <h2 className="text-2xl font-bold text-zinc-50 mb-2 group-hover:text-orange-500 transition-colors">{post.title}</h2>
-                        <p className="text-zinc-400 line-clamp-3">{post.description}</p>
+                        <p className="text-zinc-400 line-clamp-3">{post.excerpt}</p>
                     </div>
                 </div>
             </Link>
