@@ -1,13 +1,16 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Footer() {
   return (
     <footer className="bg-zinc-900 border-t border-zinc-700 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <img
+          <Image
             src="/images/logo-round.png"
             alt="Paul's Roofing Logo"
+            width={48}
+            height={48}
             className="h-12 mx-auto mb-4"
           />
           <p className="text-zinc-400 mb-4">
