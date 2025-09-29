@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Header() {
   return (
@@ -7,9 +8,11 @@ export function Header() {
         <div className="flex justify-between items-center py-4">
           <div className="h-10 flex items-center">
             <Link href="/" className="text-2xl font-bold text-zinc-50 hover:text-orange-500 transition-colors">
-              <img
+              <Image
                 src="/images/logo-round.png"
                 alt="Paul's Roofing Logo"
+                width={40}
+                height={40}
                 className="h-10 w-auto"
               />
             </Link>
@@ -24,7 +27,6 @@ export function Header() {
             <Link href="/visualizer" className="text-zinc-400 hover:text-orange-500 transition-colors">
               VISUALIZER
             </Link>
-            {/* Link to the combined Handbook/Resource page */}
             <Link href="/handbook" className="text-zinc-400 hover:text-orange-500 transition-colors">
               RESOURCES 📖
             </Link>
@@ -33,7 +35,7 @@ export function Header() {
               CONTACT
             </Link>
             
-            {/* STAFF LINK */}
+            {/* STAFF LINK - Leads to the secure Boss Quarters page */}
             <Link 
               href="/boss-quarters" 
               className="text-sm font-bold text-orange-500 hover:text-orange-400 px-3 py-2 border-2 border-orange-500 rounded-lg transition-colors"
