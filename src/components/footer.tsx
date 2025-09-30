@@ -24,10 +24,10 @@ export function Footer() {
           <p className="text-zinc-400 mb-2">
             Contact:{" "}
             <a
-              href="mailto:paul@paulroofs.com"
+              href="mailto:info@paulroofs.com" // 🛠️ UPDATED EMAIL
               className="underline hover:text-orange-500"
             >
-              paul@paulroofs.com
+              info@paulroofs.com
             </a>
           </p>
           <p className="text-zinc-500 text-sm">
