@@ -11,11 +11,25 @@ export default function Home() {
   // which routes the user to the dedicated and fully-featured /boss-quarters page.
   // This keeps the homepage clean and focused on customers.
 
+  // --- GALLERY: "OUR WORK" IMAGES ---
+  const galleryImages = [
+      "/images/house-garage-water.jpg",
+      "/images/colored-roofs.jpg",
+      "/images/roof-view.jpg",
+      "/images/bible-dad-hat.jpg",
+      "/images/window-roof.jpg",
+      "/images/house-garage-water-2.jpg",
+      // 🛠️ NEW IMAGES ADDED HERE
+      "/images/new-install-metal.jpg", 
+      "/images/clean-shingle-job.jpg",
+      "/images/commercial-flat-roof.jpg", 
+  ];
+
   return (
     <div className="min-h-screen bg-zinc-900">
       <Header />
 
-      {/* Hero Section */}
+      {/* Hero Section - (Content remains unchanged) */}
       <section
         id="home"
         className="hero-bg min-h-screen flex items-center justify-center pt-20"
@@ -44,7 +58,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* 🛠️ NEW OUR WORK GALLERY SECTION ADDED */}
+      <section id="ourwork" className="py-16 bg-zinc-800">
+          <h2 className="text-4xl font-bold text-center text-zinc-50 mb-12">Our Work</h2>
+          <div className="flex flex-wrap justify-center gap-6">
+              {galleryImages.map((img, idx) => (
+                  <img 
+                      key={img + idx}
+                      src={img}
+                      alt={`Paul's Roofing work photo ${idx + 1}`}
+                      className="w-72 h-44 object-cover rounded shadow-lg border-2 border-zinc-900"
+                  />
+              ))}
+          </div>
+      </section>
+      
+      {/* Contact Section - Email addresses updated */}
       <section id="contact" className="py-20 bg-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center text-zinc-50 mb-16">
@@ -75,7 +104,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="text-zinc-300 font-semibold">
-                      paul@paulroofs.com
+                      info@paulroofs.com 
                     </p>
                     <p className="text-zinc-400 text-sm">General inquiries</p>
                   </div>
@@ -86,7 +115,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="text-zinc-300 font-semibold">
-                      paul@paulroofs.com
+                      info@paulroofs.com 
                     </p>
                     <p className="text-zinc-400 text-sm">Emergency repairs</p>
                   </div>
